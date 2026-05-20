@@ -60,15 +60,15 @@ export default function HomePage() {
             className="absolute inset-0 z-10"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(8,8,8,0.4) 0%, rgba(8,8,8,0.15) 40%, rgba(8,8,8,0.75) 80%, rgba(8,8,8,1) 100%)",
+                "linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.3) 40%, rgba(8,8,8,0.8) 80%, rgba(8,8,8,1) 100%)",
             }}
           />
-          <div
-            className="w-full h-full"
-            style={{
-              background:
-                "radial-gradient(ellipse 60% 80% at 75% 50%, rgba(201,168,76,0.04) 0%, transparent 70%), linear-gradient(135deg, #0e0c09 0%, #1a1510 35%, #0a0807 70%, #080808 100%)",
-            }}
+          <Image
+            src="/metro-1.jpg"
+            alt="Moore Covenant Productions"
+            fill
+            className="object-cover object-center"
+            priority
           />
         </motion.div>
 

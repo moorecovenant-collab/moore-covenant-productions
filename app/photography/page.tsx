@@ -1,9 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
-const placeholders = Array.from({ length: 9 });
+const photos = [
+  { src: "/metro-1.jpg", aspect: "3/4" },
+  { src: "/metro-2.jpg", aspect: "4/3" },
+  { src: null, aspect: "3/4" },
+  { src: null, aspect: "4/3" },
+  { src: null, aspect: "3/4" },
+  { src: null, aspect: "4/3" },
+  { src: null, aspect: "3/4" },
+  { src: null, aspect: "4/3" },
+  { src: null, aspect: "3/4" },
+];
 
 export default function PhotographyPage() {
   return (
@@ -89,30 +100,44 @@ export default function PhotographyPage() {
       <section className="px-6 md:px-10 lg:px-16 pb-32 md:pb-44">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-border/40">
-            {placeholders.map((_, i) => (
+            {photos.map((photo, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1.2, delay: 1.2 + i * 0.08, ease: "easeOut" }}
-                className="bg-dark relative overflow-hidden"
-                style={{ aspectRatio: i % 3 === 1 ? "3/4" : "4/3" }}
+                className="bg-dark relative overflow-hidden group"
+                style={{ aspectRatio: photo.aspect }}
               >
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: `linear-gradient(${135 + i * 15}deg, #${["141414", "1a1208", "0e0e0e", "12100e", "0e1218"][i % 5]} 0%, #0d0d0d 100%)`,
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-8 h-8 border border-gold/10 flex items-center justify-center">
-                    <svg viewBox="0 0 24 24" className="w-4 h-4" style={{ stroke: "rgba(196,151,74,0.2)", fill: "none", strokeWidth: 1.2 }}>
-                      <rect x="3" y="3" width="18" height="18" rx="2" />
-                      <circle cx="8.5" cy="8.5" r="1.5" />
-                      <path d="M21 15l-5-5L5 21" />
-                    </svg>
-                  </div>
-                </div>
+                {photo.src ? (
+                  <>
+                    <Image
+                      src={photo.src}
+                      alt="Moore Covenant Productions photography"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+                  </>
+                ) : (
+                  <>
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `linear-gradient(${135 + i * 15}deg, #${["141414", "1a1208", "0e0e0e", "12100e", "0e1218"][i % 5]} 0%, #0d0d0d 100%)`,
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-8 h-8 border border-gold/10 flex items-center justify-center">
+                        <svg viewBox="0 0 24 24" className="w-4 h-4" style={{ stroke: "rgba(196,151,74,0.2)", fill: "none", strokeWidth: 1.2 }}>
+                          <rect x="3" y="3" width="18" height="18" rx="2" />
+                          <circle cx="8.5" cy="8.5" r="1.5" />
+                          <path d="M21 15l-5-5L5 21" />
+                        </svg>
+                      </div>
+                    </div>
+                  </>
+                )}
                 <div className="absolute top-3 left-3 w-4 h-4 border-t border-l border-gold/10" />
                 <div className="absolute bottom-3 right-3 w-4 h-4 border-b border-r border-gold/10" />
               </motion.div>
