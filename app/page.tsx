@@ -173,27 +173,24 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          {/* Right — Photo */}
+          {/* Right — placeholder */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative aspect-[3/4] max-h-[75vh] w-full max-w-md mx-auto lg:mx-0"
           >
-            <div className="w-full h-full border border-gold/15 relative overflow-hidden">
-              <Image
-                src="/metro-2.jpg"
-                alt="Moore Covenant Productions"
-                fill
-                className="object-cover object-center"
-                priority
-              />
-              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(8,8,8,0.7) 100%)" }} />
-              <div className="absolute bottom-5 left-5 bg-black/80 px-3 py-1.5">
-                <span className="text-[9px] tracking-[0.16em] uppercase text-gold">Elijah Moore · Founder</span>
+            <div className="w-full h-full border border-gold/15 relative overflow-hidden bg-dark flex items-center justify-center">
+              <div className="text-center px-8">
+                <div className="w-12 h-px bg-gold/30 mx-auto mb-6" />
+                <p className="font-display text-2xl font-light italic text-gold/40" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                  Elijah Moore
+                </p>
+                <p className="text-[9px] tracking-[0.2em] uppercase text-text-muted mt-2">Founder · MCP</p>
+                <div className="w-12 h-px bg-gold/30 mx-auto mt-6" />
               </div>
-              <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/30" />
-              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/30" />
+              <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/20" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/20" />
             </div>
           </motion.div>
         </motion.div>
@@ -241,16 +238,16 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-28 items-center">
             {/* Photo */}
             <ScrollReveal direction="left">
-              <div className="relative aspect-[2/3] max-w-lg overflow-hidden border border-gold/15">
-                <Image
-                  src="/metro-1.jpg"
-                  alt="Moore Covenant Productions"
-                  fill
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 55%, rgba(8,8,8,0.6) 100%)" }} />
-                <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/30" />
-                <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/30" />
+              <div className="relative aspect-[2/3] max-w-lg overflow-hidden border border-gold/15 bg-dark flex items-center justify-center">
+                <div className="text-center px-8">
+                  <div className="w-10 h-px bg-gold/30 mx-auto mb-5" />
+                  <p className="font-display text-xl font-light italic text-gold/40" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
+                    Moore Covenant<br />Productions
+                  </p>
+                  <div className="w-10 h-px bg-gold/30 mx-auto mt-5" />
+                </div>
+                <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/20" />
+                <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/20" />
               </div>
             </ScrollReveal>
 
