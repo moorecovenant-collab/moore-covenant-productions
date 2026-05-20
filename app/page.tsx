@@ -173,24 +173,27 @@ export default function HomePage() {
             </motion.div>
           </div>
 
-          {/* Right — placeholder */}
+          {/* Right — Hero lifestyle */}
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="relative aspect-[3/4] max-h-[75vh] w-full max-w-md mx-auto lg:mx-0"
           >
-            <div className="w-full h-full border border-gold/15 relative overflow-hidden bg-dark flex items-center justify-center">
-              <div className="text-center px-8">
-                <div className="w-12 h-px bg-gold/30 mx-auto mb-6" />
-                <p className="font-display text-2xl font-light italic text-gold/40" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                  Elijah Moore
-                </p>
-                <p className="text-[9px] tracking-[0.2em] uppercase text-text-muted mt-2">Founder · MCP</p>
-                <div className="w-12 h-px bg-gold/30 mx-auto mt-6" />
+            <div className="w-full h-full border border-gold/15 relative overflow-hidden">
+              <Image
+                src="/hero-lifestyle.jpg"
+                alt="Elijah Moore — Founder, Moore Covenant Productions"
+                fill
+                className="object-cover object-top"
+                priority
+              />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(8,8,8,0.75) 100%)" }} />
+              <div className="absolute bottom-5 left-5 bg-black/80 px-3 py-1.5">
+                <span className="text-[9px] tracking-[0.16em] uppercase text-gold">Elijah Moore · Founder</span>
               </div>
-              <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/20" />
-              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/20" />
+              <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/30" />
+              <div className="absolute bottom-4 right-4 w-6 h-6 border-b border-r border-gold/30" />
             </div>
           </motion.div>
         </motion.div>
