@@ -111,8 +111,9 @@ const articles: Record<string, {
   },
 };
 
-export default function JournalArticlePage({ params }: { params: { slug: string } }) {
-  const article = articles[params.slug];
+export default async function JournalArticlePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const article = articles[slug];
 
   if (!article) {
     notFound();
