@@ -7,13 +7,17 @@ import Link from "next/link";
 const photos = [
   { src: "/metro-1.jpg", aspect: "3/4" },
   { src: "/metro-2.jpg", aspect: "4/3" },
-  { src: null, aspect: "3/4" },
-  { src: null, aspect: "4/3" },
-  { src: null, aspect: "3/4" },
-  { src: null, aspect: "4/3" },
-  { src: null, aspect: "3/4" },
-  { src: null, aspect: "4/3" },
-  { src: null, aspect: "3/4" },
+  { src: "/DSC00062.jpg", aspect: "3/4" },
+  { src: "/DSC00101.jpg", aspect: "4/3" },
+  { src: "/DSC00103.jpg", aspect: "3/4" },
+  { src: "/DSC00248.jpeg", aspect: "4/3" },
+  { src: "/DSC00781.jpg", aspect: "3/4" },
+  { src: "/DSC00822.jpg", aspect: "4/3" },
+  { src: "/DSC00845.jpg", aspect: "3/4" },
+  { src: "/DSC00883.jpg", aspect: "4/3" },
+  { src: "/DSC01946.jpg", aspect: "3/4" },
+  { src: "/DSC01947.jpg", aspect: "4/3" },
+  { src: "/DSC02067.jpg", aspect: "3/4" },
 ];
 
 export default function PhotographyPage() {
