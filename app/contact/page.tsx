@@ -21,6 +21,7 @@ const projectTypes = [
   "Content Creation",
   "Growth Strategy",
   "1:1 Mentorship / Coaching",
+  "Website Building",
   "Brand Building + Website",
   "Content Day Production",
   "Multiple Services",

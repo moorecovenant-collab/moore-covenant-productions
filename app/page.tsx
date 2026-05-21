@@ -20,7 +20,8 @@ const services = [
   { number: "03", title: "Content Creation", desc: "Scroll-stopping visuals, captions, and short-form video crafted to grow your audience and your revenue." },
   { number: "04", title: "Growth Strategy", desc: "Data-driven strategy sessions, analytics review, and platform-specific roadmaps built for real growth." },
   { number: "05", title: "Brand Building", desc: "Custom brand identity, logo, and website that positions you as the authority in your space." },
-  { number: "06", title: "1:1 Mentorship", desc: "Private coaching for creators and entrepreneurs who want to grow their platform with purpose." },
+  { number: "06", title: "Website Building", desc: "Clean, conversion-focused websites built to represent your brand at the highest level — designed, developed, and launched." },
+  { number: "07", title: "1:1 Mentorship", desc: "Private coaching for creators and entrepreneurs who want to grow their platform with purpose." },
 ];
 
 const values = [
