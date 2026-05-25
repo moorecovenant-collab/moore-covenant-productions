@@ -159,6 +159,57 @@ const packages = [
   },
 ];
 
+const websitePackages = [
+  {
+    name: "Basic Site",
+    price: "500",
+    period: "one-time",
+    features: [
+      "Up to 3 pages",
+      "Mobile responsive design",
+      "Contact form",
+      "Brand colors & fonts applied",
+      "1 revision round",
+      "Delivered in 7–10 days",
+    ],
+    cta: "Get Started",
+    featured: false,
+  },
+  {
+    name: "Standard Site",
+    price: "1,500",
+    period: "one-time",
+    features: [
+      "Up to 6 pages",
+      "Custom design from scratch",
+      "Mobile responsive + SEO ready",
+      "Contact & inquiry forms",
+      "Social media integrations",
+      "2 revision rounds",
+      "Delivered in 14–21 days",
+    ],
+    cta: "Book a Call",
+    featured: true,
+    badge: "Most Popular",
+  },
+  {
+    name: "Premium Site",
+    price: "3,500",
+    period: "one-time",
+    features: [
+      "Unlimited pages",
+      "Full brand identity + website",
+      "Custom animations & interactions",
+      "Blog or portfolio setup",
+      "Email capture + automations",
+      "Priority build (7–14 days)",
+      "30-day post-launch support",
+    ],
+    cta: "Build My Brand",
+    featured: false,
+  },
+];
+
 const process = [
   { step: "01", title: "Discovery", desc: "We sit down, listen, and learn everything about you, your brand, your goals, and your vision." },
   { step: "02", title: "Strategy", desc: "We build the creative roadmap that ensures every deliverable serves a purpose." },
@@ -397,6 +448,75 @@ export default function ServicesPage() {
               </Link>
             </div>
           </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ─── WEBSITE PACKAGES ─── */}
+      <section id="website-packages" className="py-20 md:py-28 px-6 md:px-10 lg:px-16 bg-black border-t border-border/40">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="text-center max-w-xl mx-auto mb-14">
+            <ScrollReveal>
+              <p className="section-label justify-center mb-4 flex">
+                <span className="block w-6 h-px bg-gold mr-3 mt-[6px]" />
+                Website Building
+              </p>
+              <h2
+                className="font-display text-display-lg font-light text-cream leading-tight"
+                style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              >
+                Your Site. <em className="italic text-gold">Built Right.</em>
+              </h2>
+              <p className="text-text-muted text-sm mt-4">
+                One-time flat rate. No subscriptions. No surprises. Just a clean, conversion-ready website delivered on time.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border/40">
+            {websitePackages.map((pkg, i) => (
+              <ScrollReveal key={pkg.name} delay={i * 0.1} direction="up">
+                <div
+                  className={`relative p-10 md:p-12 flex flex-col ${
+                    pkg.featured ? "bg-gold/6 border border-gold/35" : "bg-dark"
+                  }`}
+                  style={pkg.featured ? { background: "rgba(201,168,76,0.06)" } : {}}
+                >
+                  {pkg.badge && (
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-gold text-black text-[9px] tracking-[0.16em] uppercase px-4 py-1 font-medium">
+                      {pkg.badge}
+                    </div>
+                  )}
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-gold mb-2 mt-4">{pkg.name}</p>
+                  <p
+                    className="font-display text-5xl font-light text-cream leading-none mb-1"
+                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
+                  >
+                    <sup className="text-xl align-super">$</sup>{pkg.price}
+                  </p>
+                  <p className="text-[11px] text-text-muted mb-6">{pkg.period}</p>
+                  <div className="h-px bg-border/60 mb-6" />
+                  <ul className="space-y-3 flex-1">
+                    {pkg.features.map((feat) => (
+                      <li key={feat} className="flex items-start gap-3 text-xs text-text-secondary leading-relaxed">
+                        <span className="text-gold shrink-0 mt-0.5">—</span>
+                        {feat}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/contact"
+                    className={`mt-8 block text-center py-3.5 text-[10px] tracking-[0.16em] uppercase transition-all duration-300 border ${
+                      pkg.featured
+                        ? "border-gold text-gold hover:bg-gold hover:text-black"
+                        : "border-border/60 text-text-secondary hover:border-gold hover:text-gold"
+                    }`}
+                  >
+                    {pkg.cta}
+                  </Link>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
       </section>
 
