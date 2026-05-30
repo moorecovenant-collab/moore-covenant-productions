@@ -1,11 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
 import GrainOverlay from "@/components/ui/GrainOverlay";
 import CustomCursor from "@/components/ui/CustomCursor";
-import ChatWidget from "@/components/ui/ChatWidget";
-import MusicPlayer from "@/components/ui/MusicPlayer";
 
 export const metadata: Metadata = {
   title: "Moore Covenant Productions | Built on Covenant. Established for More.",
@@ -46,11 +42,7 @@ export default function RootLayout({
       <body>
         <GrainOverlay />
         <CustomCursor />
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-        <ChatWidget />
-        <MusicPlayer />
+        {children}
       </body>
     </html>
   );
