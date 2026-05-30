@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/photography", label: "Photography" },
   { href: "/journal", label: "Journal" },
   { href: "/contact", label: "Contact" },
+  { href: "/pay", label: "Pay" },
 ];
 
 export default function Navigation() {
