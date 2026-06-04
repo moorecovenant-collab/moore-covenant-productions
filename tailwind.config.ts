@@ -22,6 +22,17 @@ const config: Config = {
         "text-primary": "#e8e3d8",
         "text-secondary": "#9a9590",
         "text-muted": "#5a5550",
+        // DeLorean 88 Vintage
+        "d88-bg":           "#000000",
+        "d88-surface":      "#0A0A0A",
+        "d88-card":         "#111111",
+        "d88-pink":         "#F0A8C8",
+        "d88-pink-light":   "#F8C8DC",
+        "d88-pink-dim":     "#C07898",
+        "d88-white":        "#FFFFFF",
+        "d88-gray":         "#666666",
+        "d88-gray-dark":    "#222222",
+        "d88-border":       "rgba(240,168,200,0.15)",
       },
       fontFamily: {
         serif: ["var(--font-cormorant)", "Georgia", "serif"],
