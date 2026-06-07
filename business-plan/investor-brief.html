@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moore Covenant Productions — Investor Brief</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #080808;
+      --dark:   #0e0e0e;
+      --gold:   #c4974a;
+      --gold-light: #d4aa6a;
+      --cream:  #f0ebe0;
+      --muted:  #6b6b6b;
+      --border: rgba(196,151,74,0.18);
+    }
+
+    html { font-size: 10pt; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      line-height: 1.7;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* ── COVER ── */
+    .cover {
+      background: var(--black);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 60px 72px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 20% 30%, rgba(196,151,74,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cover-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .cover-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13pt;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .cover-label {
+      font-size: 7pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid rgba(196,151,74,0.2);
+      padding: 5px 12px;
+    }
+    .cover-center { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 80px 0 60px; }
+    .cover-eyebrow {
+      font-size: 7.5pt;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cover-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .cover h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 54pt;
+      color: var(--cream);
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .cover h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .cover-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18pt;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(240,235,224,0.45);
+      margin-top: 12px;
+      margin-bottom: 40px;
+    }
+    .cover-divider { width: 48px; height: 1px; background: var(--gold); opacity: 0.5; margin-bottom: 32px; }
+    .cover-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14pt;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(240,235,224,0.6);
+      max-width: 480px;
+      line-height: 1.55;
+    }
+    .cover-bottom {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--border);
+      padding-top: 28px;
+    }
+    .cover-stat { padding: 0 24px 0 0; }
+    .cover-stat:first-child { padding-left: 0; }
+    .cover-stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26pt;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .cover-stat-label {
+      font-size: 6.5pt;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .cover-corner-tl { position: absolute; top: 24px; left: 24px; width: 20px; height: 20px; border-top: 1px solid rgba(196,151,74,0.3); border-left: 1px solid rgba(196,151,74,0.3); }
+    .cover-corner-br { position: absolute; bottom: 24px; right: 24px; width: 20px; height: 20px; border-bottom: 1px solid rgba(196,151,74,0.3); border-right: 1px solid rgba(196,151,74,0.3); }
+
+    /* ── PAGE LAYOUT ── */
+    .page {
+      padding: 64px 72px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media print {
+      .page { padding: 48px 64px; }
+      .page-break { page-break-before: always; }
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-num {
+      font-size: 6.5pt;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .section-num::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 28pt;
+      color: var(--black);
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+    h2 em { font-style: italic; color: var(--gold); }
+
+    h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 16pt;
+      color: var(--black);
+      margin-bottom: 12px;
+      margin-top: 32px;
+    }
+
+    p {
+      font-size: 9.5pt;
+      color: #2d2d2d;
+      line-height: 1.8;
+      margin-bottom: 14px;
+    }
+
+    strong { color: var(--black); font-weight: 600; }
+
+    /* ── SECTION DIVIDER ── */
+    .section-block {
+      border-top: 1px solid rgba(0,0,0,0.08);
+      padding-top: 48px;
+      margin-top: 48px;
+    }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 2px solid var(--gold);
+      padding: 10px 0 10px 24px;
+      margin: 32px 0;
+    }
+    .pull-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15pt;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--black);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .pull-quote cite {
+      display: block;
+      font-size: 6.5pt;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 10px;
+      font-style: normal;
+    }
+
+    /* ── CALLOUT BOX ── */
+    .callout {
+      background: #f9f7f3;
+      border: 1px solid rgba(196,151,74,0.2);
+      padding: 28px 32px;
+      margin: 28px 0;
+    }
+    .callout-label {
+      font-size: 6.5pt;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .callout p { margin: 0; color: #1a1a1a; }
+
+    /* ── STAT ROW ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border: 1px solid rgba(0,0,0,0.08);
+      margin: 28px 0;
+    }
+    .stat-cell {
+      padding: 24px 20px;
+      border-right: 1px solid rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26pt;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 6.5pt;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── TABLE ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 28px;
+      font-size: 8.5pt;
+    }
+    thead tr {
+      background: var(--black);
+      color: var(--cream);
+    }
+    thead th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      font-size: 7.5pt;
+    }
+    tbody tr { border-bottom: 1px solid rgba(0,0,0,0.07); }
+    tbody tr:last-child { border-bottom: none; }
+    tbody td { padding: 10px 14px; color: #2d2d2d; }
+    tbody tr.highlight { background: #faf7f2; }
+    tbody tr.total { background: var(--black); }
+    tbody tr.total td { color: var(--cream); font-weight: 600; }
+    td.gold { color: var(--gold); font-weight: 600; }
+
+    /* ── COMPARISON GRID ── */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
+      margin: 24px 0;
+    }
+    .compare-cell {
+      background: white;
+      padding: 16px 20px;
+    }
+    .compare-header {
+      background: var(--black);
+      padding: 12px 20px;
+    }
+    .compare-header p {
+      color: var(--cream);
+      font-size: 7.5pt;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin: 0;
+      font-weight: 500;
+    }
+    .compare-cell p { font-size: 8.5pt; margin: 0; }
+    .compare-cell.gold-cell { background: #faf7f2; }
+    .compare-cell.gold-cell p { color: var(--black); font-weight: 500; }
+
+    /* ── PHASE TIMELINE ── */
+    .phases { display: flex; flex-direction: column; gap: 0; margin: 24px 0; }
+    .phase {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 0;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-bottom: none;
+    }
+    .phase:last-child { border-bottom: 1px solid rgba(0,0,0,0.08); }
+    .phase-label {
+      background: var(--black);
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .phase-num {
+      font-size: 6pt;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .phase-time {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11pt;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.3;
+    }
+    .phase-body { padding: 18px 24px; }
+    .phase-title {
+      font-weight: 600;
+      font-size: 8.5pt;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
+    .phase-desc { font-size: 8pt; color: #4a4a4a; margin: 0; line-height: 1.7; }
+
+    /* ── USE OF FUNDS ── */
+    .funds-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .fund-cell {
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .fund-pct {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24pt;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .fund-label { font-size: 7pt; line-height: 1.45; color: #4a4a4a; }
+
+    /* ── FOUNDER BLOCK ── */
+    .founder-block {
+      background: var(--black);
+      padding: 40px 44px;
+      margin: 32px 0;
+      position: relative;
+    }
+    .founder-block::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(196,151,74,0.06) 0%, transparent 60%);
+    }
+    .founder-eyebrow {
+      font-size: 6.5pt;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .founder-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22pt;
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .founder-block p {
+      color: rgba(240,235,224,0.7);
+      font-size: 9pt;
+      line-height: 1.8;
+    }
+    .founder-block p strong { color: var(--cream); }
+    .founder-quote {
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
+      margin-top: 24px;
+    }
+    .founder-quote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13pt;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.55;
+    }
+
+    /* ── SCRIPTURE ── */
+    .scripture {
+      text-align: center;
+      padding: 40px;
+      border: 1px solid rgba(196,151,74,0.2);
+      margin: 40px 0;
+    }
+    .scripture p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14pt;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--black);
+      max-width: 480px;
+      margin: 0 auto 12px;
+      line-height: 1.6;
+    }
+    .scripture p span { color: var(--gold); font-style: normal; }
+    .scripture cite {
+      font-size: 6.5pt;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    /* ── CLOSING ── */
+    .closing {
+      background: var(--black);
+      padding: 64px 72px;
+      text-align: center;
+      page-break-before: always;
+    }
+    .closing h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 32pt;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+    .closing h2 em { color: var(--gold); font-style: italic; }
+    .closing p { color: rgba(240,235,224,0.6); max-width: 480px; margin: 0 auto 10px; }
+    .closing .contact {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      font-size: 8pt;
+      letter-spacing: 0.08em;
+      color: rgba(240,235,224,0.4);
+    }
+    .closing .contact a { color: var(--gold); text-decoration: none; }
+
+    /* ── PRINT ── */
+    @media print {
+      .cover { page-break-after: always; min-height: 100vh; }
+      .closing { page-break-before: always; }
+      body { font-size: 9.5pt; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     COVER
+══════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-corner-tl"></div>
+  <div class="cover-corner-br"></div>
+
+  <div class="cover-top">
+    <div class="cover-logo">Moore Covenant<br>Productions</div>
+    <div class="cover-label">Confidential — Investor Brief · 2025</div>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-eyebrow">Built From Purpose. Not Accident.</div>
+    <h1>Your Story.<br>Your <em>Legacy.</em><br>Your Covenant.</h1>
+    <div class="cover-sub">Faith-Driven Creative Media for the Called.</div>
+    <div class="cover-divider"></div>
+    <div class="cover-tagline">
+      "We are raising capital to scale the only creative agency built on
+      covenant, not contract — and the results already prove the model."
+    </div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-stat">
+      <div class="cover-stat-val">60M+</div>
+      <div class="cover-stat-label">Views Generated</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">100K+</div>
+      <div class="cover-stat-label">Followers Grown</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">1,000+</div>
+      <div class="cover-stat-label">Videos Produced</div>
+    </div>
+    <div class="cover-stat">
+      <div class="cover-stat-val">$0</div>
+      <div class="cover-stat-label">Raised to Date</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     BODY
+══════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- ── 01. EXECUTIVE SUMMARY ── -->
+  <div class="section-num">01 &mdash; Executive Summary</div>
+  <h2>The Agency Built on <em>Covenant,</em><br>Not Contract.</h2>
+
+  <p>
+    Moore Covenant Productions is a faith-driven creative media agency specializing in social media
+    management, brand storytelling, and content strategy for purpose-led entrepreneurs and businesses.
+  </p>
+  <p>
+    In less than one year of operation — with no outside investment, no paid team, and no advertising
+    spend — we have generated <strong>60 million views</strong>, <strong>50 million likes</strong>,
+    grown <strong>100,000+ followers</strong>, and produced <strong>1,000+ high-performing videos</strong>
+    across our client portfolio.
+  </p>
+  <p>
+    We are not a commodity agency. We are a covenant-based creative partnership — the only firm in
+    our market that combines cinematic production quality, strategic brand architecture, and a
+    faith-rooted work ethic to build digital presences that don't just look good. They convert. They last.
+  </p>
+
+  <div class="callout">
+    <div class="callout-label">The Ask</div>
+    <p>We are raising <strong>$[X]</strong> to scale our delivery team, systematize our model, and expand
+    into a proprietary content platform serving the <strong>$1.2 trillion faith-and-purpose economy.</strong></p>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-cell">
+      <div class="stat-val">60M+</div>
+      <div class="stat-label">Total Views Generated</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">50M+</div>
+      <div class="stat-label">Total Likes Generated</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">100K+</div>
+      <div class="stat-label">Followers Grown</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-val">1,000+</div>
+      <div class="stat-label">High-Performing Videos</div>
+    </div>
+  </div>
+
+
+  <!-- ── 02. THE PROBLEM ── -->
+  <div class="section-block">
+    <div class="section-num">02 &mdash; The Problem</div>
+    <h2>Millions of Brands Have<br>Something Real to Say.<br><em>Nobody Can See Them.</em></h2>
+
+    <p>
+      The average small business owner spends $400–$800 per month on social media with no measurable
+      return. They either hire cheap agencies that treat them like a ticket number, try to manage
+      content themselves and burn out, or pay premium firms that don't understand their values or voice.
+    </p>
+    <p>
+      The result: businesses with real stories, real impact, and real transformation potential —
+      invisible online.
+    </p>
+    <p>
+      This is especially acute in the faith-driven and purpose-led entrepreneurship space, where
+      authenticity, integrity, and long-term trust are non-negotiable — but most agencies operate
+      on volume and short-term metrics with no alignment to the brand's core identity.
+    </p>
+
+    <div class="pull-quote">
+      <p>"There was a moment when I looked around and saw people with something real to say —
+      but no one could see them. They were invisible. And I knew that was something I could fix."</p>
+      <cite>Elijah Moore — Founder, Moore Covenant Productions</cite>
+    </div>
+  </div>
+
+
+  <!-- ── 03. THE SOLUTION ── -->
+  <div class="section-block">
+    <div class="section-num">03 &mdash; The Solution</div>
+    <h2>The <em>Covenant Model:</em><br>Strategy Before Camera.</h2>
+
+    <p>
+      Moore Covenant Productions operates on a fundamentally different premise: we don't sell content.
+      We build brand architecture. Before we touch a camera or build a content calendar, we do what
+      no one else does.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>What We Do</th>
+          <th>What It Produces</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>01</strong></td>
+          <td>Brand Story Audit</td>
+          <td>Values, voice, and vision alignment — what you're actually saying vs. what you think</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>02</strong></td>
+          <td>Narrative Architecture</td>
+          <td>Every piece of content gets a story spine — beginning, tension, resolution</td>
+        </tr>
+        <tr>
+          <td><strong>03</strong></td>
+          <td>Platform Mapping</td>
+          <td>Content built for where your client actually lives, not where trends are</td>
+        </tr>
+        <tr class="highlight">
+          <td><strong>04</strong></td>
+          <td>Identity Alignment</td>
+          <td>Visual language matched to brand — never to trend</td>
+        </tr>
+        <tr>
+          <td><strong>05</strong></td>
+          <td>Covenant Check</td>
+          <td>Does this serve your audience? Does it represent who you are? If not, we start over.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      This process produces content that doesn't just perform — it builds <strong>compounding brand
+      equity</strong>. Our clients don't just get views. They get clients.
+    </p>
+  </div>
+
+
+  <!-- ── 04. MARKET OPPORTUNITY ── -->
+  <div class="section-block page-break">
+    <div class="section-num">04 &mdash; Market Opportunity</div>
+    <h2>A Wide-Open Lane in a<br><em>Trillion-Dollar</em> Market.</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Market</th>
+          <th>2024 Size</th>
+          <th>Growth Rate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Social Media Management (Global)</td><td class="gold">$23.4B</td><td>23% CAGR</td></tr>
+        <tr class="highlight"><td>Digital Content Creation</td><td class="gold">$38.2B</td><td>17% CAGR</td></tr>
+        <tr><td>Creator Economy</td><td class="gold">$250B</td><td>22% CAGR</td></tr>
+        <tr class="highlight"><td>Faith &amp; Purpose Economy (US)</td><td class="gold">$1.2T</td><td>Steady</td></tr>
+        <tr><td>Online Business Coaching</td><td class="gold">$11.6B</td><td>15% CAGR</td></tr>
+      </tbody>
+    </table>
+
+    <div class="stat-row">
+      <div class="stat-cell">
+        <div class="stat-val">$50B+</div>
+        <div class="stat-label">Total Addressable Market</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val">$4.2B</div>
+        <div class="stat-label">Serviceable Market (SAM)</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val">$12M</div>
+        <div class="stat-label">Year 1–3 Target (SOM)</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val">35M</div>
+        <div class="stat-label">Christian Business Owners (US)</div>
+      </div>
+    </div>
+
+    <p>
+      The faith-driven entrepreneurship market is the most underserved segment in the creative agency
+      space. There are <strong>230 million Christians in the United States alone</strong> — an estimated
+      35 million of whom own or operate a business. Less than 3% have a professional, consistent
+      content strategy.
+    </p>
+    <p>
+      That is a wide-open market with extremely high lifetime client value and extremely low churn —
+      because covenant relationships don't end when the invoice does.
+    </p>
+  </div>
+
+
+  <!-- ── 05. COMPETITIVE ADVANTAGE ── -->
+  <div class="section-block">
+    <div class="section-num">05 &mdash; Competitive Advantage</div>
+    <h2>Our Moat Is Not a Tool.<br><em>It's a Philosophy.</em></h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Factor</th>
+          <th>Commodity Agency</th>
+          <th>Moore Covenant</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Client Relationship</td><td>Contract</td><td class="gold">Covenant</td></tr>
+        <tr class="highlight"><td>Work Standard</td><td>Client satisfaction</td><td class="gold">"As unto the Lord"</td></tr>
+        <tr><td>Content Approach</td><td>Template-driven</td><td class="gold">Story-architected</td></tr>
+        <tr class="highlight"><td>Niche Focus</td><td>Everyone</td><td class="gold">Purpose-led entrepreneurs</td></tr>
+        <tr><td>Founder Story</td><td>Generic</td><td class="gold">Built from rebuilding</td></tr>
+        <tr class="highlight"><td>Proven Results</td><td>Varied</td><td class="gold">60M+ views, $0 raised</td></tr>
+        <tr><td>Faith Alignment</td><td>None</td><td class="gold">Foundational</td></tr>
+      </tbody>
+    </table>
+
+    <p>
+      Agencies can copy our services. They cannot copy our covenant. They cannot copy 60 million
+      views built before raising a dollar. They cannot replicate a founder who was broken, rebuilt
+      by faith, and now builds other people's brands from that same posture.
+    </p>
+    <p>
+      The brands who find us don't just hire us. They trust us. And trust is the hardest thing
+      to manufacture in any market.
+    </p>
+  </div>
+
+
+  <!-- ── 06. BUSINESS MODEL ── -->
+  <div class="section-block page-break">
+    <div class="section-num">06 &mdash; Business Model</div>
+    <h2>Three Revenue Streams.<br>One <em>Recurring</em> Engine.</h2>
+
+    <h3>Tier 1 — Monthly Retainer (Recurring)</h3>
+    <table>
+      <thead>
+        <tr><th>Service</th><th>Starting Rate</th><th>Avg Monthly</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Social Media Management</td><td>$1,500/mo</td><td class="gold">$2,200/mo</td></tr>
+        <tr class="highlight"><td>Content Strategy Retainer</td><td>$1,000/mo</td><td class="gold">$1,600/mo</td></tr>
+        <tr><td>Growth Strategy Partnership</td><td>$1,200/mo</td><td class="gold">$1,800/mo</td></tr>
+        <tr class="total"><td><strong>Target: 50 Clients by End of Year 1</strong></td><td></td><td>$90K MRR / $1.08M ARR</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tier 2 — Project-Based (One-Time)</h3>
+    <table>
+      <thead>
+        <tr><th>Service</th><th>Starting Rate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Brand Identity Build</td><td class="gold">$3,500</td></tr>
+        <tr class="highlight"><td>Website Design &amp; Development</td><td class="gold">$4,000</td></tr>
+        <tr><td>Content Creation Package</td><td class="gold">$1,500</td></tr>
+        <tr class="highlight"><td>Brand Story Film</td><td class="gold">$2,500</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tier 3 — Education &amp; Mentorship (Scalable)</h3>
+    <table>
+      <thead>
+        <tr><th>Service</th><th>Rate</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1:1 Mentorship</td><td class="gold">$800/mo</td><td>High margin, low overhead</td></tr>
+        <tr class="highlight"><td>Group Coaching Program</td><td class="gold">$1,200/cohort</td><td>Scalable cohort model</td></tr>
+        <tr><td>The Covenant Content System (Phase 3)</td><td class="gold">$497–$997</td><td>Digital course + community</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ── 07. GO-TO-MARKET ── -->
+  <div class="section-block">
+    <div class="section-num">07 &mdash; Go-to-Market Strategy</div>
+    <h2>Three Phases.<br><em>One</em> Direction.</h2>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-label">
+          <div class="phase-num">Phase 01</div>
+          <div class="phase-time">Months 1–6</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Establish Authority</div>
+          <div class="phase-desc">
+            Organic content strategy built around founder story and proven results. January 2nd
+            testimony series. Voice memo content — unfiltered, unproduced, undeniable. Target:
+            Instagram, TikTok, LinkedIn, YouTube Shorts.
+            <br><strong>Goal: 10,000 engaged followers, 10 retainer clients.</strong>
+          </div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-label">
+          <div class="phase-num">Phase 02</div>
+          <div class="phase-time">Months 6–18</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Build the Machine</div>
+          <div class="phase-desc">
+            Hire first content producer and brand strategist. Launch referral program. Partner
+            with faith-based business communities and entrepreneur networks. Launch 1:1 mentorship
+            (waitlist already forming).
+            <br><strong>Goal: 30 retainer clients, $65K MRR.</strong>
+          </div>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-label">
+          <div class="phase-num">Phase 03</div>
+          <div class="phase-time">Months 18–36</div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-title">Scale the Platform</div>
+          <div class="phase-desc">
+            Launch <strong>The Covenant Content System</strong> — proprietary digital course and
+            community for faith-driven entrepreneurs. License the methodology. Build the community.
+            500 students at $997 = $498,500. Expand agency to 75 retainer clients.
+            <br><strong>Goal: $1.98M ARR from agency + $498K from platform.</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 08. FINANCIAL PROJECTIONS ── -->
+  <div class="section-block page-break">
+    <div class="section-num">08 &mdash; Financial Projections</div>
+    <h2>The Numbers.<br><em>Conservative</em> and Compounding.</h2>
+
+    <table>
+      <thead>
+        <tr><th>Revenue Stream</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Retainer Clients (avg $1,800/mo)</td><td>$432,000</td><td>$972,000</td><td>$1,620,000</td></tr>
+        <tr class="highlight"><td>Project-Based Work</td><td>$120,000</td><td>$240,000</td><td>$360,000</td></tr>
+        <tr><td>Mentorship / Coaching</td><td>$48,000</td><td>$120,000</td><td>$240,000</td></tr>
+        <tr class="highlight"><td>Digital Course / Platform</td><td>—</td><td>$250,000</td><td>$750,000</td></tr>
+        <tr class="total"><td><strong>Total Revenue</strong></td><td><strong>$600,000</strong></td><td><strong>$1,582,000</strong></td><td><strong>$2,970,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <thead>
+        <tr><th>Operating Expense</th><th>Monthly</th><th>Annual</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Salaries (2 FT hires)</td><td>$10,000</td><td>$120,000</td></tr>
+        <tr class="highlight"><td>Software &amp; Tools</td><td>$1,200</td><td>$14,400</td></tr>
+        <tr><td>Marketing &amp; Amplification</td><td>$2,000</td><td>$24,000</td></tr>
+        <tr class="highlight"><td>Equipment &amp; Production</td><td>$1,500</td><td>$18,000</td></tr>
+        <tr><td>Operations &amp; Legal</td><td>$800</td><td>$9,600</td></tr>
+        <tr class="total"><td><strong>Total OpEx</strong></td><td><strong>$15,500</strong></td><td><strong>$186,000</strong></td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Year 1 Summary</div>
+      <p><strong>Projected Net Profit: ~$414,000</strong> &nbsp;|&nbsp;
+      <strong>Gross Margin: 69%</strong> &nbsp;|&nbsp;
+      This is before founder salary and assumes conservative client acquisition.</p>
+    </div>
+  </div>
+
+
+  <!-- ── 09. USE OF FUNDS ── -->
+  <div class="section-block">
+    <div class="section-num">09 &mdash; Use of Funds</div>
+    <h2>Where the Capital <em>Goes.</em></h2>
+
+    <div class="funds-grid">
+      <div class="fund-cell">
+        <div class="fund-pct">40%</div>
+        <div class="fund-label">Team<br>(2 FT Hires)</div>
+      </div>
+      <div class="fund-cell">
+        <div class="fund-pct">20%</div>
+        <div class="fund-label">Marketing &amp;<br>Growth</div>
+      </div>
+      <div class="fund-cell">
+        <div class="fund-pct">20%</div>
+        <div class="fund-label">Technology &amp;<br>Platform Build</div>
+      </div>
+      <div class="fund-cell">
+        <div class="fund-pct">10%</div>
+        <div class="fund-label">Equipment &amp;<br>Production</div>
+      </div>
+      <div class="fund-cell">
+        <div class="fund-pct">10%</div>
+        <div class="fund-label">Operations<br>&amp; Legal</div>
+      </div>
+    </div>
+
+    <p>
+      The first two hires — a Content Producer and a Brand Strategist — allow Elijah to shift from
+      sole operator to company leader, unlocking the capacity to serve 3x the current client volume
+      without sacrificing the quality the Covenant Model demands.
+    </p>
+  </div>
+
+
+  <!-- ── 10. THE FOUNDER ── -->
+  <div class="section-block page-break">
+    <div class="section-num">10 &mdash; The Founder</div>
+    <h2>Built From Rebuilding.<br>Not From <em>Perfection.</em></h2>
+
+    <div class="founder-block">
+      <div class="founder-eyebrow">Elijah Moore &mdash; Founder &amp; Chief Strategist</div>
+      <div class="founder-name">Storyteller. Strategist.<br>Called, Not Stumbled.</div>
+      <p>
+        On <strong>January 2nd, 2025</strong>, after a season of fast living, wrong financial decisions,
+        and operating without alignment — God forced a stop. "I've been broke, made wrong financial
+        decisions, and lived a fast life. Even in my speed, God slowed me down."
+      </p>
+      <p>
+        What felt like failure became refinement. What felt like delay became direction. Moore Covenant
+        Productions was not built from a business plan. It was <strong>built from rebuilding.</strong>
+      </p>
+      <p>
+        In the months that followed, Elijah generated 60 million views for clients across beauty,
+        lifestyle, faith, and entrepreneurship. He grew six-figure followings. He built digital
+        presences that convert — not just impress. Before raising a single dollar.
+      </p>
+      <p>
+        He named the company after his family legacy (Moore) and the standard he holds himself to
+        (Covenant). He put his family's name on a promise.
+      </p>
+      <div class="founder-quote">
+        <p>"That is not a brand position. That is a belief system. And belief systems build companies that last."</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── 11. THE ASK ── -->
+  <div class="section-block">
+    <div class="section-num">11 &mdash; The Ask</div>
+    <h2>We're Ready to Scale.<br>We Need <em>One Partner</em> Who Believes.</h2>
+
+    <p>
+      We are raising <strong>$[Investment Amount]</strong> via
+      <strong>[SAFE / Convertible Note / Equity]</strong> at a
+      <strong>$[Pre-Money Valuation]</strong> pre-money valuation.
+    </p>
+
+    <p>This round will accomplish four things:</p>
+
+    <table>
+      <thead>
+        <tr><th>#</th><th>Milestone</th><th>Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Hire Content Producer + Brand Strategist</td><td>3x delivery capacity</td></tr>
+        <tr class="highlight"><td>2</td><td>Launch founder-led organic content strategy</td><td>10K+ followers, 10 retainer clients</td></tr>
+        <tr><td>3</td><td>Begin development of The Covenant Content System</td><td>Platform revenue by Month 18</td></tr>
+        <tr class="highlight"><td>4</td><td>Establish IP, contracts, and operational infrastructure</td><td>Investor-grade business foundation</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <div class="callout-label">Why Now</div>
+      <p>The creator economy is at an inflection point. Authenticity has beaten polish. Values have
+      beaten volume. Trust has beaten tactics. Moore Covenant Productions was built for exactly
+      this moment — with the results to prove it before the raise.</p>
+    </div>
+  </div>
+
+  <!-- ── SCRIPTURE ── -->
+  <div class="scripture">
+    <p>"For we are <span>God's handiwork</span>, created in Christ Jesus to do good works,
+    which God prepared in advance for us to do."</p>
+    <cite>Ephesians 2:10</cite>
+  </div>
+
+</div><!-- /page -->
+
+
+<!-- ══════════════════════════════════════════
+     CLOSING
+══════════════════════════════════════════ -->
+<div class="closing">
+  <div class="section-num" style="justify-content:center;color:var(--gold);margin-bottom:24px;">
+    Moore Covenant Productions
+  </div>
+  <h2>If You're Building Something<br><em>Worth Remembering —</em><br>We Should Talk.</h2>
+  <p>
+    Our work is selective. We choose partners we believe in,
+    so we can give them everything we have.
+  </p>
+  <p style="margin-top:8px;">
+    The covenant isn't just a name. It's a promise.<br>
+    And this is the moment we take it to scale.
+  </p>
+  <div class="contact">
+    Elijah Moore &nbsp;·&nbsp;
+    <a href="tel:3013776958">(301) 377-6958</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:elijahdouglasmoore@gmail.com">elijahdouglasmoore@gmail.com</a>
+    &nbsp;·&nbsp;
+    <a href="https://moorecovenantproductions.com">moorecovenantproductions.com</a>
+    <br><br>
+    This document is confidential and intended solely for the recipient.
+    Not for distribution.
+  </div>
+</div>
+
+</body>
+</html>
