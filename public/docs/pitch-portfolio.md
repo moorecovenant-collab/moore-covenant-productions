@@ -279,7 +279,7 @@ They cannot copy 60 million views built before raising a dollar. They cannot rep
 
 ## This Is Not a Bet. It Is a Bridge.
 
-**At 7% interest over 36 months:** Monthly payment ≈ **$1,081** — covered by a single retainer client.
+**At 7% interest over 36 months:** Monthly payment ~**$1,081** — covered by a single retainer client.
 
 At **20 retainer clients** — less than half our Year 1 target — monthly revenue exceeds **$36,000.**
 
