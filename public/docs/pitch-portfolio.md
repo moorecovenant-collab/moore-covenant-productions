@@ -162,29 +162,32 @@ They cannot copy 60 million views built before raising a dollar. They cannot rep
 ## Three Revenue Streams. One Recurring Engine.
 
 ### Tier 1 — Monthly Retainer (Core Revenue)
+*All packages require a minimum 3-month commitment.*
 
-| Service | Starting Rate | Avg Monthly |
-|---------|--------------|-------------|
-| Social Media Management | $1,500/mo | $2,200/mo |
-| Content Strategy Retainer | $1,000/mo | $1,600/mo |
-| Growth Strategy Partnership | $1,200/mo | $1,800/mo |
+| Package | Monthly Rate | Includes |
+|---------|-------------|---------|
+| **Starter** | $1,297/mo | 12 posts/month, content calendar, captions, hashtag strategy, analytics, monthly check-in |
+| **Growth** *(Most Popular)* | $2,750/mo | 20+ posts/month, Reels/TikTok/Shorts, community engagement, bi-weekly strategy calls |
+| **Scale** | $5,500/mo | Daily posting, full content production, paid ads, lead funnels, weekly calls, dedicated strategist |
+| **Annual Covenant Plan** | $10,000/year | 12 months dedicated management, quarterly strategy reviews, priority support |
 
-**Target: 50 Clients by End of Year 1 → $90K MRR / $1.08M ARR**
+**Target: 20 Clients by End of Year 1 → $55K+ MRR**
 
 ### Tier 2 — Project-Based (One-Time)
 
-| Service | Starting Rate |
-|---------|--------------|
-| Brand Identity Build | $3,500 |
-| Website Design & Development | $4,000 |
-| Content Creation Package | $1,500 |
-| Brand Story Film | $2,500 |
+| Service | Rate |
+|---------|------|
+| Website — Basic (3 pages) | $500 |
+| Website — Standard (6 pages, SEO-ready) | $1,500 |
+| Website — Premium (unlimited pages, brand identity, automations) | $3,500 |
+| Content Day (Full-day production shoot) | from $1,500/day |
+| Content Creation Package | from $800/month |
 
 ### Tier 3 — Education & Mentorship (Scalable)
 
 | Service | Rate | Notes |
 |---------|------|-------|
-| 1:1 Mentorship | $800/mo | High margin, low overhead |
+| 1:1 Mentorship | $297/session · from $1,497/mo | High margin, low overhead |
 | Group Coaching Program | $1,200/cohort | Scalable cohort model |
 | The Covenant Content System | $497–$997 | Digital course + community (Phase 3) |
 
@@ -227,11 +230,11 @@ They cannot copy 60 million views built before raising a dollar. They cannot rep
 
 | Revenue Stream | Year 1 | Year 2 | Year 3 |
 |----------------|--------|--------|--------|
-| Retainer Clients (avg $1,800/mo) | $432,000 | $972,000 | $1,620,000 |
-| Project-Based Work | $120,000 | $240,000 | $360,000 |
-| Mentorship / Coaching | $48,000 | $120,000 | $240,000 |
-| Digital Course / Platform | — | $250,000 | $750,000 |
-| **Total Revenue** | **$600,000** | **$1,582,000** | **$2,970,000** |
+| Retainer Clients (mix of Starter/Growth/Scale) | $432,000 | $990,000 | $1,650,000 |
+| Project-Based Work (websites, content days) | $120,000 | $240,000 | $360,000 |
+| Mentorship / Coaching ($297/session · $1,497/mo) | $48,000 | $120,000 | $240,000 |
+| Digital Course / Platform ($497–$997) | — | $250,000 | $750,000 |
+| **Total Revenue** | **$600,000** | **$1,600,000** | **$3,000,000** |
 
 | Operating Expense | Monthly | Annual |
 |------------------|---------|--------|

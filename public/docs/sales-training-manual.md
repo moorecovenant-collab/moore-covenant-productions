@@ -228,7 +228,47 @@ Then use the script.
 
 ---
 
-# PART 6 — QUICK REFERENCE CHEAT SHEET
+# PART 6 — PRICING REFERENCE
+*(Know this cold. Never guess a price on a call.)*
+
+### Monthly Retainer Packages — Min. 3-Month Commitment
+
+| Package | Price | Best For |
+|---------|-------|---------|
+| **Starter** | $1,297/mo | Businesses just getting consistent |
+| **Growth** *(Most Popular)* | $2,750/mo | Businesses ready to accelerate |
+| **Scale** | $5,500/mo | Businesses going all-in |
+| **Annual Covenant Plan** | $10,000/year | Long-term partnership, best value |
+
+### A La Carte / Add-On Services
+
+| Service | Rate |
+|---------|------|
+| Content Strategy | from $500/mo |
+| Content Creation | from $800/mo |
+| Growth Strategy | from $750/mo |
+| Content Day (full production shoot) | from $1,500/day |
+
+### One-Time Website Packages
+
+| Package | Price | Includes |
+|---------|-------|---------|
+| Basic | $500 | Up to 3 pages, mobile responsive, 7–10 day delivery |
+| Standard | $1,500 | Up to 6 pages, SEO-ready, social integrations, 14–21 days |
+| Premium | $3,500 | Unlimited pages, full brand identity, animations, automations, 30-day support |
+
+### Mentorship / Coaching
+
+| Option | Rate |
+|--------|------|
+| Single session | $297/session |
+| Monthly retainer | from $1,497/mo |
+
+**Never discount on the first call. If budget is a concern, move them to a smaller package — not a lower price.**
+
+---
+
+# PART 7 — QUICK REFERENCE CHEAT SHEET
 *(Print and keep on your desk)*
 
 | Stage | What To Say | What You're Doing |
