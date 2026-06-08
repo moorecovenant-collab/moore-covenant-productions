@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moore Covenant Productions — Pitch Portfolio 2025</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9972B;--gold-light:#E5C16A;--gold-dim:rgba(201,151,43,0.12);
+  --bg:#080808;--surface:#111111;--surface2:#181818;
+  --text:#F5F5F5;--muted:#888;--border:rgba(201,151,43,0.22);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
+#deck{position:relative;width:100vw;height:100vh;overflow:hidden}
+
+/* SLIDES */
+.slide{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;padding:60px 72px;
+  opacity:0;transform:translateY(28px);
+  transition:opacity .42s ease,transform .42s ease;pointer-events:none;
+}
+.slide.active{opacity:1;transform:translateY(0);pointer-events:all}
+.slide.exit{opacity:0;transform:translateY(-28px);transition:opacity .3s ease,transform .3s ease}
+
+/* TYPE */
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+h1{font-family:'Playfair Display',serif;font-size:clamp(38px,5.5vw,76px);font-weight:900;line-height:1.05}
+h2{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,52px);font-weight:700;line-height:1.15}
+h3{font-size:clamp(15px,1.8vw,20px);font-weight:600}
+p{font-size:clamp(13px,1.4vw,17px);line-height:1.7;color:var(--muted)}
+.gold{color:var(--gold)}.gl{color:var(--gold-light)}.white{color:var(--text)}
+.tc{text-align:center}.fw{width:100%}
+.rule{width:56px;height:3px;background:var(--gold);border-radius:2px;margin:20px 0}
+
+/* LAYOUT */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:100%}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;width:100%}
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;width:100%}
+.mw800{max-width:800px}.mw900{max-width:900px}.mw1000{max-width:1000px}.mw1100{max-width:1100px}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px}
+.cg{background:linear-gradient(135deg,rgba(201,151,43,.11),rgba(201,151,43,.04));border:1px solid rgba(201,151,43,.38);border-radius:12px;padding:26px}
+
+/* STAT */
+.sn{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,68px);font-weight:900;color:var(--gold);line-height:1}
+.sl{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);padding:10px 16px;border-bottom:1px solid var(--border);text-align:left}
+.tbl td{color:#ccc;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:14px}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr.hl td{color:var(--text);font-weight:600}.tbl tr.hl td:first-child{color:var(--gold-light)}
+.ck{color:var(--gold)}.cx{color:#484848}
+
+/* PRICING CARDS */
+.pc{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 24px;display:flex;flex-direction:column;gap:10px;text-align:center}
+.pc.feat{background:linear-gradient(145deg,#1a1600,#141414);border-color:var(--gold);border-width:1.5px;position:relative}
+.badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 13px;border-radius:20px;white-space:nowrap}
+.pname{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pprice{font-family:'Playfair Display',serif;font-size:40px;font-weight:900;color:var(--gold);line-height:1}
+.pper{font-size:13px;color:var(--muted);margin-top:3px}
+.pf{list-style:none;text-align:left;font-size:12px;color:#aaa;line-height:1.9;margin-top:8px}
+.pf li::before{content:'— ';color:var(--gold)}
+
+/* QUOTE */
+.bq{border-left:3px solid var(--gold);padding:16px 22px;background:var(--surface);border-radius:0 8px 8px 0;font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(14px,1.7vw,19px);color:#ddd;line-height:1.65}
+
+/* PHASE */
+.phase{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;position:relative;overflow:hidden}
+.pnum{font-family:'Playfair Display',serif;font-size:52px;font-weight:900;color:rgba(201,151,43,.12);line-height:1;position:absolute;top:12px;right:16px}
+
+/* BULLETS */
+.bl{list-style:none;display:flex;flex-direction:column;gap:11px;font-size:14px;color:#ccc}
+.bl li{display:flex;align-items:flex-start;gap:11px;line-height:1.5}
+.bl li::before{content:'◆';color:var(--gold);font-size:7px;margin-top:5px;flex-shrink:0}
+
+/* ALLOC */
+.alloc{display:flex;align-items:center;gap:16px;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.apct{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--gold);min-width:54px}
+
+/* METRIC PILL */
+.pill{display:inline-block;background:var(--gold-dim);border:1px solid var(--border);border-radius:8px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--gold-light)}
+
+/* SCRIPTURE */
+.scrip{font-family:'Playfair Display',serif;font-style:italic;font-size:clamp(13px,1.7vw,19px);color:var(--muted);text-align:center;line-height:1.75}
+
+/* BACKGROUNDS */
+#s1{background:radial-gradient(ellipse at 65% 50%,rgba(201,151,43,.07) 0%,transparent 68%),var(--bg)}
+#s4{background:radial-gradient(ellipse at 35% 55%,rgba(201,151,43,.06) 0%,transparent 65%),var(--bg)}
+#s15{background:radial-gradient(ellipse at 50% 50%,rgba(201,151,43,.09) 0%,transparent 68%),var(--bg)}
+
+/* NAV */
+#nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;background:rgba(18,18,18,.96);border:1px solid var(--border);border-radius:50px;padding:9px 20px;z-index:1000;backdrop-filter:blur(12px)}
+#nav button{background:none;border:none;color:var(--gold);font-size:17px;cursor:pointer;padding:3px 8px;border-radius:6px;transition:background .2s;font-family:'Inter',sans-serif}
+#nav button:hover{background:var(--gold-dim)}
+#nav button:disabled{color:#3a3a3a;cursor:default}
+#nav button:disabled:hover{background:none}
+#ctr{font-size:12px;font-weight:500;color:var(--muted);min-width:44px;text-align:center}
+.bmark{position:fixed;top:22px;left:28px;font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:var(--gold);opacity:.65;z-index:999;letter-spacing:.04em}
+#fshint{position:fixed;top:22px;right:28px;font-size:11px;color:#3a3a3a;font-family:'Inter',sans-serif;cursor:pointer;z-index:999;transition:color .2s}
+#fshint:hover{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="bmark">MCP</div>
+<div id="fshint" onclick="toggleFS()" title="Fullscreen">&#9974; Press F</div>
+
+<div id="deck">
+
+<!-- S01 COVER -->
+<div class="slide active" id="s1">
+  <div class="tc mw900" style="display:flex;flex-direction:column;align-items:center">
+    <div class="eyebrow">Confidential · 2025</div>
+    <h1>Moore Covenant<br><span class="gold">Productions</span></h1>
+    <div class="rule" style="margin:22px auto"></div>
+    <p style="font-size:19px;color:#ccc;font-style:italic;font-family:'Playfair Display',serif;margin-bottom:6px">"Your Story. Your Legacy. Your Covenant."</p>
+    <p style="font-size:14px;max-width:480px;margin-bottom:44px">Faith-driven creative media for the called — from story to strategy to scale.</p>
+    <div class="g4" style="max-width:780px">
+      <div class="card tc" style="padding:18px 14px"><div class="sn" style="font-size:34px">60M+</div><div class="sl">Views Generated</div></div>
+      <div class="card tc" style="padding:18px 14px"><div class="sn" style="font-size:34px">50M+</div><div class="sl">Likes Generated</div></div>
+      <div class="card tc" style="padding:18px 14px"><div class="sn" style="font-size:34px">100K+</div><div class="sl">Followers Grown</div></div>
+      <div class="card tc" style="padding:18px 14px"><div class="sn" style="font-size:34px;color:var(--text)">$0</div><div class="sl">Raised to Date</div></div>
+    </div>
+    <div style="margin-top:36px;font-size:13px;color:var(--muted)">Elijah Moore · Founder &amp; Chief Strategist · (301) 377-6958 · moorecovenantproductions.com</div>
+  </div>
+</div>
+
+<!-- S02 PROBLEM -->
+<div class="slide" id="s2">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">The Problem</div>
+    <h2 class="tc" style="margin-bottom:6px">Millions of brands have something <em>real</em> to say.</h2>
+    <p class="tc" style="font-size:17px;margin-bottom:38px">Nobody can see them.</p>
+    <div class="g3" style="margin-bottom:28px">
+      <div class="card" style="border-top:3px solid #2a2a2a">
+        <div style="font-size:26px;margin-bottom:10px">✗</div>
+        <h3 style="margin-bottom:7px;font-size:15px">Hire Cheap Agencies</h3>
+        <p style="font-size:13px">Treated like a ticket number. Cookie-cutter content. No strategy. No results.</p>
+      </div>
+      <div class="card" style="border-top:3px solid #2a2a2a">
+        <div style="font-size:26px;margin-bottom:10px">✗</div>
+        <h3 style="margin-bottom:7px;font-size:15px">Manage It Themselves</h3>
+        <p style="font-size:13px">Burnout within weeks. Inconsistent posting. Pulls them away from the actual work.</p>
+      </div>
+      <div class="card" style="border-top:3px solid #2a2a2a">
+        <div style="font-size:26px;margin-bottom:10px">✗</div>
+        <h3 style="margin-bottom:7px;font-size:15px">Pay Premium Firms</h3>
+        <p style="font-size:13px">No values alignment. No understanding of their mission. Just deliverables.</p>
+      </div>
+    </div>
+    <div class="bq mw800" style="margin:0 auto">The average small business owner spends <strong style="color:var(--gold-light)">$400–$800/month</strong> on social media with <strong style="color:var(--gold-light)">no measurable return</strong> — especially in the faith-driven space, where authenticity isn't optional.</div>
+  </div>
+</div>
+
+<!-- S03 SOLUTION -->
+<div class="slide" id="s3">
+  <div class="mw1100 fw">
+    <div class="eyebrow tc">The Solution</div>
+    <h2 class="tc" style="margin-bottom:6px">The Covenant Model</h2>
+    <p class="tc" style="margin-bottom:36px;font-style:italic;font-family:'Playfair Display',serif">Strategy before camera. Story before content.</p>
+    <div class="g5" style="margin-bottom:28px">
+      <div class="card tc" style="padding:22px 14px">
+        <div style="font-size:30px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;margin-bottom:8px">01</div>
+        <h3 style="font-size:13px;margin-bottom:6px">Brand Story Audit</h3>
+        <p style="font-size:12px">Values, voice &amp; vision — what you're actually saying vs. what you think</p>
+      </div>
+      <div class="card tc" style="padding:22px 14px">
+        <div style="font-size:30px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;margin-bottom:8px">02</div>
+        <h3 style="font-size:13px;margin-bottom:6px">Narrative Architecture</h3>
+        <p style="font-size:12px">Every piece of content gets a story spine — beginning, tension, resolution</p>
+      </div>
+      <div class="card tc" style="padding:22px 14px">
+        <div style="font-size:30px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;margin-bottom:8px">03</div>
+        <h3 style="font-size:13px;margin-bottom:6px">Platform Mapping</h3>
+        <p style="font-size:12px">Content built for where your client actually lives, not where trends are</p>
+      </div>
+      <div class="card tc" style="padding:22px 14px">
+        <div style="font-size:30px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;margin-bottom:8px">04</div>
+        <h3 style="font-size:13px;margin-bottom:6px">Identity Alignment</h3>
+        <p style="font-size:12px">Visual language matched to brand — never to trend</p>
+      </div>
+      <div class="cg tc" style="padding:22px 14px">
+        <div style="font-size:30px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;margin-bottom:8px">05</div>
+        <h3 style="font-size:13px;margin-bottom:6px;color:var(--gold-light)">Covenant Check</h3>
+        <p style="font-size:12px">Does this serve your audience? Does it represent who you are? If not — we start over.</p>
+      </div>
+    </div>
+    <p class="tc" style="font-size:15px;color:#aaa">Our clients don't just get views. <strong style="color:var(--text)">They get clients.</strong></p>
+  </div>
+</div>
+
+<!-- S04 TRACTION -->
+<div class="slide" id="s4">
+  <div class="mw1000 fw tc">
+    <div class="eyebrow">Proven Results</div>
+    <h2 style="margin-bottom:6px">The Results Are Already Here.</h2>
+    <p style="margin-bottom:44px;color:var(--gold);font-style:italic;font-family:'Playfair Display',serif;font-size:18px">Before a Single Dollar Was Raised.</p>
+    <div class="g5" style="margin-bottom:36px">
+      <div class="tc"><div class="sn">60M+</div><div style="width:28px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px"></div><div class="sl">Total Views</div></div>
+      <div class="tc"><div class="sn">50M+</div><div style="width:28px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px"></div><div class="sl">Total Likes</div></div>
+      <div class="tc"><div class="sn">100K+</div><div style="width:28px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px"></div><div class="sl">Followers Grown</div></div>
+      <div class="tc"><div class="sn">1,000+</div><div style="width:28px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px"></div><div class="sl">Videos Produced</div></div>
+      <div class="tc"><div class="sn" style="color:var(--text)">$0</div><div style="width:28px;height:2px;background:var(--gold);margin:12px auto;border-radius:2px"></div><div class="sl">Capital Raised</div></div>
+    </div>
+    <div class="cg" style="max-width:660px;margin:0 auto;padding:20px 28px">
+      <p style="font-size:14px;color:#ccc">Industries served: <span style="color:var(--gold-light)">Beauty · Lifestyle · Faith · Entrepreneurship · Coaching</span></p>
+      <p style="font-size:13px;margin-top:7px">This is not potential. This is proof of concept — built entirely on skill, strategy, and covenant.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S05 MARKET -->
+<div class="slide" id="s5">
+  <div class="mw1100 fw">
+    <div class="eyebrow tc">Market Opportunity</div>
+    <h2 class="tc" style="margin-bottom:36px">A Wide-Open Lane in a Trillion-Dollar Market.</h2>
+    <div class="g4" style="margin-bottom:28px">
+      <div class="card tc"><div class="sn" style="font-size:30px">$250B</div><div class="sl">Creator Economy</div><p style="font-size:12px;margin-top:7px">22% CAGR</p></div>
+      <div class="card tc"><div class="sn" style="font-size:30px">$38B</div><div class="sl">Content Creation</div><p style="font-size:12px;margin-top:7px">17% CAGR</p></div>
+      <div class="card tc"><div class="sn" style="font-size:30px">$23B</div><div class="sl">Social Media Mgmt</div><p style="font-size:12px;margin-top:7px">23% CAGR</p></div>
+      <div class="cg tc"><div class="sn" style="font-size:30px">$1.2T</div><div class="sl">Faith &amp; Purpose Economy</div><p style="font-size:12px;margin-top:7px;color:var(--gold-light)">OUR LANE</p></div>
+    </div>
+    <div class="cg" style="padding:26px 32px">
+      <div class="g3" style="gap:28px">
+        <div class="tc"><div class="sn" style="font-size:38px">230M</div><div class="sl">Christians in the US</div></div>
+        <div class="tc"><div class="sn" style="font-size:38px">35M</div><div class="sl">Who Own a Business</div></div>
+        <div class="tc"><div class="sn" style="font-size:38px">&lt;3%</div><div class="sl">Have a Pro Content Strategy</div></div>
+      </div>
+      <p class="tc" style="margin-top:18px;font-size:13px">Highest lifetime client value. Lowest churn. Built on trust, not transactions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S06 COMPETITIVE ADVANTAGE -->
+<div class="slide" id="s6">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">Competitive Advantage</div>
+    <h2 class="tc" style="margin-bottom:6px">Our Moat Is Not a Tool.</h2>
+    <p class="tc" style="margin-bottom:30px;font-style:italic;font-family:'Playfair Display',serif">It's a philosophy.</p>
+    <div class="card" style="padding:0;overflow:hidden">
+      <table class="tbl">
+        <thead><tr><th>Factor</th><th>Commodity Agency</th><th style="color:var(--gold-light)">Moore Covenant ✦</th></tr></thead>
+        <tbody>
+          <tr><td>Client Relationship</td><td class="cx">Contract</td><td class="ck">Covenant</td></tr>
+          <tr><td>Work Standard</td><td class="cx">Client satisfaction</td><td class="ck">"As unto the Lord"</td></tr>
+          <tr><td>Content Approach</td><td class="cx">Template-driven</td><td class="ck">Story-architected</td></tr>
+          <tr><td>Niche Focus</td><td class="cx">Everyone</td><td class="ck">Purpose-led entrepreneurs</td></tr>
+          <tr><td>Proven Results</td><td class="cx">Varied</td><td class="ck">60M+ views, $0 raised</td></tr>
+          <tr><td>Faith Alignment</td><td class="cx">None</td><td class="ck">Foundational</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tc" style="margin-top:22px;font-size:15px;color:#aaa">Agencies can copy our services. <strong style="color:var(--text)">They cannot copy our covenant.</strong></p>
+  </div>
+</div>
+
+<!-- S07 PRICING -->
+<div class="slide" id="s7">
+  <div class="mw1100 fw">
+    <div class="eyebrow tc">Services &amp; Pricing</div>
+    <h2 class="tc" style="margin-bottom:6px">Three Revenue Streams. One Recurring Engine.</h2>
+    <p class="tc" style="margin-bottom:32px">All retainer packages require a minimum 3-month commitment.</p>
+    <div class="g3" style="margin-bottom:20px">
+      <div class="pc">
+        <div class="pname">Starter</div>
+        <div class="pprice">$1,297</div><div class="pper">/month</div>
+        <ul class="pf"><li>12 posts/month</li><li>Content calendar</li><li>Captions + hashtag strategy</li><li>Analytics reporting</li><li>Monthly check-in call</li></ul>
+      </div>
+      <div class="pc feat">
+        <div class="badge">Most Popular</div>
+        <div class="pname" style="color:var(--gold-light)">Growth</div>
+        <div class="pprice">$2,750</div><div class="pper">/month</div>
+        <ul class="pf"><li>20+ posts/month</li><li>Reels / TikTok / Shorts</li><li>Community engagement</li><li>Growth optimization</li><li>Bi-weekly strategy calls</li></ul>
+      </div>
+      <div class="pc">
+        <div class="pname">Scale</div>
+        <div class="pprice">$5,500</div><div class="pper">/month</div>
+        <ul class="pf"><li>Daily posting</li><li>Full content production</li><li>Paid ads + lead funnels</li><li>Dedicated strategist</li><li>Weekly calls</li></ul>
+      </div>
+    </div>
+    <div class="cg tc" style="padding:14px 24px">
+      <span style="font-size:13px;color:#aaa">Annual Covenant Plan — </span>
+      <span style="font-size:17px;font-weight:700;color:var(--gold-light)">$10,000/year</span>
+      <span style="font-size:13px;color:#666"> · 12 months dedicated management + quarterly strategy reviews + priority support</span>
+    </div>
+  </div>
+</div>
+
+<!-- S08 GTM -->
+<div class="slide" id="s8">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">Go-To-Market Strategy</div>
+    <h2 class="tc" style="margin-bottom:36px">Three Phases. One Direction.</h2>
+    <div class="g3">
+      <div class="phase">
+        <div class="pnum">01</div>
+        <div class="eyebrow">Months 1–6</div>
+        <h3 style="font-size:17px;margin-bottom:10px">Establish Authority</h3>
+        <ul class="bl" style="font-size:13px"><li>Organic founder story content</li><li>January 2nd testimony series</li><li>Instagram · TikTok · LinkedIn · Shorts</li><li>Voice memo content — raw and real</li></ul>
+        <div class="pill" style="margin-top:14px;display:block;text-align:center">Goal: 10K followers · 10 clients</div>
+      </div>
+      <div class="phase">
+        <div class="pnum">02</div>
+        <div class="eyebrow">Months 6–18</div>
+        <h3 style="font-size:17px;margin-bottom:10px">Build the Machine</h3>
+        <ul class="bl" style="font-size:13px"><li>Hire Content Producer + Strategist</li><li>Launch referral program</li><li>Faith-based business partnerships</li><li>1:1 mentorship launch</li></ul>
+        <div class="pill" style="margin-top:14px;display:block;text-align:center">Goal: 30 clients · $65K MRR</div>
+      </div>
+      <div class="phase" style="border-color:rgba(201,151,43,.38)">
+        <div class="pnum" style="color:rgba(201,151,43,.25)">03</div>
+        <div class="eyebrow">Months 18–36</div>
+        <h3 style="font-size:17px;margin-bottom:10px;color:var(--gold-light)">Scale the Platform</h3>
+        <ul class="bl" style="font-size:13px"><li>Launch The Covenant Content System</li><li>500 students × $997 = $498,500</li><li>Expand to 75 retainer clients</li><li>License the methodology</li></ul>
+        <div class="pill" style="margin-top:14px;display:block;text-align:center;background:rgba(201,151,43,.18)">Goal: $2.5M+ ARR</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S09 FINANCIALS -->
+<div class="slide" id="s9">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">Financial Projections</div>
+    <h2 class="tc" style="margin-bottom:36px">The Numbers. Conservative and Compounding.</h2>
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:22px">
+      <table class="tbl">
+        <thead><tr><th>Revenue Stream</th><th>Year 1</th><th>Year 2</th><th>Year 3</th></tr></thead>
+        <tbody>
+          <tr><td>Retainer Clients (Starter / Growth / Scale)</td><td>$432,000</td><td>$990,000</td><td>$1,650,000</td></tr>
+          <tr><td>Project-Based Work (websites, content days)</td><td>$120,000</td><td>$240,000</td><td>$360,000</td></tr>
+          <tr><td>Mentorship &amp; Coaching</td><td>$48,000</td><td>$120,000</td><td>$240,000</td></tr>
+          <tr><td>Digital Course / Platform ($497–$997)</td><td style="color:#3a3a3a">—</td><td>$250,000</td><td>$750,000</td></tr>
+          <tr class="hl"><td>Total Revenue</td><td>$600,000</td><td>$1,600,000</td><td>$3,000,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="g3">
+      <div class="card tc"><div class="sn" style="font-size:30px">$600K</div><div class="sl">Year 1 Revenue</div></div>
+      <div class="card tc"><div class="sn" style="font-size:30px">69%</div><div class="sl">Gross Margin</div></div>
+      <div class="cg tc"><div class="sn" style="font-size:30px">$3M</div><div class="sl">Year 3 Target</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- S10 USE OF FUNDS -->
+<div class="slide" id="s10">
+  <div class="mw900 fw">
+    <div class="eyebrow tc">Use of Funds</div>
+    <h2 class="tc" style="margin-bottom:6px">$35,000 Business Line of Credit</h2>
+    <p class="tc" style="margin-bottom:32px">Every dollar has a specific purpose and a measurable return.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:26px">
+      <div class="alloc"><div class="apct">40%</div><div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Team — 2 Full-Time Hires</div><div style="font-size:12px;color:var(--muted)">Content Producer + Brand Strategist · Triples delivery capacity</div></div><div style="margin-left:auto;font-size:14px;font-weight:600;color:var(--gold-light)">$14,000</div></div>
+      <div class="alloc"><div class="apct">20%</div><div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Marketing &amp; Brand Amplification</div><div style="font-size:12px;color:var(--muted)">10K+ followers · 10 retainer clients</div></div><div style="margin-left:auto;font-size:14px;font-weight:600;color:var(--gold-light)">$7,000</div></div>
+      <div class="alloc"><div class="apct">20%</div><div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Equipment &amp; Production Upgrade</div><div style="font-size:12px;color:var(--muted)">Unlocks premium client tier</div></div><div style="margin-left:auto;font-size:14px;font-weight:600;color:var(--gold-light)">$7,000</div></div>
+      <div class="alloc"><div class="apct">20%</div><div><div style="font-weight:600;font-size:14px;margin-bottom:3px">Operations, Legal &amp; IP Protection</div><div style="font-size:12px;color:var(--muted)">Contracts, trademarks, infrastructure</div></div><div style="margin-left:auto;font-size:14px;font-weight:600;color:var(--gold-light)">$7,000</div></div>
+    </div>
+    <div class="cg tc" style="padding:15px 24px"><span style="font-size:14px;color:#aaa">Projected Year 1 Revenue: </span><span style="font-size:19px;font-weight:700;color:var(--gold-light)">$600,000</span><span style="font-size:14px;color:#666"> → </span><span style="font-size:17px;font-weight:700;color:var(--text)">17× return on the ask</span></div>
+  </div>
+</div>
+
+<!-- S11 REPAYMENT -->
+<div class="slide" id="s11">
+  <div class="mw800 fw tc">
+    <div class="eyebrow">The Investment Case</div>
+    <h2 style="margin-bottom:6px">This Is Not a Bet.</h2>
+    <h2 class="gold" style="margin-bottom:30px">It Is a Bridge.</h2>
+    <div class="g3" style="margin-bottom:28px">
+      <div class="card tc"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Monthly Payment</div><div class="sn" style="font-size:38px">~$1,081</div><div style="font-size:12px;color:#666;margin-top:7px">7% over 36 months</div></div>
+      <div class="card tc"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Covered By</div><div class="sn" style="font-size:38px">1</div><div style="font-size:12px;color:#666;margin-top:7px">Single retainer client</div></div>
+      <div class="cg tc"><div style="font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px">Year 1 Return</div><div class="sn" style="font-size:38px">17×</div><div style="font-size:12px;color:#666;margin-top:7px">$600K on $35K ask</div></div>
+    </div>
+    <div class="bq" style="margin-bottom:18px">The $35,000 line is less than <strong style="color:var(--gold-light)">6% of projected Year 1 annual revenue</strong> — with full repayment capability within the first operating year.</div>
+    <p style="font-size:13px">At 20 retainer clients — less than half our Year 1 target — monthly revenue exceeds <strong style="color:var(--text)">$36,000</strong>. The payment is noise.</p>
+  </div>
+</div>
+
+<!-- S12 FOUNDER -->
+<div class="slide" id="s12">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">The Founder</div>
+    <h2 class="tc" style="margin-bottom:6px">Built From Rebuilding.</h2>
+    <p class="tc" style="margin-bottom:34px;font-style:italic;font-family:'Playfair Display',serif">Not from perfection.</p>
+    <div class="g2" style="gap:30px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="bq">"I've been broke, made wrong financial decisions, and lived a fast life. Even in my speed, God slowed me down."</div>
+        <div class="bq">"I named the company after my family legacy and the standard I hold myself to. I put my family's name on a promise."</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <h3 style="font-size:20px;color:var(--gold-light)">Elijah Moore</h3>
+        <p style="font-size:12px;font-style:italic">Founder &amp; Chief Strategist · (301) 377-6958</p>
+        <ul class="bl" style="font-size:13px">
+          <li>January 2nd, 2025 — God forced a stop. Fast living, wrong decisions, operating without alignment.</li>
+          <li>What felt like failure became refinement. What felt like delay became direction.</li>
+          <li>In the months that followed: 60M views, 6-figure followings, converting brand presences — before raising a dollar.</li>
+          <li>MCP was not built from a business plan. It was built from rebuilding.</li>
+        </ul>
+        <div class="cg" style="padding:14px 18px;margin-top:4px"><p style="font-size:13px;color:#ccc">That is not a brand position. That is a belief system. And belief systems build companies that last.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S13 WHY NOW -->
+<div class="slide" id="s13">
+  <div class="mw900 fw">
+    <div class="eyebrow tc">Urgency</div>
+    <h2 class="tc" style="margin-bottom:6px">The Window Is Open.</h2>
+    <h2 class="tc gold" style="margin-bottom:36px">But It Won't Stay Open.</h2>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start">
+        <div style="font-size:26px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;flex-shrink:0;line-height:1;padding-top:2px">01</div>
+        <div><h3 style="font-size:16px;margin-bottom:5px">Short-form video has permanently shifted discovery</h3><p style="font-size:13px">Brands that don't adapt to Reels/TikTok/Shorts lose up to 45% of potential customers to active competitors — every month they wait.</p></div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start">
+        <div style="font-size:26px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;flex-shrink:0;line-height:1;padding-top:2px">02</div>
+        <div><h3 style="font-size:16px;margin-bottom:5px">The faith-driven entrepreneurship market is growing — and almost entirely unserved</h3><p style="font-size:13px">No dominant covenant-based creative agency exists. First-mover advantage is durable — but only if you move now.</p></div>
+      </div>
+      <div class="card" style="display:flex;gap:18px;align-items:flex-start">
+        <div style="font-size:26px;font-family:'Playfair Display',serif;color:var(--gold);font-weight:900;flex-shrink:0;line-height:1;padding-top:2px">03</div>
+        <div><h3 style="font-size:16px;margin-bottom:5px">The results are proven. Infrastructure is the only thing missing.</h3><p style="font-size:13px">We're not asking you to bet on an idea. We're asking you to fund a vehicle that's already moving — so it can carry more passengers.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S14 SOCIAL PROOF -->
+<div class="slide" id="s14">
+  <div class="mw1000 fw">
+    <div class="eyebrow tc">Client Impact</div>
+    <h2 class="tc" style="margin-bottom:6px">The Story Is Already Being Told.</h2>
+    <p class="tc" style="margin-bottom:34px">Every number on this deck has a face behind it.</p>
+    <div class="g3" style="margin-bottom:22px">
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div style="font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Client Testimonial</div>
+        <p style="font-size:14px;font-style:italic;color:#ccc;line-height:1.7">"Replace this with your client's actual quote — what changed for their business, what the results were, how it felt."</p>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted)">— Client Name, Industry</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div style="font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Client Testimonial</div>
+        <p style="font-size:14px;font-style:italic;color:#ccc;line-height:1.7">"Replace this with your client's actual quote — what changed for their business, what the results were, how it felt."</p>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted)">— Client Name, Industry</div>
+      </div>
+      <div class="card" style="border-left:3px solid var(--gold)">
+        <div style="font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Client Testimonial</div>
+        <p style="font-size:14px;font-style:italic;color:#ccc;line-height:1.7">"Replace this with your client's actual quote — what changed for their business, what the results were, how it felt."</p>
+        <div style="margin-top:14px;font-size:12px;color:var(--muted)">— Client Name, Industry</div>
+      </div>
+    </div>
+    <div class="cg tc" style="padding:14px 20px"><p style="font-size:13px">Swap the placeholders above with real quotes and screenshots before presenting. That slide becomes the most powerful one in the deck.</p></div>
+  </div>
+</div>
+
+<!-- S15 THE ASK -->
+<div class="slide" id="s15">
+  <div class="mw800 fw tc" style="display:flex;flex-direction:column;align-items:center">
+    <div class="eyebrow">The Ask</div>
+    <h2 style="margin-bottom:10px">If You're Building Something Worth Remembering —</h2>
+    <h1 class="gold" style="font-size:clamp(30px,5vw,62px);margin-bottom:30px">We Should Talk.</h1>
+    <div class="cg" style="padding:22px 36px;margin-bottom:28px;text-align:left;max-width:580px;width:100%">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">The Ask</div>
+      <div style="font-size:26px;font-weight:700;color:var(--gold-light);margin-bottom:7px">$35,000 Business Line of Credit</div>
+      <p style="font-size:13px;margin-bottom:16px">Deployed across team, equipment, marketing, and operations. Full repayment capability within Year 1.</p>
+      <div style="display:flex;gap:22px">
+        <div><div class="sn" style="font-size:26px">17×</div><div class="sl">Year 1 ROI</div></div>
+        <div><div class="sn" style="font-size:26px">69%</div><div class="sl">Gross Margin</div></div>
+        <div><div class="sn" style="font-size:26px">$0</div><div class="sl">Raised to Date</div></div>
+      </div>
+    </div>
+    <div class="scrip" style="margin-bottom:24px">"For we are God's handiwork, created in Christ Jesus to do good works,<br>which God prepared in advance for us to do." — Ephesians 2:10</div>
+    <div style="font-size:13px;color:var(--muted);line-height:2.1"><strong style="color:var(--text)">Elijah Moore</strong> · Founder &amp; Chief Strategist<br>(301) 377-6958 · elijahdouglasmoore@gmail.com · moorecovenantproductions.com</div>
+  </div>
+</div>
+
+</div><!-- /deck -->
+
+<div id="nav">
+  <button id="pb" onclick="go(-1)" disabled>&#8592;</button>
+  <span id="ctr">1 / 15</span>
+  <button id="nb" onclick="go(1)">&#8594;</button>
+</div>
+
+<script>
+let cur=0;
+const slides=document.querySelectorAll('.slide');
+const total=slides.length;
+
+function go(d){
+  const n=cur+d;
+  if(n<0||n>=total)return;
+  const prev=slides[cur];
+  prev.classList.remove('active');
+  prev.classList.add('exit');
+  setTimeout(()=>prev.classList.remove('exit'),400);
+  cur=n;
+  slides[cur].classList.add('active');
+  document.getElementById('ctr').textContent=(cur+1)+' / '+total;
+  document.getElementById('pb').disabled=cur===0;
+  document.getElementById('nb').disabled=cur===total-1;
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1);}
+  if(e.key==='ArrowLeft'){e.preventDefault();go(-1);}
+  if(e.key==='f'||e.key==='F')toggleFS();
+});
+
+let sx=0;
+document.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>50)go(dx<0?1:-1);});
+
+function toggleFS(){
+  if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{});
+  else document.exitFullscreen();
+}
+</script>
+</body>
+</html>
