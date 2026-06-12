@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moore Covenant Productions — Logo Preview</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #888; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; gap: 40px; padding: 60px 20px; }
+    h1 { color: white; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; }
+    .row { display: flex; gap: 40px; align-items: center; flex-wrap: wrap; justify-content: center; }
+    .card { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+    .label { color: white; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; opacity: 0.8; }
+    .size-sm img { width: 100px; height: 100px; }
+    .size-md img { width: 200px; height: 200px; }
+    .size-lg img { width: 400px; height: 400px; }
+    .on-dark { background: #111; padding: 20px; border-radius: 8px; }
+    .on-light { background: #f0f0f0; padding: 20px; border-radius: 8px; }
+    .on-thumb { background: url('DSC00062.jpg') center/cover; width: 400px; height: 225px; display: flex; align-items: flex-end; justify-content: flex-end; padding: 12px; border-radius: 8px; }
+  </style>
+</head>
+<body>
+  <h1>Moore Covenant Productions · Logo Preview</h1>
+
+  <div class="row">
+    <div class="card">
+      <div class="label">Light · 400px</div>
+      <div class="on-dark size-lg">
+        <img src="logo-mcp.svg" alt="MCP Logo Light"/>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Dark · 400px</div>
+      <div class="on-light size-lg">
+        <img src="logo-mcp-dark.svg" alt="MCP Logo Dark"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <div class="label">Thumbnail corner · light</div>
+      <div class="on-thumb">
+        <img src="logo-mcp.svg" width="80" height="80" alt="watermark"/>
+      </div>
+    </div>
+    <div class="card">
+      <div class="label">Thumbnail corner · dark</div>
+      <div class="on-thumb">
+        <img src="logo-mcp-dark.svg" width="80" height="80" alt="watermark"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <div class="label">Small (100px) · light</div>
+      <div class="on-dark size-sm"><img src="logo-mcp.svg" alt=""/></div>
+    </div>
+    <div class="card">
+      <div class="label">Small (100px) · dark</div>
+      <div class="on-light size-sm"><img src="logo-mcp-dark.svg" alt=""/></div>
+    </div>
+    <div class="card">
+      <div class="label">Medium (200px) · light</div>
+      <div class="on-dark size-md"><img src="logo-mcp.svg" alt=""/></div>
+    </div>
+    <div class="card">
+      <div class="label">Medium (200px) · dark</div>
+      <div class="on-light size-md"><img src="logo-mcp-dark.svg" alt=""/></div>
+    </div>
+  </div>
+</body>
+</html>
