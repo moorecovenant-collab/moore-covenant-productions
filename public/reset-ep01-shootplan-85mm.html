@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RESET · EP01 · SHOOT DAY PLAN · 85MM</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
+
+  :root {
+    --gold: #c9a84c;
+    --gold-dim: #8a6f30;
+    --bg: #0a0a0a;
+    --bg-card: #111111;
+    --bg-phase: #1a1a1a;
+    --text: #e8e8e8;
+    --text-dim: #888;
+    --border: #2a2a2a;
+    --red-dark: #5c1f1f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 32px;
+  }
+
+  /* ── HEADER ── */
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 52px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  h1 strong { font-weight: 600; }
+  h1 em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 54px;
+  }
+
+  .intro {
+    color: var(--text-dim);
+    font-style: italic;
+    margin: 20px 0 40px;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  .gear-badge {
+    display: inline-block;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    margin-bottom: 40px;
+  }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+  /* ── CLOCK BANNER ── */
+  .clock-banner {
+    background: var(--red-dark);
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+  .clock-banner p {
+    font-style: italic;
+    font-size: 14px;
+    color: #e8d0d0;
+  }
+  .clock-banner p span { color: #f5a0a0; }
+  .clock-num {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-align: right;
+  }
+  .clock-num small {
+    display: block;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* ── PHASE HEADER ── */
+  .phase-header {
+    border-left: 3px solid var(--gold);
+    padding: 16px 20px;
+    background: var(--bg-phase);
+    margin-bottom: 32px;
+  }
+  .phase-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 6px;
+  }
+  .phase-header h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .phase-meta {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* ── SHOT CARD ── */
+  .shot {
+    border-left: 2px solid var(--gold-dim);
+    padding: 0 0 0 20px;
+    margin-bottom: 40px;
+  }
+
+  .shot-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .tag {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+    color: var(--text-dim);
+  }
+  .tag.shot-num { color: var(--gold); border-color: var(--gold-dim); }
+  .tag.pivot { background: #c9a84c22; border-color: var(--gold); color: var(--gold); }
+  .timecode {
+    margin-left: auto;
+    font-size: 11px;
+    font-family: monospace;
+    border: 1px solid var(--gold-dim);
+    padding: 3px 10px;
+    color: var(--gold);
+  }
+
+  .shot h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .shot p { color: var(--text-dim); margin-bottom: 8px; }
+  .shot p strong { color: var(--gold); font-weight: 500; }
+
+  .highlight { color: var(--gold) !important; }
+  .alert { color: #e07070 !important; }
+
+  /* ── 85MM NOTE ── */
+  .lens-note {
+    background: #0d1a0d;
+    border-left: 2px solid #3a6b3a;
+    padding: 10px 14px;
+    margin: 10px 0;
+    color: #8fbe8f;
+    font-size: 12px;
+  }
+  .lens-note strong { color: #a8d4a8; }
+
+  /* ── NARRATIVE NOTE ── */
+  .note-block {
+    background: #0f0f0f;
+    border-left: 2px solid var(--border);
+    padding: 10px 14px;
+    margin: 10px 0;
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  .note-block strong { color: #aaa; font-style: normal; font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; }
+
+  /* ── VO / LIVE LINE ── */
+  .vo {
+    border-left: 2px solid var(--border);
+    padding: 8px 14px;
+    margin: 10px 0;
+    font-style: italic;
+    color: #999;
+    font-size: 12px;
+  }
+
+  /* ── CAM SPECS ── */
+  .cam-specs {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 16px;
+    margin: 14px 0;
+  }
+  .cam-label {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 12px;
+  }
+  .specs-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+  .spec { text-align: center; }
+  .spec-key {
+    font-size: 8px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .spec-val {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 2px;
+  }
+  .spec-note {
+    font-size: 8px;
+    color: var(--text-dim);
+    text-transform: lowercase;
+  }
+
+  /* ── PHONE GIMBAL SPECS ── */
+  .phone-specs {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 16px;
+    margin: 14px 0;
+  }
+  .phone-specs .specs-grid { grid-template-columns: repeat(5, 1fr); }
+
+  /* ── GLOBAL SETTINGS TABLE ── */
+  .settings-table {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    width: 100%;
+    margin: 24px 0;
+  }
+  .settings-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .settings-table tr:last-child td { border-bottom: none; }
+  .settings-table .key {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 160px;
+    white-space: nowrap;
+  }
+  .settings-table .val { color: var(--gold); font-size: 12px; }
+  .settings-table .desc { color: var(--text-dim); font-size: 12px; }
+
+  /* ── CLOSE BLOCK ── */
+  .close-block {
+    border: 1px solid var(--gold-dim);
+    padding: 32px;
+    text-align: center;
+    margin: 48px 0 32px;
+  }
+  .close-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .close-block p { color: var(--text-dim); font-style: italic; }
+
+  .footer {
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #333;
+    text-align: center;
+    margin-top: 48px;
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: #fff; color: #111; padding: 20px; }
+    :root {
+      --gold: #7a5c10;
+      --gold-dim: #9a7a30;
+      --bg: #fff;
+      --bg-card: #f5f5f5;
+      --bg-phase: #f0f0f0;
+      --text: #111;
+      --text-dim: #555;
+      --border: #ccc;
+      --red-dark: #f5e0e0;
+    }
+    .clock-banner p { color: #333; }
+    .clock-banner p span { color: #900; }
+    .lens-note { background: #f0f7f0; border-color: #4a8a4a; color: #2a5a2a; }
+    .lens-note strong { color: #1a4a1a; }
+    .note-block { background: #f5f5f5; }
+    .vo { color: #555; }
+    .close-block { border-color: #7a5c10; }
+    h1 em { color: #7a5c10; }
+    .spec-val { color: #7a5c10; }
+    .cam-label { color: #7a5c10; }
+    .phase-label { color: #7a5c10; }
+    .tag.shot-num { color: #7a5c10; border-color: #9a7a30; }
+    .timecode { color: #7a5c10; border-color: #9a7a30; }
+    .shot { border-color: #9a7a30; }
+    .phase-header { border-color: #7a5c10; }
+    .gear-badge { border-color: #9a7a30; color: #7a5c10; }
+    .footer { color: #aaa; }
+  }
+</style>
+</head>
+<body>
+
+<p class="eyebrow">Moore Covenant Productions · Reset · EP01</p>
+
+<h1>
+  <strong>9 shots.</strong><br>
+  <strong>2 phases.</strong><br>
+  <em>One film.</em>
+</h1>
+
+<p class="intro">
+  The consolidated shoot plan for EP01 — updated for the 85mm lens, apartment room.
+  Phase 1 captures the window-lit shots while you still have natural light.
+  Phase 2 captures everything else after dark using the accent light behind the bed and the softbox.
+  Final runtime: 4:12.
+</p>
+
+<div class="gear-badge">85mm · a7C · Accent + Softbox · Apartment Room</div>
+
+<hr>
+
+<!-- CLOCK -->
+<div class="clock-banner">
+  <p><span>Window light dying.</span> Phase 1 is time-locked.<br>Move now — phase 2 can wait until full dark.</p>
+  <div class="clock-num">30<small>min left</small></div>
+</div>
+
+<!-- ════════════════════════════════ PHASE 1 ════════════════════════════════ -->
+<div class="phase-header">
+  <p class="phase-label">Phase 1 · Time-Critical</p>
+  <h2>Window-lit shots. Shoot first.</h2>
+  <p class="phase-meta">~ 30 minutes · 2 shots · Couch → Bedroom doorway · Natural light</p>
+</div>
+
+<!-- SHOT 01 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 01</span>
+    <span class="tag">Window Light</span>
+    <span class="tag">20 sec</span>
+    <span class="tag">Living Room</span>
+    <span class="timecode">0:00 – 0:20</span>
+  </div>
+
+  <h3>OPEN — Journal on the couch.</h3>
+
+  <p><strong>Setup:</strong> Sit on the couch. Journal in your lap. Window to your side, soft fading window light hitting the page. a7C on tripod — <span class="highlight">back the tripod to the far wall</span>, 85mm needs 8–10 ft for a natural couch shot. Kill every other light in the living room.</p>
+
+  <p><strong>Action:</strong> Pen lands on the page. Write the word <em>"Reset"</em> slowly. Hold 3 seconds after the word lands.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> The compression will flatten the background so the window light becomes the whole world behind you. Keep focus manually on the journal page. At this distance, shallow DOF means the page is sharp and the room falls off beautifully.
+  </div>
+
+  <div class="note-block">
+    <strong>Continuity note:</strong> Same couch, same window, same journal as STILL. The visual rhyme connects the two films — different energy, same anchor.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">800</p><p class="spec-note">natural</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">4800K</p><p class="spec-note">daylight</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">MF</p><p class="spec-note">on page</p></div>
+    </div>
+  </div>
+
+  <p style="font-size:11px; color:#555; font-style:italic;">Opening frame · before voiceover begins</p>
+</div>
+
+<!-- SHOT 04 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 04</span>
+    <span class="tag">Window + Accent</span>
+    <span class="tag">30 sec</span>
+    <span class="tag">Living Room → Bedroom</span>
+    <span class="timecode">1:10 – 1:40</span>
+  </div>
+
+  <h3>THE ROOM — From the couch to the bedroom doorway.</h3>
+
+  <p><strong>Setup:</strong> <span class="highlight">Phone gimbal.</span> Start from the hallway side of the bedroom door — so the viewer feels you've come from somewhere else. Dim ambient light still bleeding in. Optional: turn on the accent light behind the bed early so it's glowing warm in the back of the frame as you push in.</p>
+
+  <p><strong>Action:</strong> Slow steady forward walk into the bedroom. End on the bed or the chair. Shoot while there's still enough ambient light to see the whole room — once it's pitch black this shot dies.</p>
+
+  <div class="lens-note">
+    <strong>Phone gimbal shot — 85mm not used here.</strong> The wide phone lens is intentional: the walk needs spatial context. The 85mm returns for all Phase 2 bed shots.
+  </div>
+
+  <div class="note-block">
+    <strong>Narrative note:</strong> The journey is implied — couch (public, where you still have light) to bedroom (private, where you give up). The viewer travels with you without needing to see the hallway.
+  </div>
+
+  <div class="phone-specs">
+    <p class="cam-label">Phone Gimbal</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">Mode</p><p class="spec-val" style="font-size:12px;">Cinematic</p><p class="spec-note">4K 24fps</p></div>
+      <div class="spec"><p class="spec-key">Exposure</p><p class="spec-val">−0.7</p><p class="spec-note">protect highlights</p></div>
+      <div class="spec"><p class="spec-key">WB Lock</p><p class="spec-val">3800K</p><p class="spec-note">mixed</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val" style="font-size:12px;">Lock</p><p class="spec-note">fixed at bed</p></div>
+      <div class="spec"><p class="spec-key">Speed</p><p class="spec-val" style="font-size:12px;">SLOW</p><p class="spec-note">10 steps · 30s</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "I didn't think I would be here. Not here… in this room, in this house."</div>
+</div>
+
+<hr>
+
+<!-- ════════════════════════════════ PHASE 2 ════════════════════════════════ -->
+<div class="phase-header">
+  <p class="phase-label">Phase 2 · After Dark</p>
+  <h2>Accent + softbox. 7 shots. Same setup reused.</h2>
+  <p class="phase-meta">~ 2–3 hours · No time pressure · Set it once, don't touch it</p>
+</div>
+
+<div class="lens-note" style="margin-bottom:28px;">
+  <strong>85mm room setup for all Phase 2 shots:</strong> Tripod at the far wall or in the doorway. Mark your tripod position once and don't move it between shots — just adjust distance for tight vs. wide. At f/2.0 you need ~8–10 ft for chest-up, ~6–7 ft for tight face. The accent rim on your shoulder and ear will glow harder at 85mm than any wider lens. This is the right tool.
+</div>
+
+<!-- SHOT 02 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 02</span>
+    <span class="tag">Accent + Softbox</span>
+    <span class="tag">25 sec</span>
+    <span class="timecode">0:20 – 0:45</span>
+  </div>
+
+  <h3>PORTRAIT — Sitting in the warm rim.</h3>
+
+  <p><strong>Setup:</strong> Sit on the bed leaning back. Accent light behind, pointed up at the wall. Softbox to your side, dim or bounced. Camera 8–10 feet away, slightly below eye level.</p>
+
+  <p><strong>Action:</strong> Face the camera. Don't perform. Half your face in soft fill, warm rim from the accent on your shoulder and hair. Hold 8–10 seconds before any movement.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> At 8–10 ft, f/2.0, the background falls completely off into warm bokeh. The accent rim will separate your shoulder from the dark in a way a 35mm can't touch.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">2000</p><p class="spec-note">low light</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3200K</p><p class="spec-note">warm</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">AF</p><p class="spec-note">face eye</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "I am giving up on myself… I've lost my touch. I feel ashamed in myself."</div>
+</div>
+
+<!-- SHOT 03 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 03</span>
+    <span class="tag">Accent + Softbox</span>
+    <span class="tag">25 sec</span>
+    <span class="timecode">0:45 – 1:10</span>
+  </div>
+
+  <h3>THIRST — Tight on the face.</h3>
+
+  <p><strong>Setup:</strong> Same lighting. <span class="highlight">Push the tripod closer — 6 to 7 feet.</span> Tight on your face. The accent rim now glows on the back edge of your face and ear.</p>
+
+  <p><strong>Action:</strong> Eyes up slightly, just past the lens. Waiting for something to answer. Hold 6–8 seconds.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> This is where the 85mm wins. At 6–7 ft you get a true tight portrait — eyes, nose, jaw — without the distortion a wider lens creates up close. The ear rim will cut like a blade. This is the frame.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">2000</p><p class="spec-note">match S02</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3200K</p><p class="spec-note">warm</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">AF</p><p class="spec-note">eye lock</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "I'm just thirsty."</div>
+</div>
+
+<!-- SHOT 05 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 05</span>
+    <span class="tag">Accent Reflected</span>
+    <span class="tag">35 sec</span>
+    <span class="timecode">1:40 – 2:15</span>
+  </div>
+
+  <h3>REFLECTION — Watching yourself.</h3>
+
+  <p><strong>Setup:</strong> Use a closed laptop, your room window after dark, or a dresser mirror. Accent light reflects in the surface as a soft warm glow. Camera behind you, slightly off-center, capturing your face in the reflection without seeing itself.</p>
+
+  <p><strong>Action:</strong> Sit or stand looking at the surface. Not posing. Just watching. The conversation you have with yourself when no one else is in the room.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> Focus manually on the reflection surface — the 85mm minimum focus distance is ~2.8 ft so you have room. The compression makes the reflection feel like a second world. The accent glow in the surface doubles as a motivated light source behind your reflected face.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">2500</p><p class="spec-note">darker</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3200K</p><p class="spec-note">warm</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">MF</p><p class="spec-note">on reflection</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "A version of manhood that felt strong. But strength looks different when the noise fades."</div>
+</div>
+
+<!-- SHOT 06 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 06</span>
+    <span class="tag">Screen + Accent</span>
+    <span class="tag">35 sec</span>
+    <span class="timecode">2:15 – 2:50</span>
+  </div>
+
+  <h3>EMAIL — Between two lights. Cold and warm.</h3>
+
+  <p><strong>Setup:</strong> Sit on the bed with the laptop in front of you. Laptop screen (cool blue) lights your face from below. Accent (warm orange) glows behind. <span class="alert">Kill the softbox for this one.</span> Just the two motivated sources.</p>
+
+  <p><strong>Action:</strong> Reading the screen. Let your face react or don't. The contrast between cool blue and warm orange is the entire shot.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> At 8–9 ft the laptop screen will light your face without the camera being in the reflection. The 85mm keeps you isolated from the dark room — all the audience sees is the two competing colors on your face.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">1600</p><p class="spec-note">screen lit</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">4000K</p><p class="spec-note">let mix</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">AF</p><p class="spec-note">face eye</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "When the job doesn't come. When the email doesn't say yes."</div>
+</div>
+
+<!-- SHOT 07 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 07</span>
+    <span class="tag">Accent + Softbox</span>
+    <span class="tag pivot">Pivot · 35 sec</span>
+    <span class="timecode">2:50 – 3:25</span>
+  </div>
+
+  <h3>STAYING — Direct to camera. The film's center.</h3>
+
+  <p><strong>Setup:</strong> Same as Shot 02. Sit on the bed. Accent rim behind. Softbox feathered. <span class="highlight">Most important shot of the film.</span></p>
+
+  <p><strong>Action:</strong> Look straight into the lens. Two-second silence first. Then deliver the line live — not voiceover. Hold 4 seconds after the line lands.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> The 85mm at 8 ft makes this a true connection shot — the compression removes the room and leaves only you and whoever is watching. The eye contact at this focal length is intentional and unavoidable. Deliver the line to the glass, not around it.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm · Pivot Shot</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">2000</p><p class="spec-note">match S02</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3200K</p><p class="spec-note">warm</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">AF</p><p class="spec-note">eye lock</p></div>
+    </div>
+  </div>
+
+  <div class="vo" style="font-style:normal; color: var(--gold);">LIVE: "Sometimes obedience looks like staying."</div>
+</div>
+
+<!-- SHOT 08 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 08</span>
+    <span class="tag">Accent Only</span>
+    <span class="tag">25 sec</span>
+    <span class="timecode">3:25 – 3:50</span>
+  </div>
+
+  <h3>GALATIANS — Bible by the accent light.</h3>
+
+  <p><strong>Setup:</strong> Bible open on the bed. <span class="alert">Kill the softbox.</span> Just the accent spilling over the page. Camera low, looking across the page and your hand.</p>
+
+  <p><strong>Action:</strong> Hand on the page. Finger sliding under a line. Hold steady. The voiceover carries the verse.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> Minimum focus distance is ~2.8 ft — you can get close. Set camera low to the bed surface, looking across the open page. At f/2.8 (bump up one stop for depth) you'll keep the text sharp while the room falls away. The accent light raking across the page will give the text texture.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">3200</p><p class="spec-note">accent only</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.8</p><p class="spec-note">more depth</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3000K</p><p class="spec-note">warmer</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">MF</p><p class="spec-note">on page</p></div>
+    </div>
+  </div>
+
+  <div class="vo">VO: "And I hold onto this — let us not grow weary in doing good. Galatians 6:9."</div>
+</div>
+
+<!-- SHOT 09 -->
+<div class="shot">
+  <div class="shot-tags">
+    <span class="tag shot-num">Shot 09</span>
+    <span class="tag">Accent + Softbox</span>
+    <span class="tag">22 sec</span>
+    <span class="timecode">3:50 – 4:12</span>
+  </div>
+
+  <h3>CLOSE — Hold the silence.</h3>
+
+  <p><strong>Setup:</strong> Same as Shot 07. Accent behind. Soft fill on your face. Look into the lens.</p>
+
+  <p><strong>Action:</strong> Final line. Hold 4–5 seconds after the last word. Don't fill the silence. Slow fade to black. The accent light is the last thing the audience sees.</p>
+
+  <div class="lens-note">
+    <strong>85mm note:</strong> Same position as Shot 07. Don't move the tripod. The warm accent rim fading to black at 85mm is the whole close — the compression makes the darkness feel like it's swallowing the frame from every edge.
+  </div>
+
+  <div class="cam-specs">
+    <p class="cam-label">Camera · a7C · 85mm · Match Pivot</p>
+    <div class="specs-grid">
+      <div class="spec"><p class="spec-key">ISO</p><p class="spec-val">2000</p><p class="spec-note">match S07</p></div>
+      <div class="spec"><p class="spec-key">Aperture</p><p class="spec-val">f/2.0</p><p class="spec-note">shallow</p></div>
+      <div class="spec"><p class="spec-key">Shutter</p><p class="spec-val">1/50</p><p class="spec-note">24fps</p></div>
+      <div class="spec"><p class="spec-key">WB</p><p class="spec-val">3200K</p><p class="spec-note">warm</p></div>
+      <div class="spec"><p class="spec-key">Focus</p><p class="spec-val">AF</p><p class="spec-note">eye lock</p></div>
+    </div>
+  </div>
+
+  <div class="vo" style="font-style:normal; color: var(--gold);">LIVE: "Always… His glory." · hold · fade.</div>
+</div>
+
+<hr>
+
+<!-- GLOBAL SETTINGS -->
+<p class="eyebrow" style="margin-bottom:16px;">Camera + Audio + Phone</p>
+<table class="settings-table" cellspacing="0">
+  <tr>
+    <td class="key">Camera Mode</td>
+    <td><span class="val">Manual.</span> <span class="desc">Full control over exposure. No auto.</span></td>
+  </tr>
+  <tr>
+    <td class="key">Lens</td>
+    <td><span class="val">85mm f/2.0.</span> <span class="desc">Portrait lens. Set once per shot, mark your tripod position.</span></td>
+  </tr>
+  <tr>
+    <td class="key">ISO</td>
+    <td><span class="val">1600–3200.</span> <span class="desc">This is a dark film. Embrace the higher ISO — the a7C handles it fine.</span></td>
+  </tr>
+  <tr>
+    <td class="key">Aperture</td>
+    <td><span class="val">f/2.0</span> <span class="desc">for portraits and face shots. f/2.8 for the Bible page (more depth).</span></td>
+  </tr>
+  <tr>
+    <td class="key">Shutter</td>
+    <td><span class="val">1/50 at 24fps.</span> <span class="desc">The 180° shutter rule. Cinematic motion blur.</span></td>
+  </tr>
+  <tr>
+    <td class="key">White Balance</td>
+    <td><span class="val">~3200K.</span> <span class="desc">Honor the warm accent light. Don't auto-correct it away.</span></td>
+  </tr>
+  <tr>
+    <td class="key">Audio</td>
+    <td><span class="val">Voiceover recorded separately</span> <span class="desc">— indoors, in a closet or under blankets to kill reverb. Don't try to capture clean audio during the shoot.</span></td>
+  </tr>
+  <tr>
+    <td class="key">Phone</td>
+    <td><span class="desc">Do Not Disturb. Brightness all the way down. Face-down when not actively filming so it can't bleed light into a shot.</span></td>
+  </tr>
+</table>
+
+<!-- CLOSE -->
+<div class="close-block">
+  <h2>Pray.</h2>
+  <p>Out loud or silent. Set the room.<br>The film is the prayer.</p>
+  <br>
+  <p style="font-size:12px;">"Window light at the open. Accent light at the close.<br>The room already has the film in it."</p>
+</div>
+
+<p class="footer">Moore Covenant Productions · Reset · EP01 · Shoot Day Plan · 85mm</p>
+
+</body>
+</html>
