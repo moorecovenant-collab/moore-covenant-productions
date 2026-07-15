@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     description: "Built on Covenant. Established for More.",
     type: "website",
   },
+  verification: {
+    google: "vI2PWS90Z9nDDxH1i6HjLpttsTjnsByEk5ecvti0mzw",
+  },
 };
 
 export default function RootLayout({
