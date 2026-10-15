@@ -118,10 +118,10 @@ export default function ContactPage() {
                     <div>
                       <p className="text-xs tracking-widest uppercase text-text-muted mb-1">Phone / Text</p>
                       <a
-                        href="tel:3013776958"
+                        href="tel:2024075248"
                         className="text-sm text-cream hover:text-gold transition-colors duration-300 font-medium"
                       >
-                        (301) 377-6958
+                        (202) 407-5248
                       </a>
                     </div>
                     <div>
@@ -172,7 +172,7 @@ export default function ContactPage() {
                       { step: "01", text: "Submit this form with as much detail as you have." },
                       { step: "02", text: "We review and reach out to schedule a free discovery call." },
                       { step: "03", text: "We connect, listen, and confirm if we're the right fit." },
-                      { step: "04", text: "If it's a yes — we build something together." },
+                      { step: "04", text: "If it's a yes, we build something together." },
                     ].map((item) => (
                       <div key={item.step} className="flex gap-4">
                         <span className="section-label shrink-0 mt-0.5">{item.step}</span>
@@ -187,7 +187,7 @@ export default function ContactPage() {
                     className="font-display text-xl italic text-gold/70 leading-snug"
                     style={{ fontFamily: "'Cormorant Garamond', serif" }}
                   >
-                    &ldquo;We don&apos;t just take your project — we take your vision personally.&rdquo;
+                    &ldquo;We don&apos;t just take your project. We take your vision personally.&rdquo;
                   </p>
                 </div>
               </div>
@@ -196,10 +196,10 @@ export default function ContactPage() {
             {/* Form */}
             <ScrollReveal delay={0.2} direction="right">
               <div className="flex items-start gap-4 p-5 border border-gold/20 bg-gold/5 mb-8">
-                <span className="text-gold shrink-0 mt-0.5">—</span>
+                <span className="text-gold shrink-0 mt-0.5">·</span>
                 <p className="text-xs text-text-secondary leading-relaxed">
                   <span className="text-gold">A note before you reach out: </span>
-                  Moore Covenant Productions is built on faith — that&apos;s where our work ethic and commitment to you come from. It&apos;s not a requirement for working together. If you value integrity and work done right, you&apos;re in the right place.
+                  Moore Covenant Productions is built on faith. That&apos;s where our work ethic and commitment to you come from. It&apos;s not a requirement for working together. If you value integrity and work done right, you&apos;re in the right place.
                 </p>
               </div>
               {submitted ? (
@@ -224,7 +224,7 @@ export default function ContactPage() {
                     We&apos;ve received your message and will be in touch within 24–48 hours. In the meantime, follow us on Instagram at <span className="text-gold">@moore.covenant</span>.
                   </p>
                   <p className="text-text-secondary text-sm">
-                    Or text/call directly: <a href="tel:3013776958" className="text-gold">(301) 377-6958</a>
+                    Or text/call directly: <a href="tel:2024075248" className="text-gold">(202) 407-5248</a>
                   </p>
                 </motion.div>
               ) : (
@@ -332,8 +332,8 @@ export default function ContactPage() {
 
                   <p className="text-xs text-text-muted">
                     Prefer to text or call?{" "}
-                    <a href="tel:3013776958" className="text-gold hover:text-gold-light transition-colors">
-                      (301) 377-6958
+                    <a href="tel:2024075248" className="text-gold hover:text-gold-light transition-colors">
+                      (202) 407-5248
                     </a>
                   </p>
                 </form>

@@ -29,7 +29,7 @@ type Message = {
 const steps: Step[] = [
   {
     id: "intro",
-    question: "Hey — I'm Elijah's assistant at Moore Covenant Productions. What's your name?",
+    question: "Hey, I'm Elijah's assistant at Moore Covenant Productions. What's your name?",
     field: "name",
     type: "text",
     placeholder: "Your first name",
@@ -75,7 +75,7 @@ const steps: Step[] = [
   },
   {
     id: "phone",
-    question: "And your phone number? (optional — for a quicker reply)",
+    question: "And your phone number? (optional, for a quicker reply)",
     field: "phone",
     type: "tel",
     placeholder: "(301) 000-0000",
@@ -144,7 +144,7 @@ export default function ChatWidget() {
         body: JSON.stringify(data),
       });
     } catch {
-      // fail silently — lead still captured in state
+      // fail silently, lead still captured in state
     } finally {
       setSending(false);
       setTimeout(() => {
@@ -152,7 +152,7 @@ export default function ChatWidget() {
           ...prev,
           {
             role: "bot",
-            text: `Thanks, ${data.name}. Elijah will be in touch within 24–48 hours. You can also reach him directly at (301) 377-6958.`,
+            text: `Thanks, ${data.name}. Elijah will be in touch within 24–48 hours. You can also reach him directly at (202) 407-5248.`,
           },
         ]);
         setDone(true);
@@ -167,7 +167,7 @@ export default function ChatWidget() {
   };
 
   const handleSkip = () => {
-    advance("—");
+    advance(", ");
   };
 
   return (

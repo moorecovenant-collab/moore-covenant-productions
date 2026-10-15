@@ -64,7 +64,7 @@ export default function PhotographyPage() {
             transition={{ duration: 0.9, delay: 0.9 }}
             className="text-text-secondary text-base leading-loose max-w-xl mt-8"
           >
-            Editorial, brand, and personal photography — crafted to stop the scroll and hold the moment.
+            Editorial, brand, and personal photography, crafted to stop the scroll and hold the moment.
           </motion.p>
         </div>
       </section>

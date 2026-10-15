@@ -6,25 +6,37 @@ import GrainOverlay from "@/components/ui/GrainOverlay";
 import CustomCursor from "@/components/ui/CustomCursor";
 import ChatWidget from "@/components/ui/ChatWidget";
 import MusicPlayer from "@/components/ui/MusicPlayer";
+import MetroLine from "@/components/ui/MetroLine";
+import StaticShot from "@/components/ui/StaticShot";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://moorecovenantproductions.com"),
   title: "Moore Covenant Productions | Built on Covenant. Established for More.",
   description:
-    "Moore Covenant Productions is a cinematic creative media company specializing in brand storytelling, videography, creative direction, and visual identity. We create moments people carry with them.",
+    "Social media management, cinematic video production, and websites for founders, ministries, creators, and local businesses in Washington DC, Maryland, and Virginia. Founded by Elijah Moore.",
   keywords: [
-    "cinematic media",
-    "brand storytelling",
-    "videography",
-    "creative direction",
-    "visual identity",
-    "social media management",
-    "content strategy",
-    "photography",
+    "social media management DC",
+    "video production Washington DC",
+    "content creation DMV",
+    "brand strategy",
+    "website design Maryland",
+    "cinematic content",
+    "short-form video",
+    "Moore Covenant Productions",
+    "Elijah Moore",
   ],
   openGraph: {
     title: "Moore Covenant Productions",
-    description: "Built on Covenant. Established for More.",
+    description: "Social media, cinematic content, and websites. Built on Covenant. Established for More.",
     type: "website",
+    url: "https://moorecovenantproductions.com",
+    images: [{ url: "/og/metro-ride.jpg", width: 1200, height: 630, alt: "Moore Covenant Productions. Built on Covenant. Established for More." }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Moore Covenant Productions",
+    description: "Social media, cinematic content, and websites. Built on Covenant. Established for More.",
+    images: ["/og/metro-ride.jpg"],
   },
   verification: {
     google: "vI2PWS90Z9nDDxH1i6HjLpttsTjnsByEk5ecvti0mzw",
@@ -47,8 +59,10 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <StaticShot />
         <GrainOverlay />
         <CustomCursor />
+        <MetroLine />
         <Navigation />
         <main>{children}</main>
         <Footer />

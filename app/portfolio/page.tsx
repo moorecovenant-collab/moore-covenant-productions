@@ -1,218 +1,216 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import AnimatedText from "@/components/ui/AnimatedText";
+import ReelCard from "@/components/ui/ReelCard";
+import Station from "@/components/ui/Station";
 
-const categories = ["All", "Social Media", "Personal Brand"];
+const serif = { fontFamily: "'Cormorant Garamond', serif" };
 
-const projects = [
+const growth = [
   {
-    id: 1,
-    title: "Dieu Trippin",
-    category: "Social Media",
-    type: "TikTok Creator · @dieu_tripin",
-    year: "2023–2024",
-    desc: "Managed full TikTok content strategy from the ground up. Built a fiercely loyal community through viral-engineered video — multiple videos hit 17M+ views.",
-    stats: [
-      { value: "249K", label: "Followers" },
-      { value: "60M+", label: "Views" },
-      { value: "22.6M", label: "Likes" },
+    client: "Dieu Trippin",
+    handle: "@dieu_tripin",
+    platform: "TikTok",
+    from: "0",
+    to: "255K",
+    unit: "followers",
+    extra: [
+      { value: "24.8M", label: "likes" },
+      { value: "17M+", label: "views, top video" },
     ],
-    tags: ["TikTok", "Content Strategy", "Growth"],
-    color: "#0e1208",
+    desc: "A personal brand built from a blank profile. Full content strategy, shooting, editing, and posting, with a community that still shows up for every drop.",
+    tags: ["Content Strategy", "Short-form Video", "Community"],
   },
   {
-    id: 2,
-    title: "Hair Academy MD",
-    category: "Social Media",
-    type: "Beauty Education · @hairacademy_md",
-    year: "2022–2023",
-    desc: "Managed social media for the main academy and 5 sister schools. Promoted enrollment events and grew from 2,250 → 14,300 followers across all campuses in under 18 months.",
-    stats: [
-      { value: "+535%", label: "Growth" },
-      { value: "14.3K", label: "Followers" },
+    client: "Hair Academy MD",
+    handle: "@hairacademy_md",
+    platform: "Instagram",
+    from: "1K",
+    to: "14K",
+    unit: "followers in 3 months",
+    extra: [
+      { value: "15M+", label: "content views" },
+      { value: "6", label: "campuses" },
     ],
-    tags: ["Instagram", "Social Management", "Education"],
-    color: "#0e0c18",
+    desc: "A dormant account for a beauty school and its sister campuses. Rebuilt the content system and posting cadence from scratch, promoted enrollment events, and took it to a 14x follower increase in a single quarter.",
+    tags: ["Social Management", "Enrollment Campaigns", "Education"],
   },
   {
-    id: 3,
-    title: "Utrophia Robinson",
-    category: "Personal Brand",
-    type: "Superior Court Campaign · @trophy4clayton",
-    year: "2023",
-    desc: "Built community trust and digital visibility for a Superior Court campaign. Message-driven content increased engagement and established a credible online presence during the critical voting window.",
-    stats: [
-      { value: "+36%", label: "Growth" },
-      { value: "+125", label: "Followers" },
+    client: "Morena Cafe DC",
+    handle: "@morenacafedc",
+    platform: "Instagram + TikTok",
+    from: "7.5K",
+    to: "20K",
+    unit: "followers",
+    extra: [
+      { value: "Flat", label: "to growing" },
+      { value: "DC", label: "creator network" },
     ],
-    tags: ["Facebook", "Instagram", "Political Campaign"],
-    color: "#12100e",
+    desc: "Inherited a stalled account with almost no engagement. Worked side by side with ownership on a content and engagement plan, then drove TikTok through direct creator partnerships around the city.",
+    tags: ["Growth Strategy", "Creator Partnerships", "Local Business"],
+  },
+];
+
+const sites = [
+  {
+    name: "Desire Delights",
+    type: "Bakery, South Jersey and Philadelphia",
+    url: "https://desiredelightssweets.com",
+    img: "/work/desire-delights.jpg",
+    desc: "A premium custom cake site with a gallery, reviews, and an order form that emails the owner and pings her phone.",
+  },
+  {
+    name: "121 Auto Repair & Sales",
+    type: "Auto shop, Depew, NY",
+    url: null,
+    img: "/work/121-auto.jpg",
+    desc: "A single-page site with same-day booking, nine animated service covers, a reviews carousel, and a chatbot that answers the questions the phone used to.",
   },
 ];
 
 export default function PortfolioPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filtered =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((p) => p.category === activeCategory);
-
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative pt-40 md:pt-52 pb-20 md:pb-28 px-6 md:px-10 lg:px-16 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 20%, rgba(196,151,74,0.05) 0%, transparent 60%)" }} />
+      {/* HERO */}
+      <section className="relative pt-44 md:pt-56 pb-20 md:pb-28 px-6 md:px-10 lg:px-16 overflow-hidden">
+        <div className="absolute inset-0 flicker">
+          <Image src="/dc/georgetown-night.jpg" alt="" fill className="object-cover object-[50%_35%] opacity-35 kenburns" priority />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.55) 0%, rgba(8,8,8,0.5) 55%, #080808 100%)" }} />
+        </div>
         <div className="max-w-[1400px] mx-auto relative z-10">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="section-label mb-6 flex items-center gap-3"
-          >
-            <span className="block w-6 h-px bg-gold" />
-            Client Results
-          </motion.p>
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="mb-8">
+            <Station scene="01" name="Now showing" />
+          </motion.div>
           <div className="overflow-hidden">
             <motion.h1
               initial={{ y: "110%" }}
               animate={{ y: "0%" }}
-              transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="font-display text-display-xl font-light text-cream leading-tight"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
+              transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display text-display-hero font-light text-cream"
+              style={serif}
             >
-              The Proof is in the{" "}
-              <em className="italic text-gold">Growth.</em>
+              The proof is in
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: "110%" }}
+              animate={{ y: "0%" }}
+              transition={{ duration: 1.1, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="font-display text-display-hero font-light italic text-gold"
+              style={serif}
+            >
+              the growth.
             </motion.h1>
           </div>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.8 }}
-            className="text-text-secondary text-base leading-loose max-w-xl mt-6"
+            transition={{ duration: 0.9, delay: 1 }}
+            className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl mt-10"
           >
-            Real clients. Real numbers. Real results — across politics, beauty, ministry, and entertainment.
+            Real clients and real numbers. Beauty, ministry, local business, creators, and film,
+            most of it within a Metro ride of DC.
           </motion.p>
         </div>
       </section>
 
-      {/* ─── FILTER ─── */}
-      <section className="px-6 md:px-10 lg:px-16 pb-10">
-        <div className="max-w-[1400px] mx-auto">
-          <ScrollReveal>
-            <div className="flex flex-wrap gap-3">
-              {categories.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-5 py-2 text-xs tracking-widest uppercase transition-all duration-300 border ${
-                    activeCategory === cat
-                      ? "border-gold text-gold"
-                      : "border-border/60 text-text-secondary hover:border-text-secondary hover:text-cream"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ─── RESULTS GRID ─── */}
-      <section className="px-6 md:px-10 lg:px-16 pb-24 md:pb-36">
-        <div className="max-w-[1400px] mx-auto">
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border/40">
-            <AnimatePresence mode="popLayout">
-              {filtered.map((project, i) => (
-                <motion.div
-                  key={project.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.96 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.96 }}
-                  transition={{ duration: 0.4, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                  className="group bg-dark hover:bg-gold/5 transition-colors duration-400"
-                >
-                  {/* Visual placeholder */}
-                  <div
-                    className="relative h-56 overflow-hidden"
-                    style={{ background: `linear-gradient(135deg, ${project.color} 0%, #141414 100%)` }}
-                  >
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: "radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.08) 0%, transparent 70%)" }}
-                    />
-                    <div className="absolute top-4 left-4 w-5 h-5 border-t border-l border-gold/20 group-hover:border-gold/60 transition-colors duration-500" />
-                    <div className="absolute bottom-4 right-4 w-5 h-5 border-b border-r border-gold/20 group-hover:border-gold/60 transition-colors duration-500" />
-                    <div className="absolute bottom-4 left-4">
-                      <span className="text-[9px] tracking-[0.2em] uppercase text-gold/60 block mb-1">{project.type}</span>
-                      <span className="text-[9px] tracking-[0.1em] text-text-muted">{project.year}</span>
-                    </div>
+      {/* GROWTH CASE STUDIES */}
+      <section className="px-6 md:px-10 lg:px-16 pb-24 md:pb-32 bg-black">
+        <div className="max-w-[1400px] mx-auto space-y-px">
+          {growth.map((g, i) => (
+            <ScrollReveal key={g.client} delay={0.05}>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 py-14 md:py-20 border-t border-border/40 group">
+                <div className="lg:col-span-5">
+                  <p className="text-[9px] tracking-[0.22em] uppercase text-text-muted mb-5">
+                    {String(i + 1).padStart(2, "0")} · {g.platform}
+                  </p>
+                  <div className="flex items-baseline gap-4 mb-1">
+                    <span className="font-display text-3xl text-text-muted line-through decoration-gold/40" style={serif}>{g.from}</span>
+                    <span className="font-display text-7xl md:text-8xl font-light text-cream leading-none" style={serif}>{g.to}</span>
                   </div>
-
-                  {/* Stats */}
-                  <div className="flex divide-x divide-border/40 border-b border-border/40">
-                    {project.stats.map((stat) => (
-                      <div key={stat.label} className="flex-1 text-center py-4 px-2">
-                        <p
-                          className="font-display text-xl font-light text-gold leading-none"
-                          style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                        >
-                          {stat.value}
-                        </p>
-                        <p className="text-[9px] tracking-[0.14em] uppercase text-text-muted mt-1">{stat.label}</p>
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-gold mb-8">{g.unit}</p>
+                  <div className="flex gap-10">
+                    {g.extra.map((e) => (
+                      <div key={e.label}>
+                        <p className="font-display text-3xl text-cream leading-none" style={serif}>{e.value}</p>
+                        <p className="text-[9px] tracking-[0.2em] uppercase text-text-muted mt-1">{e.label}</p>
                       </div>
                     ))}
                   </div>
-
-                  {/* Info */}
-                  <div className="p-6 md:p-7">
-                    <h3
-                      className="font-display text-2xl md:text-3xl font-light text-cream group-hover:text-gold transition-colors duration-300 mb-2"
-                      style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                    >
-                      {project.title}
-                    </h3>
-                    <p className="text-xs text-text-secondary leading-relaxed mb-4">{project.desc}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="text-[9px] tracking-widest uppercase text-text-muted border border-border/60 px-2 py-1">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
+                </div>
+                <div className="lg:col-span-7 lg:pt-2">
+                  <h3 className="font-display text-4xl md:text-5xl font-light text-cream leading-tight mb-2 group-hover:text-gold transition-colors duration-500" style={serif}>
+                    {g.client}
+                  </h3>
+                  <p className="text-xs text-text-muted mb-6">{g.handle}</p>
+                  <p className="text-text-secondary text-base leading-relaxed max-w-xl mb-6">{g.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {g.tags.map((t) => (
+                      <span key={t} className="pill-tag pointer-events-none">{t}</span>
+                    ))}
                   </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
         </div>
       </section>
 
-      {/* ─── OVERALL STATS ─── */}
-      <section className="py-20 md:py-28 px-6 md:px-10 lg:px-16 bg-dark border-y border-border/40">
+      {/* REELS (cream) */}
+      <section className="section-cream py-24 md:py-32 px-6 md:px-10 lg:px-16">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-border/40">
-            {[
-              { value: "60M+", label: "Total Views Generated" },
-              { value: "50M+", label: "Total Likes Generated" },
-              { value: "100K+", label: "Followers Grown" },
-              { value: "1,000+", label: "High-Performing Videos" },
-            ].map((stat, i) => (
-              <ScrollReveal key={stat.label} delay={i * 0.08} direction="up">
-                <div className="bg-black text-center py-10 px-6">
-                  <p
-                    className="font-display text-4xl md:text-5xl font-light text-gold leading-none mb-3"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p className="text-[9px] tracking-[0.2em] uppercase text-text-muted">{stat.label}</p>
+          <ScrollReveal>
+            <Station scene="02" name="Short-form and reels" tone="light" className="mb-6" />
+          </ScrollReveal>
+          <AnimatedText text="Hover to play. Click for sound." tag="h2" className="font-display text-display-huge font-light text-black mb-6" style={serif} />
+          <ScrollReveal delay={0.2}>
+            <p className="text-black/70 text-base leading-relaxed max-w-xl mb-14">
+              Two current partners. ELEV8D Innovations, a low-voltage installer whose feeds we built
+              from zero and now shoot on site. Nicholas Padilla, whose Miami conference livestream we
+              turned into twenty-one reels and a highlight film.
+            </p>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+            <ScrollReveal delay={0}><ReelCard src="/work/elev8d-01.mp4" poster="/work/elev8d-01.jpg" client="ELEV8D" title="Integrate, don't install" className="pill-card" /></ScrollReveal>
+            <ScrollReveal delay={0.08} className="md:mt-10"><ReelCard src="/work/elev8d-02.mp4" poster="/work/elev8d-02.jpg" client="ELEV8D" title="100-inch screens for a church" className="pill-card" /></ScrollReveal>
+            <ScrollReveal delay={0.16}><ReelCard src="/work/elev8d-04.mp4" poster="/work/elev8d-04.jpg" client="ELEV8D" title="No shortcuts" className="pill-card" /></ScrollReveal>
+            <ScrollReveal delay={0.24} className="md:mt-10"><ReelCard src="/work/nick-highlight.mp4" poster="/work/nick-highlight.jpg" client="Nicholas Padilla" title="Night of Glory, Miami" className="pill-card" /></ScrollReveal>
+            <ScrollReveal delay={0.32}><ReelCard src="/work/nick-captives.mp4" poster="/work/nick-captives.jpg" client="Nicholas Padilla" title="Set the captives free" className="pill-card" /></ScrollReveal>
+            <ScrollReveal delay={0.4} className="md:mt-10"><ReelCard src="/work/nick-fire.mp4" poster="/work/nick-fire.jpg" client="Nicholas Padilla" title="Fire" className="pill-card" /></ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* FILM (black) */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-end mb-12">
+            <div className="lg:col-span-7">
+              <ScrollReveal>
+                <Station scene="03" name="Film" className="mb-6" />
+              </ScrollReveal>
+              <AnimatedText text="A short film." tag="h2" className="font-display text-display-huge font-light text-cream" style={serif} />
+            </div>
+            <ScrollReveal delay={0.2} className="lg:col-span-5">
+              <p className="text-text-secondary text-base leading-relaxed">
+                A man alone in the woods, and the memory that put him there. Written, shot, and cut
+                in house on a Sony cinema body. The first of several.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {["/work/jakei-2.jpg", "/work/jakei-1.jpg", "/work/jakei-4.jpg", "/work/jakei-3.jpg"].map((src, i) => (
+              <ScrollReveal key={src} delay={i * 0.08}>
+                <div className={`relative aspect-[16/9] overflow-hidden ${i % 2 ? "lg:mt-10" : ""}`}>
+                  <Image src={src} alt="Still from a short film by Moore Covenant Productions" fill className="object-cover transition-transform duration-[1500ms] hover:scale-105" />
+                  <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(8,8,8,0.5) 0%, transparent 50%)" }} />
                 </div>
               </ScrollReveal>
             ))}
@@ -220,32 +218,55 @@ export default function PortfolioPage() {
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
-      <section className="py-32 md:py-44 px-6 md:px-10 lg:px-16 bg-black">
-        <div className="max-w-[1400px] mx-auto text-center">
+      {/* WEBSITES (cream) */}
+      <section className="section-cream py-24 md:py-32 px-6 md:px-10 lg:px-16">
+        <div className="max-w-[1400px] mx-auto">
           <ScrollReveal>
-            <p className="section-label justify-center mb-8 flex">
-              <span className="block w-6 h-px bg-gold mr-3 mt-[6px]" />
-              Your Story, Next
-            </p>
-            <h2
-              className="font-display text-display-xl font-light text-cream leading-tight max-w-2xl mx-auto mb-4"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              Ready to add your name{" "}
-              <em className="italic text-gold">to the list?</em>
-            </h2>
-            <p className="text-text-secondary text-sm mb-8">Text or call us directly: <a href="tel:3013776958" className="text-gold hover:text-gold-light transition-colors">(301) 377-6958</a></p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact" className="btn-primary">
-                <span>Let&apos;s Talk</span>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" className="relative z-10">
-                  <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </Link>
-            </div>
+            <Station scene="04" name="Websites" tone="light" className="mb-6" />
           </ScrollReveal>
+          <AnimatedText text="Built, launched, and handed over." tag="h2" className="font-display text-display-huge font-light text-black mb-14" style={serif} />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {sites.map((s, i) => (
+              <ScrollReveal key={s.name} delay={i * 0.1}>
+                <div className="group">
+                  <div className="relative aspect-[16/10] overflow-hidden pill-card border border-black/10 bg-black">
+                    <Image src={s.img} alt={`${s.name} website by Moore Covenant Productions`} fill className="object-cover object-top transition-transform duration-[1500ms] group-hover:scale-[1.03]" />
+                  </div>
+                  <div className="flex items-start justify-between gap-6 mt-6">
+                    <div>
+                      <h3 className="font-display text-3xl text-black" style={serif}>{s.name}</h3>
+                      <p className="text-[10px] tracking-[0.18em] uppercase text-black/50 mt-1">{s.type}</p>
+                      <p className="text-sm text-black/70 leading-relaxed mt-4 max-w-md">{s.desc}</p>
+                    </div>
+                    {s.url && (
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" className="pill-tag shrink-0 mt-1">
+                        Visit
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black border-t border-border/40">
+        <ScrollReveal>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-display text-display-huge font-light text-cream mb-6" style={serif}>
+              Your name goes here next.
+            </h2>
+            <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-10">
+              Book a free call and we will tell you honestly what it would take.
+            </p>
+            <Link href="/contact" className="btn-primary">
+              <span>Book a Free Call</span>
+            </Link>
+          </div>
+        </ScrollReveal>
       </section>
     </>
   );

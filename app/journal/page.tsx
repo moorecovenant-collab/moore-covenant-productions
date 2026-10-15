@@ -11,7 +11,7 @@ const posts = [
     category: "Creative Philosophy",
     title: "Legacy Over Virality: Why We Create What We Create",
     excerpt:
-      "In a world that rewards the fleeting — the trending, the viral, the algorithm-approved — we made a different choice. Here's why building for legacy still matters more than building for views.",
+      "In a world that rewards the fleeting, the trending, the viral, the algorithm-approved, we made a different choice. Here's why building for legacy still matters more than building for views.",
     readTime: "6 min read",
     date: "May 2026",
     featured: true,
@@ -21,7 +21,7 @@ const posts = [
     category: "Brand Strategy",
     title: "What Brand Storytelling Actually Means (And What It Doesn't)",
     excerpt:
-      "Everyone talks about storytelling. Few actually do it. The difference between a brand that moves people and one that just exists comes down to something simple — and most brands miss it.",
+      "Everyone talks about storytelling. Few actually do it. The difference between a brand that moves people and one that just exists comes down to something simple, and most brands miss it.",
     readTime: "5 min read",
     date: "April 2026",
     featured: false,
@@ -51,7 +51,7 @@ const posts = [
     category: "Videography",
     title: "The Art of the Brand Film: More Than a Marketing Video",
     excerpt:
-      "A brand film done right doesn't feel like advertising — it feels like an invitation. Here's what separates a cinematic brand story from just another video.",
+      "A brand film done right doesn't feel like advertising, it feels like an invitation. Here's what separates a cinematic brand story from just another video.",
     readTime: "5 min read",
     date: "March 2026",
     featured: false,
@@ -61,7 +61,7 @@ const posts = [
     category: "Personal Brand",
     title: "You Are the Brand: Building a Personal Identity That Attracts",
     excerpt:
-      "The most powerful brands in the world today aren't companies — they're people. Coaches, creatives, pastors, entrepreneurs. Here's how to build yours with intention.",
+      "The most powerful brands in the world today aren't companies, they're people. Coaches, creatives, pastors, entrepreneurs. Here's how to build yours with intention.",
     readTime: "6 min read",
     date: "February 2026",
     featured: false,
@@ -119,7 +119,7 @@ export default function JournalPage() {
             transition={{ duration: 0.9, delay: 0.9 }}
             className="text-text-secondary text-base leading-loose max-w-xl mt-8"
           >
-            Reflections from behind the lens — on storytelling, brand building, faith, and what it
+            Reflections from behind the lens, on storytelling, brand building, faith, and what it
             means to create work that lasts.
           </motion.p>
         </div>
@@ -165,7 +165,7 @@ export default function JournalPage() {
                   <div className="p-8 md:p-12 lg:p-14 flex flex-col justify-center">
                     <div className="flex items-center gap-4 mb-6">
                       <span className="section-label">{featured.category}</span>
-                      <span className="text-text-muted text-xs">—</span>
+                      <span className="text-text-muted text-xs">, </span>
                       <span className="text-xs text-text-muted">{featured.date}</span>
                     </div>
                     <h2

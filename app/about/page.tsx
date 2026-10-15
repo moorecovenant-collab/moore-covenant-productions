@@ -5,251 +5,202 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import AnimatedText from "@/components/ui/AnimatedText";
+import Station from "@/components/ui/Station";
+
+const serif = { fontFamily: "'Cormorant Garamond', serif" };
 
 const values = [
-  { letter: "C", name: "Covenant First", desc: "We honor our word above convenience and operate with unwavering commitment to every client we serve." },
-  { letter: "O", name: "Operational Excellence", desc: "We build with precision, discipline, and excellence — as unto the Lord, not just the client." },
-  { letter: "V", name: "Visionary Stewardship", desc: "We steward people, resources, and opportunities with foresight, responsibility, and long-term thinking." },
-  { letter: "E", name: "Ethical Integrity", desc: "Our decisions are anchored in truth. Our foundation is unshakeable — no shortcuts, no compromise." },
-  { letter: "N", name: "Noble Leadership", desc: "We lead with humility, accountability, and service-first authority — strength that uplifts, not overpowers." },
-  { letter: "A", name: "Accountability", desc: "We take full ownership of outcomes and uphold the highest standards — to our clients and to God." },
-  { letter: "N", name: "Next-Gen Mindset", desc: "We think generationally — building beyond today for those who come after us and the legacy we leave." },
-  { letter: "T", name: "Trust", desc: "We cultivate trust through consistency, transparency, and faithfulness. Trust is earned here — and it is." },
+  { letter: "C", name: "Covenant First", desc: "We keep our word, even when convenience says otherwise." },
+  { letter: "O", name: "Operational Excellence", desc: "We build with precision and discipline, as unto the Lord, not just the client." },
+  { letter: "V", name: "Visionary Stewardship", desc: "We treat your people, your budget, and your opportunities like they are our own." },
+  { letter: "E", name: "Ethical Integrity", desc: "Decisions anchored in truth. No shortcuts, no games with the numbers." },
+  { letter: "N", name: "Noble Leadership", desc: "We lead with humility and accountability. Strength that lifts, not overpowers." },
+  { letter: "A", name: "Accountability", desc: "We own the outcome. To you, and to God." },
+  { letter: "N", name: "Next-Gen Mindset", desc: "We build beyond today, for the people who come after us." },
+  { letter: "T", name: "Trust", desc: "Earned through consistency, transparency, and showing up." },
 ];
+
+const timeline = [
+  { year: "2019", text: "Started shooting and editing for YouTubers and online personalities. Learned the algorithm by living in it." },
+  { year: "2022", text: "Took Hair Academy MD from 1K to 14K followers in a quarter. Figured out the system was repeatable." },
+  { year: "2023", text: "Built Dieu Trippin from a blank TikTok profile to 255K followers and 24.8M likes." },
+  { year: "2025", text: "Founded Moore Covenant Productions Inc. in Maryland. Social, video, and websites under one roof." },
+  { year: "2026", text: "Current partners across the DMV and beyond. First short film shot. Sony cinema body on every shoot." },
+];
+
+const team = [
+  {
+    name: "Elijah Moore",
+    role: "CEO · Founder & Creative Director",
+    bio: "Strategy, creative direction, and the camera. Every project runs through him.",
+    img: "/elijah-amyah-cafe.jpg",
+  },
+  {
+    name: "You.",
+    role: "The dreamer",
+    bio: "The key component. Your story, your business, your calling. Nothing here works without it.",
+    img: null,
+  },
+  {
+    name: "Your people.",
+    role: "The support",
+    bio: "Your team, your family, your church, your customers. We build so they can carry it with you.",
+    img: null,
+  },
+  {
+    name: "Covenant partners",
+    role: "The network",
+    bio: "Market Research Design LLC, AMD Branding, and Sam Studios. Design, strategy, and photography when the job calls for more hands.",
+    img: null,
+  },
+];
+
+const tools = ["Sony a7C II", "DaVinci Resolve", "Final Cut Pro", "Premiere Pro", "Lightroom", "Photoshop", "Meta Business Suite", "CapCut", "Descript", "Next.js"];
 
 export default function AboutPage() {
   return (
     <>
-      {/* ─── HERO ─── */}
-      <section className="relative pt-40 md:pt-52 pb-24 md:pb-36 px-6 md:px-10 lg:px-16 overflow-hidden">
-        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 20% 30%, rgba(196,151,74,0.06) 0%, transparent 60%)" }} />
-        <div className="max-w-[1400px] mx-auto relative z-10">
-          <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="section-label mb-6 flex items-center gap-3"
-          >
-            <span className="block w-6 h-px bg-gold" />
-            About
-          </motion.p>
-
-          <div className="max-w-4xl">
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display text-display-xl font-light text-cream leading-tight"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Built From Purpose.
-              </motion.h1>
-            </div>
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: "110%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 1, delay: 0.65, ease: [0.16, 1, 0.3, 1] }}
-                className="font-display text-display-xl font-light italic text-gold leading-tight"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Not Accident.
-              </motion.h1>
-            </div>
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.9 }}
-            className="text-text-secondary text-base md:text-lg leading-loose max-w-xl mt-8"
-          >
-            Moore Covenant Productions isn&apos;t just a media company. It&apos;s a covenant — a promise that every brand we touch will be seen, felt, and remembered.
-          </motion.p>
+      {/* HERO */}
+      <section className="relative pt-44 md:pt-56 pb-20 md:pb-28 px-6 md:px-10 lg:px-16 overflow-hidden">
+        <div className="absolute inset-0 flicker">
+          <Image src="/dc/georgetown-night.jpg" alt="" fill className="object-cover object-center opacity-30 kenburns" priority />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.6) 0%, rgba(8,8,8,0.5) 50%, #080808 100%)" }} />
         </div>
-      </section>
-
-      {/* ─── THE STORY ─── */}
-      <section className="py-24 md:py-36 px-6 md:px-10 lg:px-16 bg-dark">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-28 items-start">
-            {/* Photo frame */}
-            <ScrollReveal direction="left">
-              <div className="sticky top-32">
-                <div className="relative aspect-[2/3] max-w-lg overflow-hidden border border-gold/15">
-                  <Image
-                    src="/IMG_2404.jpg"
-                    alt="Elijah Moore — Founder, Moore Covenant Productions"
-                    fill
-                    className="object-cover object-top"
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 55%, rgba(8,8,8,0.85) 100%)" }} />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <p className="text-[9px] tracking-[0.2em] uppercase text-gold mb-1">Elijah Moore</p>
-                    <p className="text-[9px] tracking-[0.14em] uppercase text-text-muted">Founder · Moore Covenant Productions</p>
-                  </div>
-                  <div className="absolute top-4 left-4 w-6 h-6 border-t border-l border-gold/30" />
-                  <div className="absolute bottom-16 right-4 w-6 h-6 border-b border-r border-gold/30" />
-                </div>
+        <div className="max-w-[1400px] mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end">
+          <div className="lg:col-span-7">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }} className="mb-8">
+              <Station scene="01" name="The founder" />
+            </motion.div>
+            <div className="overflow-hidden">
+              <motion.h1
+                initial={{ y: "110%" }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1.1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="font-display text-display-hero font-light text-cream"
+                style={serif}
+              >
+                Elijah Moore
+              </motion.h1>
+            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.9 }}
+              className="text-[11px] tracking-[0.28em] uppercase text-gold mt-6"
+            >
+              Founder & Creative Director · Washington, DC
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 1.05 }}
+              className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl mt-8"
+            >
+              Brand architect, social strategist, and the person behind the camera. Married,
+              family first, built on faith. Seven years of making people and businesses
+              impossible to scroll past.
+            </motion.p>
+          </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
+          >
+            <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0 lg:ml-auto pill-photo border border-gold/20">
+              <Image src="/elijah-amyah-cafe.jpg" alt="Elijah Moore, Founder & Creative Director" fill className="object-cover object-center" priority />
+              <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 65%, rgba(8,8,8,0.7) 100%)" }} />
+              <div className="absolute bottom-7 left-0 right-0 text-center">
+                <p className="text-[9px] tracking-[0.25em] uppercase text-gold">Founder & Creative Director</p>
               </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* STORY (cream) */}
+      <section className="section-cream py-24 md:py-32 px-6 md:px-10 lg:px-16">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <div className="lg:col-span-5">
+            <ScrollReveal>
+              <Station scene="02" name="The story" tone="light" className="mb-6" />
             </ScrollReveal>
+            <AnimatedText text="I did not stumble into this." tag="h2" className="font-display text-display-huge font-light text-black" style={serif} />
+          </div>
+          <ScrollReveal delay={0.2} className="lg:col-span-7">
+            <div className="space-y-6 text-black/75 text-base md:text-lg leading-relaxed max-w-2xl">
+              <p>
+                I kept meeting people with something real to offer and no one could see them. A
+                salon owner with a full book and a dead Instagram. A pastor with a word for
+                thousands and a livestream nobody clipped. A cafe on a DC corner with better food
+                than the places getting the press. I knew I could fix that, so I did.
+              </p>
+              <p>
+                I started by editing for YouTubers at nineteen. Then I ran accounts, then I shot
+                the content myself, then I built the websites, because handing a client off to
+                three different vendors never ended well for the client. Moore Covenant Productions
+                is all of that under one roof.
+              </p>
+              <p>
+                The name is a promise. A covenant is a bond you do not walk away from. When I take
+                on your brand, I treat it like my own, and my faith is the reason the work gets
+                done right, not a sales line.
+              </p>
+              <p>
+                I am based in DC and I bring the movie feel to the DMV. That means cinema cameras
+                on a job that used to get an iPhone, and a story where there used to be a flyer.
+              </p>
+            </div>
+            <blockquote className="font-display text-2xl md:text-3xl italic text-black border-l-2 border-gold pl-6 mt-10 leading-snug max-w-xl" style={serif}>
+              &ldquo;My story is who I am. Are you ready to tell yours?&rdquo;
+            </blockquote>
+          </ScrollReveal>
+        </div>
+      </section>
 
-            {/* Story text */}
-            <div className="space-y-10">
-              <ScrollReveal>
-                <p className="section-label mb-6 flex items-center gap-3">
-                  <span className="block w-6 h-px bg-gold" />
-                  My Story
-                </p>
-                <div className="space-y-5 text-text-secondary text-sm md:text-base leading-loose">
-                  <p>
-                    I didn&apos;t stumble into this. I was called to it. There was a moment — not long ago — when I looked around and saw people with something real to say, businesses with something real to offer, and leaders with something real to give — but no one could see them. They were invisible. And I knew that was something I could fix.
-                  </p>
-                  <p>
-                    I&apos;m Elijah Moore — storyteller, strategist, and founder of Moore Covenant Productions. I built this company on a covenant: a promise that every brand we touch will be seen, felt, and remembered. Faith isn&apos;t just a backdrop to what I do — it&apos;s the foundation. I believe God prepared good works for each of us in advance. My assignment is helping you show the world yours.
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.12}>
-                <div className="my-8 p-7 border border-gold/20 bg-gold/5">
-                  <p className="text-[9px] tracking-[0.2em] uppercase text-gold mb-4">Who We Work With</p>
-                  <p
-                    className="font-display text-xl md:text-2xl font-light text-cream leading-snug mb-4"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    Faith-driven. Open to everyone built on purpose.
-                  </p>
-                  <div className="space-y-3 text-text-secondary text-sm leading-loose">
-                    <p>
-                      Moore Covenant Productions is a faith-driven creative agency. That&apos;s where our work ethic, our standards, and our commitment to you come from. It doesn&apos;t mean we&apos;ll preach at you or turn down your project because you don&apos;t share our beliefs.
-                    </p>
-                    <p>
-                      It means you&apos;re getting someone who takes their word seriously. The covenant isn&apos;t just a name — it&apos;s how we operate. Clients who value integrity, discipline, and work done right will always have a home here — regardless of where they stand on faith.
-                    </p>
-                    <p className="text-cream/80">
-                      We reserve the right to decline or exit engagements that conflict with our core values. That determination is made with honesty, respect, and written notice — never without conversation.
-                    </p>
+      {/* TIMELINE (black) */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black">
+        <div className="max-w-[1400px] mx-auto">
+          <ScrollReveal>
+            <Station scene="03" name="The line so far" className="mb-6" />
+          </ScrollReveal>
+          <AnimatedText text="Stops along the way." tag="h2" className="font-display text-display-huge font-light text-cream mb-16" style={serif} />
+          <div className="relative">
+            <div className="absolute left-[7px] md:left-1/2 top-0 bottom-0 w-px bg-gold/30" />
+            <div className="space-y-12 md:space-y-0">
+              {timeline.map((t, i) => (
+                <ScrollReveal key={t.year} delay={i * 0.06}>
+                  <div className={`relative md:grid md:grid-cols-2 md:gap-16 md:py-8 ${i % 2 ? "" : ""}`}>
+                    <span className="absolute left-0 md:left-1/2 md:-translate-x-1/2 top-1 w-[15px] h-[15px] rounded-full bg-gold border-[3px] border-black shadow-[0_0_0_3px_rgba(196,151,74,0.25)]" />
+                    <div className={`pl-10 md:pl-0 ${i % 2 ? "md:col-start-2 md:pl-16" : "md:text-right md:pr-16"}`}>
+                      <p className="font-display text-5xl font-light text-gold leading-none mb-3" style={serif}>{t.year}</p>
+                      <p className="text-text-secondary text-base leading-relaxed max-w-md md:inline-block">{t.text}</p>
+                    </div>
                   </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.12}>
-                <div className="border-l-2 border-gold/40 pl-6 py-2 my-8">
-                  <p className="text-[9px] tracking-[0.2em] uppercase text-gold mb-4">January 2nd, 2025</p>
-                  <div className="space-y-4 text-text-secondary text-sm md:text-base leading-loose italic font-light" style={{ fontFamily: "'Cormorant Garamond', serif" }}>
-                    <p className="text-cream/80 text-base md:text-lg">
-                      &ldquo;On January 2nd, 2025, God slowed me down faster than anything I&apos;ve ever seen.
-                    </p>
-                    <p>
-                      I&apos;ve seen Him lift me up and drop me. I&apos;ve been broke, made wrong financial decisions, and lived a fast life. Even in my speed, God slowed me down.
-                    </p>
-                    <p className="text-cream/80">
-                      What felt like failure became refinement. What felt like delay became direction. Moore Covenant Productions wasn&apos;t built from perfection — it was built from rebuilding.&rdquo;
-                    </p>
-                  </div>
-                </div>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.15}>
-                <h2
-                  className="font-display text-2xl md:text-3xl font-light text-cream leading-tight mb-5"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  The results speak.
-                </h2>
-                <div className="space-y-4 text-text-secondary text-sm md:text-base leading-loose">
-                  <p>
-                    I&apos;ve helped creators, beauty brands, and entrepreneurs generate over <em className="text-cream">60 million views</em>, grow six-figure followings, and build digital presences that convert — not just impress. I don&apos;t just manage your social media. I tell your story.
-                  </p>
-                  <p>
-                    And there is nothing more powerful than a story told right.
-                  </p>
-                </div>
-
-                <blockquote
-                  className="font-display text-xl italic text-cream border-l-2 border-gold pl-5 my-8 leading-snug"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  &ldquo;My story is who I am.<br />Are you ready to tell yours?&rdquo;
-                </blockquote>
-              </ScrollReveal>
-
-              <ScrollReveal delay={0.3}>
-                <h2
-                  className="font-display text-2xl md:text-3xl font-light text-cream leading-tight mb-5"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  Where the name comes from.
-                </h2>
-                <div className="space-y-4 text-text-secondary text-sm md:text-base leading-loose">
-                  <p>
-                    &ldquo;Moore&rdquo; is legacy — family, name, lineage. &ldquo;Covenant&rdquo; is commitment — to truth, to craft, to the people we serve. &ldquo;Productions&rdquo; is the vessel — the work, the art, the output that carries everything forward.
-                  </p>
-                  <p>
-                    Together, it&apos;s a statement: we are building something here that matters beyond any single project.
-                  </p>
-                </div>
-
-                <div className="flex flex-wrap gap-2 mt-6 mb-8">
-                  {["Faith-Driven", "Storytelling", "Social Strategy", "Brand Building", "Coaching"].map((tag) => (
-                    <span key={tag} className="px-3 py-1.5 border border-gold/15 text-[10px] tracking-[0.14em] uppercase text-gold bg-gold/5">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <Link href="/contact" className="btn-primary">
-                    <span>Work With Elijah</span>
-                  </Link>
-                  <Link href="/services" className="btn-ghost">
-                    <span>View Services</span>
-                  </Link>
-                </div>
-              </ScrollReveal>
+                </ScrollReveal>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── COVENANT VALUES ─── */}
-      <section className="py-24 md:py-36 px-6 md:px-10 lg:px-16 bg-black">
+      {/* COVENANT VALUES (cream) */}
+      <section className="section-cream py-24 md:py-32 px-6 md:px-10 lg:px-16">
         <div className="max-w-[1400px] mx-auto">
-          <div className="text-center max-w-xl mx-auto mb-16 md:mb-20">
-            <ScrollReveal>
-              <p className="section-label justify-center mb-4 flex">
-                <span className="block w-6 h-px bg-gold mr-3 mt-[6px]" />
-                What We Stand On
-              </p>
-              <h2
-                className="font-display text-display-lg font-light text-cream"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                The <em className="italic text-gold">Covenant</em> Framework
-              </h2>
-              <p
-                className="font-display italic text-gold/60 mt-3 text-lg"
-                style={{ fontFamily: "'Cormorant Garamond', serif" }}
-              >
-                Built on Covenant. Established for More.
-              </p>
-            </ScrollReveal>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border/40">
+          <ScrollReveal>
+            <Station scene="04" name="What we stand on" tone="light" className="mb-6" />
+          </ScrollReveal>
+          <AnimatedText text="The Covenant Framework." tag="h2" className="font-display text-display-huge font-light text-black mb-4" style={serif} />
+          <ScrollReveal delay={0.2}>
+            <p className="font-display italic text-black/60 text-xl mb-14" style={serif}>Built on Covenant. Established for More.</p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {values.map((v, i) => (
-              <ScrollReveal key={v.letter + i} delay={i * 0.06} direction="up">
-                <div className="bg-black p-8 md:p-10 group hover:bg-gold/5 transition-colors duration-300 relative">
-                  <span
-                    className="absolute top-3 right-4 font-display text-5xl font-light text-gold/10 leading-none"
-                    style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                  >
-                    {v.letter}
-                  </span>
-                  <p className="text-[11px] tracking-[0.16em] uppercase text-gold font-medium mb-3 relative z-10">{v.name}</p>
-                  <p className="text-xs text-text-muted leading-relaxed relative z-10">{v.desc}</p>
+              <ScrollReveal key={v.letter + i} delay={i * 0.05}>
+                <div className="pill-card bg-cream/60 border border-black/10 p-7 h-full relative overflow-hidden group hover:bg-black hover:text-cream transition-colors duration-500">
+                  <span className="absolute -top-2 right-4 font-display text-7xl font-light text-gold/20 leading-none" style={serif}>{v.letter}</span>
+                  <p className="text-[10px] tracking-[0.18em] uppercase text-gold font-medium mb-3 relative z-10">{v.name}</p>
+                  <p className="text-sm leading-relaxed relative z-10 text-black/70 group-hover:text-text-secondary transition-colors duration-500">{v.desc}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -257,75 +208,91 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ─── SCRIPTURE ─── */}
-      <section className="py-20 md:py-28 px-6 md:px-10 lg:px-16 bg-dark border-y border-border/40">
+      {/* TEAM (black) */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black">
         <div className="max-w-[1400px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1px_1fr] gap-0 items-center">
-            <ScrollReveal direction="left">
-              <div className="text-center py-10 lg:py-8 px-8">
-                <p
-                  className="font-display italic text-xl md:text-2xl font-light text-cream leading-relaxed max-w-md mx-auto mb-5"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  &ldquo;I will establish{" "}
-                  <span className="text-gold not-italic">my covenant</span>{" "}
-                  between me and you and your descendants after you, throughout your generations, for an everlasting covenant.&rdquo;
-                </p>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-gold">Genesis 17:7</p>
-              </div>
-            </ScrollReveal>
-            <div className="hidden lg:block bg-border/40 self-stretch" />
-            <ScrollReveal direction="right">
-              <div className="text-center py-10 lg:py-8 px-8 border-t border-border/40 lg:border-t-0">
-                <p
-                  className="font-display italic text-xl md:text-2xl font-light text-cream leading-relaxed max-w-md mx-auto mb-5"
-                  style={{ fontFamily: "'Cormorant Garamond', serif" }}
-                >
-                  &ldquo;For we are{" "}
-                  <span className="text-gold not-italic">God&apos;s handiwork</span>
-                  , created in Christ Jesus to do good works, which God prepared in advance for us to do.&rdquo;
-                </p>
-                <p className="text-[10px] tracking-[0.2em] uppercase text-gold">Ephesians 2:10</p>
-              </div>
-            </ScrollReveal>
+          <ScrollReveal>
+            <Station scene="05" name="Our team" className="mb-6" />
+          </ScrollReveal>
+          <AnimatedText text="Small on purpose." tag="h2" className="font-display text-display-huge font-light text-cream mb-4" style={serif} />
+          <ScrollReveal delay={0.2}>
+            <p className="text-text-secondary text-base leading-relaxed max-w-xl mb-14">
+              One person answers your calls, shoots your content, and signs off on the edit. The rest of
+              the team is you.
+            </p>
+          </ScrollReveal>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {team.map((m, i) => (
+              <ScrollReveal key={m.name} delay={i * 0.08}>
+                <div className="pill-card bg-dark border border-border/40 overflow-hidden h-full group hover:border-gold/40 transition-colors duration-500">
+                  <div className="relative aspect-square overflow-hidden">
+                    {m.img ? (
+                      <Image src={m.img} alt={m.name} fill className="object-cover object-[50%_30%] transition-transform duration-[1500ms] group-hover:scale-105" />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black">
+                        <span className="font-display text-8xl font-light text-gold/20 group-hover:text-gold/50 transition-colors duration-500" style={serif}>
+                          {i === 1 ? "?" : i === 2 ? "+" : "&"}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <p className="font-display text-2xl text-cream leading-none mb-2" style={serif}>{m.name}</p>
+                    <p className="text-[9px] tracking-[0.22em] uppercase text-gold mb-4">{m.role}</p>
+                    <p className="text-sm text-text-secondary leading-relaxed">{m.bio}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
-      <section className="py-32 md:py-44 px-6 md:px-10 lg:px-16 bg-black">
-        <div className="max-w-[1400px] mx-auto text-center">
-          <ScrollReveal>
-            <p className="section-label justify-center mb-8 flex">
-              <span className="block w-6 h-px bg-gold mr-3 mt-[6px]" />
-              The Invitation
+      {/* TOOLS + SCRIPTURE (black) */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black border-t border-border/40">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <div className="lg:col-span-5">
+            <ScrollReveal>
+              <Station scene="06" name="The kit" className="mb-6" />
+              <p className="text-text-secondary text-base leading-relaxed mb-8 max-w-md">
+                What the work gets made with. Nothing rented, nothing outsourced.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {tools.map((t) => (
+                  <span key={t} className="pill-tag pointer-events-none">{t}</span>
+                ))}
+              </div>
+            </ScrollReveal>
+          </div>
+          <ScrollReveal delay={0.2} className="lg:col-span-7">
+            <p className="font-display italic text-2xl md:text-3xl font-light text-cream leading-relaxed mb-5" style={serif}>
+              &ldquo;For we are <span className="text-gold not-italic">God&apos;s handiwork</span>, created in Christ Jesus to do good works, which God prepared in advance for us to do.&rdquo;
             </p>
-            <h2
-              className="font-display text-display-xl font-light text-cream leading-tight max-w-3xl mx-auto mb-4"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              If you&apos;re building something{" "}
-              <em className="italic text-gold">worth remembering — we want to help.</em>
-            </h2>
-            <p className="text-text-secondary text-sm max-w-md mx-auto mb-8">
-              Our work is selective. We choose projects we believe in, so we can give them everything we have.
-            </p>
-            <p className="text-sm text-text-secondary mb-8">
-              Call or text directly:{" "}
-              <a href="tel:3013776958" className="text-gold hover:text-gold-light transition-colors font-medium">
-                (301) 377-6958
-              </a>
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/contact" className="btn-primary">
-                <span>Start the Conversation</span>
-              </Link>
-              <Link href="/services" className="btn-ghost">
-                <span>What We Offer</span>
-              </Link>
-            </div>
+            <p className="text-[10px] tracking-[0.25em] uppercase text-gold">Ephesians 2:10</p>
           </ScrollReveal>
         </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-dark border-t border-border/40">
+        <ScrollReveal>
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-display text-display-huge font-light text-cream mb-6" style={serif}>
+              Let&apos;s talk about yours.
+            </h2>
+            <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-10">
+              A free call, twenty minutes, and an honest read on where your brand is.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/contact" className="btn-primary">
+                <span>Book a Free Call</span>
+              </Link>
+              <Link href="/portfolio" className="btn-ghost">
+                <span>See the Work</span>
+              </Link>
+            </div>
+          </div>
+        </ScrollReveal>
       </section>
     </>
   );

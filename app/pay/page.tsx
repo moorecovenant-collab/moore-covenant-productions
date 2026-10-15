@@ -102,7 +102,7 @@ export default function PayPage() {
             transition={{ duration: 0.9, delay: 0.9 }}
             className="text-text-secondary text-base leading-loose max-w-xl mt-8"
           >
-            Choose your preferred payment method below. All transactions are secure. If you have questions, reach us at <a href="tel:3013776958" className="text-gold">(301) 377-6958</a>.
+            Choose your preferred payment method below. All transactions are secure. If you have questions, reach us at <a href="tel:2024075248" className="text-gold">(202) 407-5248</a>.
           </motion.p>
         </div>
       </section>
@@ -161,10 +161,10 @@ export default function PayPage() {
           {/* Note */}
           <ScrollReveal>
             <div className="flex items-start gap-4 p-6 border border-gold/20 bg-gold/5">
-              <span className="text-gold shrink-0 mt-0.5">—</span>
+              <span className="text-gold shrink-0 mt-0.5">, </span>
               <p className="text-xs text-text-secondary leading-relaxed">
                 <span className="text-gold">Payment Note: </span>
-                All projects require a deposit before work begins. Invoices will be sent via email prior to payment. Questions? Text or call <a href="tel:3013776958" className="text-gold">(301) 377-6958</a> or email <a href="mailto:moorecovenant@gmail.com" className="text-gold">moorecovenant@gmail.com</a>.
+                All projects require a deposit before work begins. Invoices will be sent via email prior to payment. Questions? Text or call <a href="tel:2024075248" className="text-gold">(202) 407-5248</a> or email <a href="mailto:moorecovenant@gmail.com" className="text-gold">moorecovenant@gmail.com</a>.
               </p>
             </div>
           </ScrollReveal>
