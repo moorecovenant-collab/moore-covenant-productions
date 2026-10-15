@@ -127,7 +127,9 @@ const Body = z.object({
 });
 
 export async function POST(req: NextRequest) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  // the key can be stored as ANTHROPIC_API_KEY or simply "anthropic" in the host's env settings
+  const apiKey = process.env.ANTHROPIC_API_KEY || process.env.anthropic || process.env.ANTHROPIC;
+  if (!apiKey) {
     return Response.json({ error: "not_configured" }, { status: 503 });
   }
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
@@ -139,7 +141,7 @@ export async function POST(req: NextRequest) {
     return Response.json({ error: "bad_request" }, { status: 400 });
   }
 
-  const client = new Anthropic();
+  const client = new Anthropic({ apiKey });
   const page = parsed.data.page ?? "/";
   const messages: Anthropic.MessageParam[] = parsed.data.messages.map((m) => ({ role: m.role, content: m.content }));
   const encoder = new TextEncoder();
