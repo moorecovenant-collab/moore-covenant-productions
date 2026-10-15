@@ -186,44 +186,112 @@ export default function TrainRide({
 
   // announcements: chime + voice at each stop (on by default; muted with the speaker button)
   const [voiceOn, setVoiceOn] = useState(true);
+  const [needsTap, setNeedsTap] = useState(false);
   const announced = useRef<string | null>(null);
-  const unlocked = useRef(false);
+  const chimeEl = useRef<HTMLAudioElement | null>(null);
+  const voiceEl = useRef<HTMLAudioElement | null>(null);
+  const voiceTimer = useRef<number | null>(null);
+
+  // two persistent audio elements, reused for every cue (phones only allow sound on elements unlocked by a tap)
+  const getEls = () => {
+    if (!chimeEl.current || !voiceEl.current) {
+      const c = new Audio(`${voicePath}chime.m4a`);
+      c.preload = "auto";
+      c.volume = 0.6;
+      const v = new Audio(`${voicePath}chime.m4a`);
+      v.preload = "auto";
+      v.volume = 0.9;
+      chimeEl.current = c;
+      voiceEl.current = v;
+    }
+    return { chime: chimeEl.current as HTMLAudioElement, voice: voiceEl.current as HTMLAudioElement };
+  };
+
+  // Browsers only allow sound after a click, tap, or key press. Scrolling does not count.
+  // Unlock both elements inside a real gesture; after that the cues can play on their own.
+  const unlockP = useRef<Promise<void> | null>(null);
+  const unlockAudio = (): Promise<void> => {
+    if (unlockP.current) return unlockP.current;
+    const { chime, voice } = getEls();
+    let failed = false;
+    const jobs = [chime, voice].map((el) => {
+      el.muted = true;
+      const p = el.play();
+      return (p ? p.then(() => { el.pause(); el.currentTime = 0; }) : Promise.resolve())
+        .catch(() => {
+          failed = true;
+        })
+        .finally(() => {
+          el.muted = false;
+        });
+    });
+    const all = Promise.all(jobs).then(() => {
+      if (failed) unlockP.current = null;
+    });
+    unlockP.current = all;
+    return all;
+  };
+
   useEffect(() => {
-    const unlock = () => {
-      unlocked.current = true;
+    const onGesture = () => {
+      void unlockAudio();
     };
-    window.addEventListener("pointerdown", unlock, { once: true });
-    window.addEventListener("keydown", unlock, { once: true });
-    window.addEventListener("wheel", unlock, { once: true, passive: true });
-    window.addEventListener("touchstart", unlock, { once: true, passive: true });
-    return () => {
-      window.removeEventListener("pointerdown", unlock);
-      window.removeEventListener("keydown", unlock);
-      window.removeEventListener("wheel", unlock);
-      window.removeEventListener("touchstart", unlock);
-    };
+    const evts = ["pointerdown", "click", "keydown", "touchend"] as const;
+    evts.forEach((e) => window.addEventListener(e, onGesture, { passive: true }));
+    return () => evts.forEach((e) => window.removeEventListener(e, onGesture));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const stopAudio = () => {
+    if (voiceTimer.current) window.clearTimeout(voiceTimer.current);
+    chimeEl.current?.pause();
+    voiceEl.current?.pause();
+  };
+
   // one announcement per cue: "next-NN" when the sign flips to the next stop, "arrive-NN" (after the chime) when the doors open
-  const playing = useRef<HTMLAudioElement | null>(null);
+  const playCue = (c: string) => {
+    const { chime, voice } = getEls();
+    stopAudio();
+    // a refused play (no tap yet) shows the "Tap for sound" button; interruptions are fine
+    const blocked = (e: unknown) => {
+      if ((e as Error)?.name === "NotAllowedError") setNeedsTap(true);
+    };
+    const ok = () => setNeedsTap(false);
+    voice.src = `${voicePath}${c}.m4a`;
+    voice.currentTime = 0;
+    if (c.startsWith("arrive")) {
+      chime.currentTime = 0;
+      chime.play().then(ok).catch(blocked);
+      voiceTimer.current = window.setTimeout(() => voice.play().then(ok).catch(blocked), 650);
+    } else {
+      voice.play().then(ok).catch(blocked);
+    }
+  };
+
   const cue = active ? `arrive-${active.number}` : nextStop ? `next-${nextStop.number}` : null;
   useEffect(() => {
-    // nothing plays until the rider has actually started the ride and touched the page
-    if (!voiceOn || !cue || !started || !unlocked.current || announced.current === cue) return;
+    // nothing plays until the rider has actually started the ride
+    if (!voiceOn || !cue || !started || announced.current === cue) return;
     announced.current = cue;
-    playing.current?.pause();
-    const voice = new Audio(`${voicePath}${cue}.m4a`);
-    voice.volume = 0.9;
-    playing.current = voice;
-    if (cue.startsWith("arrive")) {
-      const chime = new Audio(`${voicePath}chime.m4a`);
-      chime.volume = 0.6;
-      chime.play().catch(() => {});
-      const t = window.setTimeout(() => voice.play().catch(() => {}), 650);
-      return () => window.clearTimeout(t);
-    }
-    voice.play().catch(() => {});
+    playCue(cue);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cue, voiceOn, started]);
+
+  const onSoundButton = () => {
+    if (needsTap && voiceOn) {
+      // this tap is the permission: unlock, then play whatever the sign is showing right now
+      const c = cue;
+      void unlockAudio().finally(() => {
+        if (c) {
+          announced.current = c;
+          playCue(c);
+        }
+      });
+      return;
+    }
+    if (voiceOn) stopAudio();
+    setVoiceOn((v) => !v);
+  };
 
   if (reduced) {
     return (
@@ -257,13 +325,15 @@ export default function TrainRide({
           <span className="text-[10px] tracking-[0.28em] uppercase text-cream">The Covenant Line</span>
           <button
             type="button"
-            onClick={() => setVoiceOn((v) => !v)}
-            aria-pressed={voiceOn}
-            aria-label={voiceOn ? "Mute announcements" : "Unmute announcements"}
-            className="ml-1 inline-flex items-center gap-1.5 border border-gold/40 rounded-full px-2.5 py-1 bg-black/50 backdrop-blur text-[9px] tracking-[0.22em] uppercase text-text-muted hover:text-gold transition-colors"
+            onClick={onSoundButton}
+            aria-pressed={voiceOn && !needsTap}
+            aria-label={!voiceOn ? "Unmute announcements" : needsTap ? "Tap to turn on announcement sound" : "Mute announcements"}
+            className={`ml-1 inline-flex items-center gap-1.5 border rounded-full px-2.5 py-1 bg-black/50 backdrop-blur text-[9px] tracking-[0.22em] uppercase transition-colors ${
+              needsTap && voiceOn ? "border-gold text-gold animate-pulse" : "border-gold/40 text-text-muted hover:text-gold"
+            }`}
           >
-            <span aria-hidden>{voiceOn ? "♪" : "×"}</span>
-            <span>{voiceOn ? "Announcements on" : "Muted"}</span>
+            <span aria-hidden>{voiceOn ? "\u266A" : "\u00D7"}</span>
+            <span>{!voiceOn ? "Muted" : needsTap ? "Tap for sound" : "Announcements on"}</span>
           </button>
         </div>
 
