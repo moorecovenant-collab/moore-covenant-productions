@@ -1,174 +1,113 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
-type Step = {
-  id: string;
-  question: string;
-  field?: keyof LeadData;
-  options?: string[];
-  type?: "text" | "email" | "tel";
-  placeholder?: string;
-};
+type Message = { role: "user" | "assistant"; text: string };
 
-type LeadData = {
-  name: string;
-  email: string;
-  phone: string;
-  service: string;
-  budget: string;
-  timeline: string;
-};
+const GREETING =
+  "Hey, this is the front desk at Moore Covenant Productions. Ask me about social, video, or websites, or tell me what you're building and I'll point you the right way.";
 
-type Message = {
-  role: "bot" | "user";
-  text: string;
-};
+const QUICK = ["What do you charge?", "What's a content day?", "I need a website", "Book a call with Elijah"];
 
-const steps: Step[] = [
-  {
-    id: "intro",
-    question: "Hey, I'm Elijah's assistant at Moore Covenant Productions. What's your name?",
-    field: "name",
-    type: "text",
-    placeholder: "Your first name",
-  },
-  {
-    id: "service",
-    question: "Good to meet you, {name}. What are you looking for help with?",
-    field: "service",
-    options: [
-      "Social Media Management",
-      "Content Strategy",
-      "Content Creation",
-      "Brand Building + Website",
-      "1:1 Coaching / Mentorship",
-      "Content Day Production",
-      "Not sure yet",
-    ],
-  },
-  {
-    id: "budget",
-    question: "Got it. What's your approximate monthly budget?",
-    field: "budget",
-    options: [
-      "Under $1,000",
-      "$1,000 – $3,000",
-      "$3,000 – $7,500",
-      "$7,500+",
-      "Let's discuss",
-    ],
-  },
-  {
-    id: "timeline",
-    question: "When are you looking to get started?",
-    field: "timeline",
-    options: ["ASAP", "Within 30 days", "1–3 months", "Just exploring"],
-  },
-  {
-    id: "email",
-    question: "Perfect. What email should Elijah reach you at?",
-    field: "email",
-    type: "email",
-    placeholder: "your@email.com",
-  },
-  {
-    id: "phone",
-    question: "And your phone number? (optional, for a quicker reply)",
-    field: "phone",
-    type: "tel",
-    placeholder: "(301) 000-0000",
-  },
-];
+const STORE = "mcp-agent-chat";
 
 export default function ChatWidget() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [stepIndex, setStepIndex] = useState(0);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [lead, setLead] = useState<Partial<LeadData>>({});
-  const [done, setDone] = useState(false);
-  const [sending, setSending] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [offline, setOffline] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
 
-  const currentStep = steps[stepIndex];
-
-  const interpolate = (text: string) =>
-    text.replace("{name}", lead.name ?? "there");
-
+  // remember the conversation for the session
   useEffect(() => {
-    if (open && messages.length === 0) {
-      setMessages([{ role: "bot", text: steps[0].question }]);
-    }
-  }, [open, messages.length]);
-
+    try {
+      const saved = sessionStorage.getItem(STORE);
+      if (saved) setMessages(JSON.parse(saved));
+    } catch {}
+  }, []);
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    try {
+      if (messages.length) sessionStorage.setItem(STORE, JSON.stringify(messages.slice(-40)));
+    } catch {}
   }, [messages]);
 
   useEffect(() => {
-    if (open && !currentStep?.options) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [open, stepIndex, currentStep?.options]);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, busy]);
 
-  const advance = (value: string) => {
-    const step = steps[stepIndex];
-    const newLead = step.field ? { ...lead, [step.field]: value } : lead;
-    setLead(newLead);
-    setMessages((prev) => [...prev, { role: "user", text: value }]);
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 150);
+  }, [open]);
+
+  const send = async (text: string) => {
+    const content = text.trim();
+    if (!content || busy) return;
+    const history: Message[] = [...messages, { role: "user", text: content }];
+    setMessages(history);
     setInput("");
-
-    const next = stepIndex + 1;
-    if (next < steps.length) {
-      setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          { role: "bot", text: interpolate(steps[next].question).replace("{name}", newLead.name ?? "there") },
-        ]);
-        setStepIndex(next);
-      }, 500);
-    } else {
-      submitLead(newLead as LeadData);
-    }
-  };
-
-  const submitLead = async (data: LeadData) => {
-    setSending(true);
+    setBusy(true);
+    abortRef.current?.abort();
+    const ac = new AbortController();
+    abortRef.current = ac;
     try {
-      await fetch("/api/leads", {
+      const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        signal: ac.signal,
+        body: JSON.stringify({
+          page: pathname,
+          messages: history.slice(-30).map((m) => ({ role: m.role, content: m.text })),
+        }),
       });
-    } catch {
-      // fail silently, lead still captured in state
-    } finally {
-      setSending(false);
-      setTimeout(() => {
+      if (res.status === 503) {
+        setOffline(true);
         setMessages((prev) => [
           ...prev,
-          {
-            role: "bot",
-            text: `Thanks, ${data.name}. Elijah will be in touch within 24–48 hours. You can also reach him directly at (202) 407-5248.`,
-          },
+          { role: "assistant", text: "The desk is closed for a moment. Text Elijah at (202) 407-5248 or use the contact page and he'll get right back to you." },
         ]);
-        setDone(true);
-      }, 500);
+        return;
+      }
+      if (!res.ok || !res.body) throw new Error(String(res.status));
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let acc = "";
+      setMessages((prev) => [...prev, { role: "assistant", text: "" }]);
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        acc += decoder.decode(value, { stream: true });
+        const snapshot = acc;
+        setMessages((prev) => {
+          const next = prev.slice();
+          next[next.length - 1] = { role: "assistant", text: snapshot };
+          return next;
+        });
+      }
+      if (!acc.trim()) {
+        setMessages((prev) => {
+          const next = prev.slice();
+          next[next.length - 1] = { role: "assistant", text: "Say that one more time? I didn't catch it." };
+          return next;
+        });
+      }
+    } catch (e) {
+      if ((e as Error).name === "AbortError") return;
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", text: "I lost the connection for a second. Try again, or text Elijah at (202) 407-5248." },
+      ]);
+    } finally {
+      setBusy(false);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    advance(input.trim());
-  };
-
-  const handleSkip = () => {
-    advance(", ");
-  };
+  const shown: Message[] = messages.length ? messages : [{ role: "assistant", text: GREETING }];
 
   return (
     <>
@@ -195,8 +134,10 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.97 }}
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-6 right-6 z-50 w-[360px] max-w-[calc(100vw-1.5rem)] bg-black border border-border/60 shadow-2xl flex flex-col"
-            style={{ height: "520px", maxHeight: "calc(100vh - 3rem)" }}
+            className="fixed bottom-6 right-6 z-50 w-[380px] max-w-[calc(100vw-1.5rem)] bg-black border border-border/60 shadow-2xl flex flex-col"
+            style={{ height: "560px", maxHeight: "calc(100vh - 3rem)" }}
+            role="dialog"
+            aria-label="Chat with Moore Covenant Productions"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-border/40 shrink-0">
@@ -207,25 +148,41 @@ export default function ChatWidget() {
                 <div>
                   <p className="text-[10px] tracking-[0.14em] uppercase text-cream">Moore Covenant</p>
                   <p className="text-[9px] text-text-muted flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold inline-block" />
-                    Usually replies within 24h
+                    <span className={`w-1.5 h-1.5 rounded-full inline-block ${offline ? "bg-text-muted" : "bg-gold"}`} />
+                    {offline ? "Leave a message" : "Front desk, online now"}
                   </p>
                 </div>
               </div>
-              <button
-                onClick={() => setOpen(false)}
-                className="text-text-muted hover:text-cream transition-colors duration-200 p-1"
-                aria-label="Close chat"
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                  <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </button>
+              <div className="flex items-center gap-1">
+                {messages.length > 0 && (
+                  <button
+                    onClick={() => {
+                      abortRef.current?.abort();
+                      setMessages([]);
+                      try {
+                        sessionStorage.removeItem(STORE);
+                      } catch {}
+                    }}
+                    className="text-[9px] tracking-[0.14em] uppercase text-text-muted hover:text-cream transition-colors duration-200 px-2 py-1"
+                  >
+                    Clear
+                  </button>
+                )}
+                <button
+                  onClick={() => setOpen(false)}
+                  className="text-text-muted hover:text-cream transition-colors duration-200 p-1"
+                  aria-label="Close chat"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
-              {messages.map((msg, i) => (
+              {shown.map((msg, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 8 }}
@@ -234,17 +191,15 @@ export default function ChatWidget() {
                   className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[80%] px-4 py-2.5 text-xs leading-relaxed ${
-                      msg.role === "user"
-                        ? "bg-gold text-black"
-                        : "bg-charcoal text-text-secondary border border-border/40"
+                    className={`max-w-[85%] px-4 py-2.5 text-xs leading-relaxed whitespace-pre-wrap ${
+                      msg.role === "user" ? "bg-gold text-black" : "bg-charcoal text-text-secondary border border-border/40"
                     }`}
                   >
-                    {msg.text}
+                    {msg.text || (busy ? " " : "")}
                   </div>
                 </motion.div>
               ))}
-              {sending && (
+              {busy && (shown[shown.length - 1]?.role !== "assistant" || !shown[shown.length - 1]?.text) && (
                 <div className="flex justify-start">
                   <div className="bg-charcoal border border-border/40 px-4 py-3 flex gap-1 items-center">
                     {[0, 1, 2].map((i) => (
@@ -261,53 +216,59 @@ export default function ChatWidget() {
               <div ref={bottomRef} />
             </div>
 
-            {/* Input */}
-            {!done && (
-              <div className="border-t border-border/40 px-4 py-3 shrink-0">
-                {currentStep?.options ? (
-                  <div className="flex flex-wrap gap-2">
-                    {currentStep.options.map((opt) => (
-                      <button
-                        key={opt}
-                        onClick={() => advance(opt)}
-                        className="px-3 py-1.5 text-[10px] tracking-[0.08em] border border-border/60 text-text-secondary hover:border-gold hover:text-gold transition-all duration-200"
-                      >
-                        {opt}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="flex gap-2">
-                    <input
-                      ref={inputRef}
-                      type={currentStep?.type ?? "text"}
-                      value={input}
-                      onChange={(e) => setInput(e.target.value)}
-                      placeholder={currentStep?.placeholder ?? "Type here..."}
-                      className="flex-1 bg-transparent border border-border/60 focus:border-gold text-cream placeholder-text-muted px-3 py-2 text-xs outline-none transition-colors duration-300"
-                    />
+            {/* Quick prompts, then the input */}
+            <div className="border-t border-border/40 px-4 py-3 shrink-0 space-y-2">
+              {messages.length === 0 && !offline && (
+                <div className="flex flex-wrap gap-2">
+                  {QUICK.map((q) => (
                     <button
-                      type="submit"
-                      disabled={!input.trim()}
-                      className="px-3 py-2 border border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                      key={q}
+                      onClick={() => send(q)}
+                      className="px-3 py-1.5 text-[10px] tracking-[0.08em] border border-border/60 text-text-secondary hover:border-gold hover:text-gold transition-all duration-200"
                     >
-                      <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
+                      {q}
                     </button>
-                    {currentStep?.id === "phone" && (
-                      <button
-                        type="button"
-                        onClick={handleSkip}
-                        className="px-3 py-2 text-[10px] tracking-[0.08em] text-text-muted hover:text-cream transition-colors duration-200 border border-border/40"
-                      >
-                        Skip
-                      </button>
-                    )}
-                  </form>
-                )}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+              {offline ? (
+                <a
+                  href="/contact"
+                  className="block text-center px-3 py-2 border border-gold text-gold hover:bg-gold hover:text-black text-[10px] tracking-[0.14em] uppercase transition-all duration-200"
+                >
+                  Go to the contact page
+                </a>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    send(input);
+                  }}
+                  className="flex gap-2"
+                >
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    placeholder="Ask anything about the studio"
+                    maxLength={2000}
+                    className="flex-1 bg-transparent border border-border/60 focus:border-gold text-cream placeholder-text-muted px-3 py-2 text-xs outline-none transition-colors duration-300"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!input.trim() || busy}
+                    className="px-3 py-2 border border-gold text-gold hover:bg-gold hover:text-black disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
+                    aria-label="Send"
+                  >
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                      <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </form>
+              )}
+              <p className="text-[9px] text-text-muted/70 text-center">Elijah reads every conversation. Text (202) 407-5248 any time.</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
