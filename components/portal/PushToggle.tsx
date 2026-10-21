@@ -29,7 +29,14 @@ export default function PushToggle({ publicKey, compact }: { publicKey: string |
       try {
         const reg = await navigator.serviceWorker.ready;
         const sub = await reg.pushManager.getSubscription();
-        setState(sub && Notification.permission === "granted" ? "on" : "off");
+        if (sub && Notification.permission === "granted") {
+          // the phone already has a subscription: make sure the server has it too (safe to repeat)
+          const r = await saveSubscription(sub.toJSON());
+          if (!r.ok) setMsg(r.error);
+          setState("on");
+        } else {
+          setState("off");
+        }
       } catch {
         setState("unsupported");
       }
@@ -99,6 +106,12 @@ export default function PushToggle({ publicKey, compact }: { publicKey: string |
               disabled={pending}
               onClick={() =>
                 start(async () => {
+                  // re-register this device first, in case the server lost it
+                  try {
+                    const reg = await navigator.serviceWorker.ready;
+                    const sub = await reg.pushManager.getSubscription();
+                    if (sub) await saveSubscription(sub.toJSON());
+                  } catch {}
                   const r = await sendTestPush();
                   setMsg(r.ok ? "Sent. Check your phone." : r.error);
                 })
