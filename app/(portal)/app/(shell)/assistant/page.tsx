@@ -1,14 +1,15 @@
-import ComingSoon from "@/components/portal/ComingSoon";
+import AssistantChat from "@/components/portal/AssistantChat";
 import PageHeader from "@/components/portal/PageHeader";
 import { getSession } from "@/lib/portal/session";
 
-export default async function Page() {
+export const dynamic = "force-dynamic";
+
+export default async function AssistantPage() {
   const session = (await getSession())!;
-  const admin = session.role === "admin";
   return (
     <>
-      <PageHeader eyebrow="Assistant" title={admin ? "Assistant" : "Assistant"} />
-      <ComingSoon title={admin ? "The same assistant from the website, now able to answer client questions about their own account and handle booking." : "Ask about your balance, your next call, pricing, or moving a booking. It only ever sees your account."}>{admin ? "" : ""}</ComingSoon>
+      <PageHeader eyebrow={session.role === "admin" ? "Studio" : "Assistant"} title={session.role === "admin" ? "Your assistant" : "Studio assistant"} />
+      <AssistantChat role={session.role} name={session.name} previewing={session.previewing} />
     </>
   );
 }

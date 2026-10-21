@@ -19,6 +19,7 @@ const ADMIN_TABS = [
   { href: "/app/book", label: "Schedule", icon: CalendarIcon },
   { href: "/app/pay", label: "Payments", icon: CardIcon },
   { href: "/app/alerts", label: "Alerts", icon: BellIcon },
+  { href: "/app/assistant", label: "Assistant", icon: ChatIcon },
 ];
 
 export default function TabBar({ role, unread = 0 }: { role: "admin" | "client"; unread?: number }) {
