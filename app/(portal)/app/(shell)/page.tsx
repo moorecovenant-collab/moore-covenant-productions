@@ -1,5 +1,7 @@
 import Link from "next/link";
 import InstallCard from "@/components/portal/InstallCard";
+import PushToggle from "@/components/portal/PushToggle";
+import { listAlertsForClient } from "@/lib/portal/alerts";
 import { STUDIO_PHONE, STUDIO_SMS } from "@/lib/portal/config";
 import { listClients, findClientById } from "@/lib/portal/clients";
 import { listPendingLeads } from "@/lib/portal/leads";
@@ -83,7 +85,8 @@ export default async function Home() {
     );
   }
 
-  const [bookings, invoices, me] = await Promise.all([listUpcomingBookings(session.clientId!), listInvoices(session.clientId!), findClientById(session.clientId!)]);
+  const [bookings, invoices, me, alerts] = await Promise.all([listUpcomingBookings(session.clientId!), listInvoices(session.clientId!), findClientById(session.clientId!), listAlertsForClient(session.clientId!)]);
+  const latest = alerts[0];
   const next = bookings[0];
   const open = invoices.filter((i) => i.status === "open");
   const owed = open.reduce((n, i) => n + i.amountCents, 0);
@@ -92,6 +95,7 @@ export default async function Home() {
     <div className="space-y-4">
       {header}
       <InstallCard />
+      <PushToggle compact publicKey={session.previewing ? null : (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? null)} />
       {me?.service && (
         <div className={card}>
           <p className={label}>Your service</p>
@@ -119,10 +123,17 @@ export default async function Home() {
           {owed ? (late ? "Part of this is past due. Tap to pay." : "Tap to pay or see invoices.") : "Nothing due right now."}
         </p>
       </Link>
-      <div className={card}>
+      <Link href="/app/alerts" className={`${card} block transition-colors hover:border-gold/60`}>
         <p className={label}>From the studio</p>
-        <p className="text-sm leading-relaxed text-text-secondary">No updates right now. Deals and schedule changes show up here first.</p>
-      </div>
+        {latest ? (
+          <>
+            <p className="font-display text-xl text-cream">{latest.title}</p>
+            <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-text-secondary">{latest.body}</p>
+          </>
+        ) : (
+          <p className="text-sm leading-relaxed text-text-secondary">No updates right now. Deals and schedule changes show up here first.</p>
+        )}
+      </Link>
       <a href={STUDIO_SMS} className="block rounded-full border border-border py-3.5 text-center text-sm text-cream transition-colors hover:border-gold hover:text-gold">
         Text Elijah {STUDIO_PHONE}
       </a>

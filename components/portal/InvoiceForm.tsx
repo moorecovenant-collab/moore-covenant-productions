@@ -121,6 +121,10 @@ export function PaymentSettingsForm({ initial }: { initial: PaymentSettings }) {
         <input type="email" value={s.zelleEmail} onChange={(e) => setS({ ...s, zelleEmail: e.target.value })} autoCapitalize="none" className={`${input} mt-1`} />
       </label>
       <label className="block text-xs text-text-secondary">
+        Cash App $cashtag
+        <input value={s.cashAppTag} onChange={(e) => setS({ ...s, cashAppTag: e.target.value })} autoCapitalize="none" placeholder="$yourname" className={`${input} mt-1`} />
+      </label>
+      <label className="block text-xs text-text-secondary">
         Square payment link (adds a "Pay by card" button)
         <input type="url" inputMode="url" value={s.squareLink} onChange={(e) => setS({ ...s, squareLink: e.target.value })} autoCapitalize="none" placeholder="https://square.link/u/..." className={`${input} mt-1`} />
       </label>

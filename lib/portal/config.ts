@@ -15,11 +15,15 @@ export const devAuthEnabled = !hasSupabase && process.env.NODE_ENV !== "producti
 
 export const ADMIN_NAME = "Elijah";
 
-export function isAdminEmail(email: string) {
-  const list = (process.env.ADMIN_EMAILS ?? "")
+export function adminEmails() {
+  return (process.env.ADMIN_EMAILS ?? "")
     .split(",")
     .map((e) => e.trim().toLowerCase())
     .filter(Boolean);
+}
+
+export function isAdminEmail(email: string) {
+  const list = adminEmails();
   if (devAuthEnabled) list.push("admin@demo.test");
   return list.includes(email.trim().toLowerCase());
 }

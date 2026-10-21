@@ -5,7 +5,7 @@ import { useState, useTransition } from "react";
 import { claimPayment } from "@/app/(portal)/app/actions";
 import type { PaymentSettings } from "@/lib/portal/payments";
 
-const METHODS = ["Zelle", "PayPal", "Square", "Other"] as const;
+const METHODS = ["Zelle", "PayPal", "Square", "Cash App", "Other"] as const;
 
 export default function PayOptions({
   amountCents,
@@ -42,6 +42,16 @@ export default function PayOptions({
             className={`${pill} ${settings.squareLink ? "border border-border text-cream hover:border-gold" : "bg-gold font-medium text-black"}`}
           >
             Pay with PayPal
+          </a>
+        )}
+        {settings.cashAppTag && (
+          <a
+            href={`https://cash.app/$${settings.cashAppTag}/${dollars}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${pill} border border-border text-cream hover:border-gold`}
+          >
+            Pay with Cash App
           </a>
         )}
         {settings.zelleEmail && (

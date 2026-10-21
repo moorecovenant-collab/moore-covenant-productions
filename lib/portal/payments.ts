@@ -4,12 +4,14 @@ export type PaymentSettings = {
   paypalHandle: string; // paypal.me/<handle>
   zelleEmail: string;
   squareLink: string; // a Square payment link or online checkout URL, blank until set up
+  cashAppTag: string; // $cashtag without the $, blank until set up
 };
 
 export const DEFAULT_PAYMENTS: PaymentSettings = {
   paypalHandle: "isthatelii",
   zelleEmail: "elijahandisaacsworld@gmail.com",
   squareLink: "",
+  cashAppTag: "",
 };
 
 export async function getPaymentSettings(): Promise<PaymentSettings> {

@@ -21,7 +21,7 @@ const ADMIN_TABS = [
   { href: "/app/alerts", label: "Alerts", icon: BellIcon },
 ];
 
-export default function TabBar({ role }: { role: "admin" | "client" }) {
+export default function TabBar({ role, unread = 0 }: { role: "admin" | "client"; unread?: number }) {
   const pathname = usePathname();
   const tabs = role === "admin" ? ADMIN_TABS : CLIENT_TABS;
   return (
@@ -43,7 +43,14 @@ export default function TabBar({ role }: { role: "admin" | "client" }) {
                   active ? "text-gold" : "text-text-secondary hover:text-cream"
                 )}
               >
-                <Icon />
+                <span className="relative">
+                  <Icon />
+                  {label === "Alerts" && unread > 0 && (
+                    <span className="absolute -right-1.5 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gold px-1 text-[9px] font-semibold text-black">
+                      {unread > 9 ? "9+" : unread}
+                    </span>
+                  )}
+                </span>
                 {label}
               </Link>
             </li>

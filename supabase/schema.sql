@@ -81,3 +81,27 @@ alter table public.clients  add column if not exists service text;
 alter table public.clients  add column if not exists phone text;
 alter table public.invoices add column if not exists claimed_at timestamptz;
 alter table public.invoices add column if not exists claimed_method text;
+
+-- Phase 4: alerts and phone notifications (web push).
+
+create table if not exists public.alerts (
+  id         uuid primary key default gen_random_uuid(),
+  title      text not null,
+  body       text not null,
+  kind       text not null default 'news' check (kind in ('deal', 'schedule', 'news')),
+  client_id  uuid references public.clients(id) on delete cascade, -- null = everyone
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.push_subscriptions (
+  id         uuid primary key default gen_random_uuid(),
+  user_email text not null,
+  endpoint   text not null unique,
+  p256dh     text not null,
+  auth       text not null,
+  created_at timestamptz not null default now()
+);
+
+alter table public.alerts enable row level security;
+alter table public.push_subscriptions enable row level security;
+alter table public.clients add column if not exists alerts_seen_at timestamptz;

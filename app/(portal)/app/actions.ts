@@ -6,7 +6,9 @@ import { DateTime } from "luxon";
 import { addClient, findClientByEmail, touchClient } from "@/lib/portal/clients";
 import { claimInvoices, createInvoice, listInvoices, setInvoiceStatus } from "@/lib/portal/invoices";
 import { getLead, markLead, saveLead } from "@/lib/portal/leads";
+import { createAlert, deleteAlert as removeAlert, markSeen, ALERT_KINDS } from "@/lib/portal/alerts";
 import { savePaymentSettings } from "@/lib/portal/payments";
+import { pushEnabled, pushToAllClients, pushToEmails, pushToOwner } from "@/lib/portal/push";
 import { SERVICES, serviceLabel } from "@/lib/portal/services";
 import { whenLabel } from "@/lib/portal/format";
 import {
@@ -169,7 +171,7 @@ export async function removeAway(id: string): Promise<Result> {
 
 const FORMSPREE = "https://formspree.io/f/mzdwejlk";
 
-async function notifyOwner(subject: string, fields: Record<string, string>) {
+async function notifyOwner(subject: string, fields: Record<string, string>, url = "/app") {
   try {
     await fetch(FORMSPREE, {
       method: "POST",
@@ -178,6 +180,11 @@ async function notifyOwner(subject: string, fields: Record<string, string>) {
     });
   } catch {
     // the booking is saved either way; this is only the heads-up email
+  }
+  try {
+    await pushToOwner({ title: subject, body: "Tap to open the app.", url, tag: "owner" });
+  } catch {
+    // push is a bonus on top of the email
   }
 }
 
@@ -219,7 +226,7 @@ export async function bookSlot(input: { callType: string; start: string; notes?:
     call: type.label,
     notes: notes ?? "",
     addToGoogleCalendar: gcalLink(`${type.label}: ${session.name}`, start, end, notes ?? ""),
-  });
+  }, "/app/book");
   return { ok: true };
 }
 
@@ -240,7 +247,7 @@ export async function cancelBooking(id: string): Promise<Result> {
     const t = callType(data[0].call_type);
     await notifyOwner(`Booking cancelled: ${session.name}, ${whenLabel(data[0].starts_at)}`, {
       name: session.name, email: session.email, call: t?.label ?? data[0].call_type, when: whenLabel(data[0].starts_at),
-    });
+    }, "/app/book");
   }
   return { ok: true };
 }
@@ -273,6 +280,18 @@ export async function changeInvoice(id: string, status: "open" | "paid" | "void"
   if (!ok) return { ok: false, error: "Not found." };
   try {
     await setInvoiceStatus(id, status);
+    if (status === "paid") {
+      const { data } = await supabaseAdmin().from("invoices").select("amount_cents, description, clients(email)").eq("id", id).maybeSingle();
+      const email = (data?.clients as unknown as { email: string } | null)?.email;
+      if (email && data) {
+        await pushToEmails([email], {
+          title: "Payment received",
+          body: `Thank you. ${data.description} is marked paid.`,
+          url: "/app/pay",
+          tag: "payment",
+        }).catch(() => 0);
+      }
+    }
     return { ok: true };
   } catch (e) {
     return fail(e, "Couldn't update the invoice.");
@@ -327,7 +346,7 @@ export async function submitLead(input: {
         service: serviceLabel(parsed.data.service),
         goals: parsed.data.goals ?? "",
         review: "Open the app, Clients tab, to approve or decline.",
-      });
+      }, "/app/clients");
     }
     return { ok: true };
   } catch {
@@ -380,12 +399,13 @@ const PaymentInput = z.object({
   paypalHandle: z.string().trim().regex(/^[A-Za-z0-9._-]{0,40}$/),
   zelleEmail: z.string().trim().max(200).refine((v) => v === "" || z.email().safeParse(v).success),
   squareLink: z.string().trim().max(400).refine((v) => v === "" || /^https:\/\//.test(v)),
+  cashAppTag: z.string().trim().transform((v) => v.replace(/^\$/, "")).pipe(z.string().regex(/^[A-Za-z0-9_]{0,20}$/)),
 });
 
-export async function savePayments(input: { paypalHandle: string; zelleEmail: string; squareLink: string }): Promise<Result> {
+export async function savePayments(input: { paypalHandle: string; zelleEmail: string; squareLink: string; cashAppTag: string }): Promise<Result> {
   if (!(await adminOnly())) return NOT_ALLOWED;
   const parsed = PaymentInput.safeParse(input);
-  if (!parsed.success) return { ok: false, error: "Check the PayPal handle, the Zelle email, and that the Square link starts with https://." };
+  if (!parsed.success) return { ok: false, error: "Check the PayPal handle, the Zelle email, the Cash App name, and that the Square link starts with https://." };
   try {
     await savePaymentSettings(parsed.data);
     return { ok: true };
@@ -399,7 +419,7 @@ export async function claimPayment(method: string): Promise<Result> {
   const session = await getSession();
   if (!session || session.role !== "client" || !session.clientId) return NOT_ALLOWED;
   if (session.previewing) return { ok: false, error: "You're previewing. Exit the preview first." };
-  const m = z.enum(["Zelle", "PayPal", "Square", "Other"]).safeParse(method);
+  const m = z.enum(["Zelle", "PayPal", "Square", "Cash App", "Other"]).safeParse(method);
   if (!m.success) return { ok: false, error: "Pick how you paid." };
   try {
     const open = (await listInvoices(session.clientId)).filter((i) => i.status === "open" && !i.claimedAt);
@@ -409,9 +429,93 @@ export async function claimPayment(method: string): Promise<Result> {
     await notifyOwner(`${session.name} says they paid $${total.toLocaleString("en-US")} by ${m.data}`, {
       name: session.name, email: session.email, method: m.data, amount: `$${total.toLocaleString("en-US")}`,
       confirm: "Check your account, then open the app, Payments tab, and tap Mark paid.",
-    });
+    }, "/app/pay");
     return { ok: true };
   } catch (e) {
     return fail(e, "Couldn't send that. Text Elijah.");
   }
+}
+
+// ---------- alerts and phone notifications ----------
+
+const Subscription = z.object({
+  endpoint: z.string().url().max(1000),
+  keys: z.object({ p256dh: z.string().min(1).max(300), auth: z.string().min(1).max(100) }),
+});
+
+/** This phone or browser wants notifications for the signed-in person. */
+export async function saveSubscription(sub: unknown): Promise<Result> {
+  const session = await getSession();
+  if (!session || session.previewing) return NOT_ALLOWED;
+  const parsed = Subscription.safeParse(sub);
+  if (!parsed.success) return { ok: false, error: "That device couldn't be registered." };
+  const { error } = await supabaseAdmin()
+    .from("push_subscriptions")
+    .upsert({ user_email: session.email.toLowerCase(), endpoint: parsed.data.endpoint, p256dh: parsed.data.keys.p256dh, auth: parsed.data.keys.auth }, { onConflict: "endpoint" });
+  return error ? { ok: false, error: "Couldn't save that device. Try again." } : { ok: true };
+}
+
+export async function removeSubscription(endpoint: string): Promise<Result> {
+  const session = await getSession();
+  if (!session || session.previewing) return NOT_ALLOWED;
+  await supabaseAdmin().from("push_subscriptions").delete().eq("endpoint", endpoint).eq("user_email", session.email.toLowerCase());
+  return { ok: true };
+}
+
+/** Sends a notification to the signed-in person's own devices, to prove it works. */
+export async function sendTestPush(): Promise<Result> {
+  const session = await getSession();
+  if (!session || session.previewing) return NOT_ALLOWED;
+  if (!pushEnabled) return { ok: false, error: "Notifications aren't switched on for this site yet." };
+  const n = await pushToEmails([session.email], { title: "It works", body: "You'll get alerts from Moore Covenant Productions here.", url: "/app/alerts", tag: "test" });
+  return n > 0 ? { ok: true } : { ok: false, error: "No device was reached. Turn notifications on first." };
+}
+
+const AlertInput = z.object({
+  title: z.string().trim().min(1).max(80),
+  body: z.string().trim().min(1).max(500),
+  kind: z.enum(["deal", "schedule", "news"]),
+  clientId: z.string().uuid().nullable(),
+});
+
+/** Admin: post an alert to everyone or one client. It lands in their feed and on their phone. */
+export async function sendAlert(input: { title: string; body: string; kind: string; clientId: string | null }): Promise<
+  { ok: true; devices: number } | { ok: false; error: string }
+> {
+  if (!(await adminOnly())) return { ok: false, error: "Not allowed." };
+  const parsed = AlertInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Add a title (80 characters or fewer) and a message (500 or fewer)." };
+  try {
+    await createAlert(parsed.data);
+    const kind = ALERT_KINDS.find((k) => k.id === parsed.data.kind)!.label;
+    const payload = { title: parsed.data.title, body: parsed.data.body, url: "/app/alerts", tag: `alert-${kind}` };
+    let devices = 0;
+    if (parsed.data.clientId) {
+      const { data } = await supabaseAdmin().from("clients").select("email").eq("id", parsed.data.clientId).maybeSingle();
+      if (data?.email) devices = await pushToEmails([data.email as string], payload);
+    } else {
+      devices = await pushToAllClients(payload);
+    }
+    return { ok: true, devices };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Couldn't send that." };
+  }
+}
+
+export async function deleteAlert(id: string): Promise<Result> {
+  if (!(await adminOnly())) return NOT_ALLOWED;
+  try {
+    await removeAlert(z.string().uuid().parse(id));
+    return { ok: true };
+  } catch (e) {
+    return fail(e, "Couldn't delete that.");
+  }
+}
+
+/** A client opened their feed: clear the unread badge. */
+export async function markAlertsSeen(): Promise<Result> {
+  const session = await getSession();
+  if (!session || session.role !== "client" || !session.clientId || session.previewing) return { ok: true };
+  await markSeen(session.clientId);
+  return { ok: true };
 }

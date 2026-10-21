@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import PreviewBanner from "@/components/portal/PreviewBanner";
 import TabBar from "@/components/portal/TabBar";
+import { unreadCount } from "@/lib/portal/alerts";
 import { getSession } from "@/lib/portal/session";
 
 export const dynamic = "force-dynamic";
@@ -9,6 +10,8 @@ export const dynamic = "force-dynamic";
 export default async function ShellLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const session = await getSession();
   if (!session) redirect("/app/login");
+
+  const unread = session.role === "client" && session.clientId && !session.previewing ? await unreadCount(session.clientId) : 0;
 
   return (
     <>
@@ -37,7 +40,7 @@ export default async function ShellLayout({ children }: Readonly<{ children: Rea
       <main className="mx-auto max-w-xl px-5 pt-6" style={{ paddingBottom: "calc(6rem + env(safe-area-inset-bottom))" }}>
         {children}
       </main>
-      <TabBar role={session.role} />
+      <TabBar role={session.role} unread={unread} />
     </>
   );
 }
