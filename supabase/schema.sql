@@ -59,3 +59,25 @@ alter table public.settings enable row level security;
 
 -- Away dates. No reason is stored: clients only ever see "unavailable".
 insert into public.blocked_dates (start_date, end_date) values ('2026-10-23', '2026-10-27');
+
+-- Phase 2b: new client requests, plan on the client, payment claims.
+
+create table if not exists public.leads (
+  id         uuid primary key default gen_random_uuid(),
+  name       text not null,
+  email      text not null,
+  company    text,
+  phone      text,
+  service    text not null,
+  goals      text,
+  status     text not null default 'pending' check (status in ('pending', 'approved', 'declined')),
+  client_id  uuid references public.clients(id) on delete set null,
+  created_at timestamptz not null default now(),
+  handled_at timestamptz
+);
+alter table public.leads enable row level security;
+
+alter table public.clients  add column if not exists service text;
+alter table public.clients  add column if not exists phone text;
+alter table public.invoices add column if not exists claimed_at timestamptz;
+alter table public.invoices add column if not exists claimed_method text;

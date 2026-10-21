@@ -8,6 +8,8 @@ export type Client = {
   email: string;
   name: string;
   company: string | null;
+  phone: string | null;
+  service: string | null;
   createdAt: string;
   lastSeenAt: string | null;
 };
@@ -17,6 +19,8 @@ type Row = {
   email: string;
   name: string;
   company: string | null;
+  phone?: string | null;
+  service?: string | null;
   created_at: string;
   last_seen_at: string | null;
 };
@@ -26,6 +30,8 @@ const fromRow = (r: Row): Client => ({
   email: r.email,
   name: r.name,
   company: r.company,
+  phone: r.phone ?? null,
+  service: r.service ?? null,
   createdAt: r.created_at,
   lastSeenAt: r.last_seen_at,
 });
@@ -38,7 +44,7 @@ async function devRead(): Promise<Client[]> {
     return JSON.parse(await fs.readFile(DEV_FILE, "utf8"));
   } catch {
     const seed: Client[] = [
-      { id: "dev-1", email: "client@demo.test", name: "Demo Client", company: "Demo Co", createdAt: new Date().toISOString(), lastSeenAt: null },
+      { id: "dev-1", email: "client@demo.test", name: "Demo Client", company: "Demo Co", phone: null, service: null, createdAt: new Date().toISOString(), lastSeenAt: null },
     ];
     await devWrite(seed);
     return seed;
@@ -72,18 +78,18 @@ export async function findClientById(id: string): Promise<Client | null> {
   return data ? fromRow(data as Row) : null;
 }
 
-export async function addClient(input: { email: string; name: string; company?: string }): Promise<Client> {
+export async function addClient(input: { email: string; name: string; company?: string; phone?: string; service?: string }): Promise<Client> {
   const email = input.email.trim().toLowerCase();
   if (!hasSupabase) {
     const list = await devRead();
     if (list.some((c) => c.email === email)) throw new Error("That email is already invited.");
-    const c: Client = { id: `dev-${Date.now()}`, email, name: input.name.trim(), company: input.company?.trim() || null, createdAt: new Date().toISOString(), lastSeenAt: null };
+    const c: Client = { id: `dev-${Date.now()}`, email, name: input.name.trim(), company: input.company?.trim() || null, phone: input.phone?.trim() || null, service: input.service ?? null, createdAt: new Date().toISOString(), lastSeenAt: null };
     await devWrite([...list, c]);
     return c;
   }
   const { data, error } = await supabaseAdmin()
     .from("clients")
-    .insert({ email, name: input.name.trim(), company: input.company?.trim() || null })
+    .insert({ email, name: input.name.trim(), company: input.company?.trim() || null, phone: input.phone?.trim() || null, service: input.service ?? null })
     .select("*")
     .single();
   if (error) throw new Error(error.code === "23505" ? "That email is already invited." : error.message);

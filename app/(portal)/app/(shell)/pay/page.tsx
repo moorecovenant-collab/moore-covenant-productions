@@ -1,10 +1,11 @@
 import clsx from "clsx";
 import PageHeader from "@/components/portal/PageHeader";
 import PayOptions from "@/components/portal/PayOptions";
-import { InvoiceActions, InvoiceForm } from "@/components/portal/InvoiceForm";
+import { InvoiceActions, InvoiceForm, PaymentSettingsForm } from "@/components/portal/InvoiceForm";
 import { listClients } from "@/lib/portal/clients";
 import { dateOnly, invoiceState, money, type InvoiceState } from "@/lib/portal/format";
 import { listInvoices, type Invoice } from "@/lib/portal/invoices";
+import { getPaymentSettings } from "@/lib/portal/payments";
 import { getSession } from "@/lib/portal/session";
 
 export const dynamic = "force-dynamic";
@@ -34,6 +35,9 @@ function Row({ inv, admin }: { inv: Invoice; admin: boolean }) {
           <span className={clsx("mt-1 inline-block rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider", CHIP[state].cls)}>
             {CHIP[state].text}
           </span>
+          {inv.status === "open" && inv.claimedAt && (
+            <p className="mt-1 text-[11px] text-gold">{admin ? `Says paid by ${inv.claimedMethod}` : `Marked as sent by ${inv.claimedMethod}`}</p>
+          )}
         </div>
       </div>
       {admin && (
@@ -48,7 +52,7 @@ function Row({ inv, admin }: { inv: Invoice; admin: boolean }) {
 export default async function PayPage() {
   const session = (await getSession())!;
   const admin = session.role === "admin";
-  const invoices = await listInvoices(admin ? undefined : session.clientId!);
+  const [invoices, payment] = await Promise.all([listInvoices(admin ? undefined : session.clientId!), getPaymentSettings()]);
   const owing = invoices.filter((i) => i.status === "open");
   const total = owing.reduce((n, i) => n + i.amountCents, 0);
   const overdue = owing.filter((i) => invoiceState(i.status, i.dueDate) === "overdue").reduce((n, i) => n + i.amountCents, 0);
@@ -70,6 +74,7 @@ export default async function PayPage() {
             </div>
           </div>
           <InvoiceForm clients={clients} />
+          <PaymentSettingsForm initial={payment} />
           {invoices.length > 0 && (
             <ul className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-charcoal">
               {invoices.map((i) => (
@@ -92,8 +97,7 @@ export default async function PayPage() {
           {overdue > 0 && <p className="mt-1 text-sm text-red-300">{money(overdue)} is past due.</p>}
           {total > 0 && (
             <div className="mt-4">
-              <PayOptions amountCents={total} />
-              <p className="mt-3 text-xs text-text-muted">After you pay, Elijah marks it received here. That can take a few hours.</p>
+              <PayOptions amountCents={total} settings={payment} alreadyClaimed={owing.every((i) => !!i.claimedAt)} readOnly={session.previewing} />
             </div>
           )}
         </div>

@@ -1,7 +1,9 @@
 import Link from "next/link";
 import InstallCard from "@/components/portal/InstallCard";
 import { STUDIO_PHONE, STUDIO_SMS } from "@/lib/portal/config";
-import { listClients } from "@/lib/portal/clients";
+import { listClients, findClientById } from "@/lib/portal/clients";
+import { listPendingLeads } from "@/lib/portal/leads";
+import { serviceLabel } from "@/lib/portal/services";
 import { invoiceState, money, whenLabel } from "@/lib/portal/format";
 import { listInvoices } from "@/lib/portal/invoices";
 import { callType, listUpcomingBookings } from "@/lib/portal/schedule";
@@ -34,7 +36,8 @@ export default async function Home() {
   );
 
   if (session.role === "admin") {
-    const [clients, bookings, invoices] = await Promise.all([listClients(), listUpcomingBookings(), listInvoices()]);
+    const [clients, bookings, invoices, leads] = await Promise.all([listClients(), listUpcomingBookings(), listInvoices(), listPendingLeads()]);
+    const claims = invoices.filter((i) => i.status === "open" && i.claimedAt).length;
     const open = invoices.filter((i) => i.status === "open");
     const owed = open.reduce((n, i) => n + i.amountCents, 0);
     const overdue = open.filter((i) => invoiceState(i.status, i.dueDate) === "overdue").length;
@@ -43,6 +46,13 @@ export default async function Home() {
       <div className="space-y-4">
         {header}
         <InstallCard />
+        {(leads.length > 0 || claims > 0) && (
+          <Link href={leads.length > 0 ? "/app/clients" : "/app/pay"} className={`${card} block border-gold/50 bg-gold/[0.06]`}>
+            <p className="mb-2 text-[10px] uppercase tracking-[0.2em] text-gold">Needs you</p>
+            {leads.length > 0 && <p className="text-cream">{leads.length} new client request{leads.length === 1 ? "" : "s"} to review</p>}
+            {claims > 0 && <p className="text-cream">{claims} payment{claims === 1 ? "" : "s"} to confirm</p>}
+          </Link>
+        )}
         <Link href="/app/book" className={`${card} block transition-colors hover:border-gold/60`}>
           <p className={label}>Next call</p>
           {next ? (
@@ -73,7 +83,7 @@ export default async function Home() {
     );
   }
 
-  const [bookings, invoices] = await Promise.all([listUpcomingBookings(session.clientId!), listInvoices(session.clientId!)]);
+  const [bookings, invoices, me] = await Promise.all([listUpcomingBookings(session.clientId!), listInvoices(session.clientId!), findClientById(session.clientId!)]);
   const next = bookings[0];
   const open = invoices.filter((i) => i.status === "open");
   const owed = open.reduce((n, i) => n + i.amountCents, 0);
@@ -82,6 +92,12 @@ export default async function Home() {
     <div className="space-y-4">
       {header}
       <InstallCard />
+      {me?.service && (
+        <div className={card}>
+          <p className={label}>Your service</p>
+          <p className="font-display text-2xl text-cream">{serviceLabel(me.service)}</p>
+        </div>
+      )}
       <Link href="/app/book" className={`${card} block transition-colors hover:border-gold/60`}>
         <p className={label}>Next call</p>
         {next ? (

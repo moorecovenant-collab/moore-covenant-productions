@@ -1,10 +1,13 @@
 "use server";
 
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { z } from "zod";
 import { DateTime } from "luxon";
 import { addClient, findClientByEmail, touchClient } from "@/lib/portal/clients";
-import { createInvoice, setInvoiceStatus } from "@/lib/portal/invoices";
+import { claimInvoices, createInvoice, listInvoices, setInvoiceStatus } from "@/lib/portal/invoices";
+import { getLead, markLead, saveLead } from "@/lib/portal/leads";
+import { savePaymentSettings } from "@/lib/portal/payments";
+import { SERVICES, serviceLabel } from "@/lib/portal/services";
 import { whenLabel } from "@/lib/portal/format";
 import {
   addBlocked, availableSlots, callType, getSchedule, removeBlocked, saveSchedule, type Schedule,
@@ -273,5 +276,142 @@ export async function changeInvoice(id: string, status: "open" | "paid" | "void"
     return { ok: true };
   } catch (e) {
     return fail(e, "Couldn't update the invoice.");
+  }
+}
+
+// ---------- new client requests ----------
+
+const hits = new Map<string, { n: number; t: number }>();
+function tooMany(ip: string) {
+  const now = Date.now();
+  const h = hits.get(ip);
+  if (!h || now - h.t > 60 * 60 * 1000) {
+    hits.set(ip, { n: 1, t: now });
+    return false;
+  }
+  h.n += 1;
+  return h.n > 5;
+}
+
+const LeadInput = z.object({
+  name: z.string().trim().min(1).max(120),
+  email: Email,
+  company: z.string().trim().max(120).optional(),
+  phone: z.string().trim().max(40).optional(),
+  service: z.string().refine((id) => SERVICES.some((s) => s.id === id)),
+  goals: z.string().trim().max(1500).optional(),
+  website: z.string().max(0).optional(), // honeypot: real people leave this empty
+});
+
+/** Public: someone asks to become a client. No account is made until the owner approves. */
+export async function submitLead(input: {
+  name: string; email: string; company?: string; phone?: string; service: string; goals?: string; website?: string;
+}): Promise<Result> {
+  const ip = (await headers()).get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
+  if (tooMany(ip)) return { ok: false, error: "Too many requests from this connection. Try again in an hour, or text Elijah." };
+  const parsed = LeadInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Add your name, a valid email, and pick a service." };
+  if (parsed.data.website) return { ok: true }; // bot: pretend it worked
+  if (!hasSupabase) return { ok: false, error: "Requests aren't switched on yet. Text Elijah." };
+
+  try {
+    // someone already set up gets the same thank-you, but no duplicate request
+    const existing = isAdminEmail(parsed.data.email) || (await findClientByEmail(parsed.data.email));
+    if (!existing) {
+      const { created } = await saveLead(parsed.data);
+      await notifyOwner(`${created ? "New client request" : "Updated client request"}: ${parsed.data.name}, ${serviceLabel(parsed.data.service)}`, {
+        name: parsed.data.name,
+        email: parsed.data.email,
+        business: parsed.data.company ?? "",
+        phone: parsed.data.phone ?? "",
+        service: serviceLabel(parsed.data.service),
+        goals: parsed.data.goals ?? "",
+        review: "Open the app, Clients tab, to approve or decline.",
+      });
+    }
+    return { ok: true };
+  } catch {
+    return { ok: false, error: "Couldn't send that. Try again, or text Elijah." };
+  }
+}
+
+const Approve = z.object({
+  leadId: z.string().uuid(),
+  description: z.string().trim().min(1).max(200),
+  amount: z.number().positive().max(1_000_000),
+  dueDate: Ymd,
+});
+
+/** Admin: turn a request into a client with a first invoice. */
+export async function approveLead(input: { leadId: string; description: string; amount: number; dueDate: string }): Promise<
+  | { ok: true; name: string; email: string; phone: string | null }
+  | { ok: false; error: string }
+> {
+  if (!(await adminOnly())) return { ok: false, error: "Not allowed." };
+  const parsed = Approve.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Add a description, an amount, and a due date for the first invoice." };
+  try {
+    const lead = await getLead(parsed.data.leadId);
+    if (!lead || lead.status !== "pending") return { ok: false, error: "That request was already handled." };
+    const client =
+      (await findClientByEmail(lead.email)) ??
+      (await addClient({ email: lead.email, name: lead.name, company: lead.company ?? undefined, phone: lead.phone ?? undefined, service: lead.service }));
+    await createInvoice({ clientId: client.id, description: parsed.data.description, amountCents: Math.round(parsed.data.amount * 100), dueDate: parsed.data.dueDate });
+    await markLead(lead.id, "approved", client.id);
+    return { ok: true, name: lead.name, email: lead.email, phone: lead.phone };
+  } catch (e) {
+    return { ok: false, error: e instanceof Error ? e.message : "Couldn't approve that." };
+  }
+}
+
+export async function declineLead(leadId: string): Promise<Result> {
+  if (!(await adminOnly())) return NOT_ALLOWED;
+  try {
+    await markLead(z.string().uuid().parse(leadId), "declined");
+    return { ok: true };
+  } catch (e) {
+    return fail(e, "Couldn't decline that.");
+  }
+}
+
+// ---------- payment settings and claims ----------
+
+const PaymentInput = z.object({
+  paypalHandle: z.string().trim().regex(/^[A-Za-z0-9._-]{0,40}$/),
+  zelleEmail: z.string().trim().max(200).refine((v) => v === "" || z.email().safeParse(v).success),
+  squareLink: z.string().trim().max(400).refine((v) => v === "" || /^https:\/\//.test(v)),
+});
+
+export async function savePayments(input: { paypalHandle: string; zelleEmail: string; squareLink: string }): Promise<Result> {
+  if (!(await adminOnly())) return NOT_ALLOWED;
+  const parsed = PaymentInput.safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Check the PayPal handle, the Zelle email, and that the Square link starts with https://." };
+  try {
+    await savePaymentSettings(parsed.data);
+    return { ok: true };
+  } catch (e) {
+    return fail(e, "Couldn't save.");
+  }
+}
+
+/** A client says they paid. Nothing is marked paid until the owner confirms. */
+export async function claimPayment(method: string): Promise<Result> {
+  const session = await getSession();
+  if (!session || session.role !== "client" || !session.clientId) return NOT_ALLOWED;
+  if (session.previewing) return { ok: false, error: "You're previewing. Exit the preview first." };
+  const m = z.enum(["Zelle", "PayPal", "Square", "Other"]).safeParse(method);
+  if (!m.success) return { ok: false, error: "Pick how you paid." };
+  try {
+    const open = (await listInvoices(session.clientId)).filter((i) => i.status === "open" && !i.claimedAt);
+    if (!open.length) return { ok: false, error: "Nothing open to mark." };
+    await claimInvoices(session.clientId, open.map((i) => i.id), m.data);
+    const total = open.reduce((n, i) => n + i.amountCents, 0) / 100;
+    await notifyOwner(`${session.name} says they paid $${total.toLocaleString("en-US")} by ${m.data}`, {
+      name: session.name, email: session.email, method: m.data, amount: `$${total.toLocaleString("en-US")}`,
+      confirm: "Check your account, then open the app, Payments tab, and tap Mark paid.",
+    });
+    return { ok: true };
+  } catch (e) {
+    return fail(e, "Couldn't send that. Text Elijah.");
   }
 }

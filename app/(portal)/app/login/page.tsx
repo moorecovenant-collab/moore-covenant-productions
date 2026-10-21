@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import LoginForm from "@/components/portal/LoginForm";
 import { devAuthEnabled } from "@/lib/portal/config";
@@ -22,6 +23,12 @@ export default async function LoginPage() {
         </p>
       </div>
       <LoginForm dev={devAuthEnabled} />
+      <p className="mt-10 text-center text-sm text-text-secondary">
+        New here?{" "}
+        <Link href="/app/start" className="text-gold underline-offset-4 hover:underline">
+          Request to work with us
+        </Link>
+      </p>
     </div>
   );
 }

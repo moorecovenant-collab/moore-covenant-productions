@@ -10,15 +10,18 @@ export type Invoice = {
   dueDate: string;
   status: "open" | "paid" | "void";
   paidAt: string | null;
+  claimedAt: string | null;
+  claimedMethod: string | null;
 };
 
 type Row = {
   id: string; client_id: string; description: string; amount_cents: number; due_date: string;
-  status: "open" | "paid" | "void"; paid_at: string | null; clients: { name: string; company: string | null } | null;
+  status: "open" | "paid" | "void"; paid_at: string | null; claimed_at: string | null; claimed_method: string | null; clients: { name: string; company: string | null } | null;
 };
 const toInvoice = (r: Row): Invoice => ({
   id: r.id, clientId: r.client_id, clientName: r.clients?.name ?? "Client", clientCompany: r.clients?.company ?? null,
   description: r.description, amountCents: r.amount_cents, dueDate: r.due_date, status: r.status, paidAt: r.paid_at,
+  claimedAt: r.claimed_at, claimedMethod: r.claimed_method,
 });
 
 /** Newest due date first. Pass clientId to limit to one client. */
@@ -47,5 +50,16 @@ export async function setInvoiceStatus(id: string, status: "open" | "paid" | "vo
     .from("invoices")
     .update({ status, paid_at: status === "paid" ? new Date().toISOString() : null })
     .eq("id", id);
+  if (error) throw new Error(error.message);
+}
+
+/** A client says they have paid. The owner still confirms; this just puts it on the owner's radar. */
+export async function claimInvoices(clientId: string, ids: string[], method: string) {
+  const { error } = await supabaseAdmin()
+    .from("invoices")
+    .update({ claimed_at: new Date().toISOString(), claimed_method: method })
+    .eq("client_id", clientId)
+    .eq("status", "open")
+    .in("id", ids);
   if (error) throw new Error(error.message);
 }
