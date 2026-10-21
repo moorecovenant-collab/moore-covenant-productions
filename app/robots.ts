@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/app", "/api/"],
     },
     sitemap: "https://moorecovenantproductions.com/sitemap.xml",
   };

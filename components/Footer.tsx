@@ -101,9 +101,14 @@ export default function Footer() {
           <p className="text-[10px] tracking-[0.18em] uppercase text-text-muted">
             Built on Covenant. Established for More.
           </p>
-          <Link href="/pay" className="text-[10px] tracking-[0.18em] uppercase text-text-muted hover:text-gold transition-colors">
-            Make a payment
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/app" className="text-[10px] tracking-[0.18em] uppercase text-text-muted hover:text-gold transition-colors">
+              Client app
+            </Link>
+            <Link href="/pay" className="text-[10px] tracking-[0.18em] uppercase text-text-muted hover:text-gold transition-colors">
+              Make a payment
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

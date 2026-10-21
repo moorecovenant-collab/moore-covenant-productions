@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navigation from "@/components/Navigation";
-import Footer from "@/components/Footer";
-import GrainOverlay from "@/components/ui/GrainOverlay";
-import CustomCursor from "@/components/ui/CustomCursor";
-import ChatWidget from "@/components/ui/ChatWidget";
-import MusicPlayer from "@/components/ui/MusicPlayer";
-import MetroLine from "@/components/ui/MetroLine";
-import StaticShot from "@/components/ui/StaticShot";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://moorecovenantproductions.com"),
@@ -58,17 +50,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body>
-        <StaticShot />
-        <GrainOverlay />
-        <CustomCursor />
-        <MetroLine />
-        <Navigation />
-        <main>{children}</main>
-        <Footer />
-        <ChatWidget />
-        <MusicPlayer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
