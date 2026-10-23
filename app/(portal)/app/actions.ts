@@ -81,10 +81,11 @@ const Invite = z.object({
   name: z.string().trim().min(1).max(120),
   email: Email,
   company: z.string().trim().max(120).optional(),
+  kind: z.enum(["client", "partner"]).optional(),
 });
 
-/** Admin only. Adds a client to the invited list so they can sign in. */
-export async function inviteClient(input: { name: string; email: string; company?: string }): Promise<Result> {
+/** Admin only. Adds a client or partner to the invited list so they can sign in. */
+export async function inviteClient(input: { name: string; email: string; company?: string; kind?: "client" | "partner" }): Promise<Result> {
   const session = await getSession();
   if (session?.role !== "admin") return { ok: false, error: "Not allowed." };
   const parsed = Invite.safeParse(input);
@@ -417,7 +418,7 @@ export async function savePayments(input: { paypalHandle: string; zelleEmail: st
 /** A client says they paid. Nothing is marked paid until the owner confirms. */
 export async function claimPayment(method: string): Promise<Result> {
   const session = await getSession();
-  if (!session || session.role !== "client" || !session.clientId) return NOT_ALLOWED;
+  if (!session || session.role !== "client" || !session.clientId || session.partner) return NOT_ALLOWED;
   if (session.previewing) return { ok: false, error: "You're previewing. Exit the preview first." };
   const m = z.enum(["Zelle", "PayPal", "Square", "Cash App", "Other"]).safeParse(method);
   if (!m.success) return { ok: false, error: "Pick how you paid." };

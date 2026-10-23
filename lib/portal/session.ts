@@ -12,6 +12,8 @@ export type Session = {
   clientId: string | null;
   /** True when the admin is looking at the app as this client. Read only. */
   previewing: boolean;
+  /** True for a scheduling-only account (no invoices, no Pay tab). */
+  partner: boolean;
 };
 
 export const DEV_COOKIE = "mcp_dev_session";
@@ -43,10 +45,10 @@ export const getSession = cache(async (): Promise<Session | null> => {
     const viewAs = (await cookies()).get(VIEW_AS_COOKIE)?.value;
     if (viewAs) {
       const client = await findClientById(viewAs);
-      if (client) return { email: client.email, name: client.name, role: "client", clientId: client.id, previewing: true };
+      if (client) return { email: client.email, name: client.name, role: "client", clientId: client.id, previewing: true, partner: client.kind === "partner" };
     }
-    return { email, name: ADMIN_NAME, role: "admin", clientId: null, previewing: false };
+    return { email, name: ADMIN_NAME, role: "admin", clientId: null, previewing: false, partner: false };
   }
   const client = await findClientByEmail(email);
-  return client ? { email, name: client.name, role: "client", clientId: client.id, previewing: false } : null;
+  return client ? { email, name: client.name, role: "client", clientId: client.id, previewing: false, partner: client.kind === "partner" } : null;
 });

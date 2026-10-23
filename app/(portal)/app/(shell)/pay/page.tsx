@@ -7,6 +7,7 @@ import { dateOnly, invoiceState, money, type InvoiceState } from "@/lib/portal/f
 import { listInvoices, type Invoice } from "@/lib/portal/invoices";
 import { getPaymentSettings } from "@/lib/portal/payments";
 import { getSession } from "@/lib/portal/session";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -52,13 +53,14 @@ function Row({ inv, admin }: { inv: Invoice; admin: boolean }) {
 export default async function PayPage() {
   const session = (await getSession())!;
   const admin = session.role === "admin";
+  if (session.partner) redirect("/app");
   const [invoices, payment] = await Promise.all([listInvoices(admin ? undefined : session.clientId!), getPaymentSettings()]);
   const owing = invoices.filter((i) => i.status === "open");
   const total = owing.reduce((n, i) => n + i.amountCents, 0);
   const overdue = owing.filter((i) => invoiceState(i.status, i.dueDate) === "overdue").reduce((n, i) => n + i.amountCents, 0);
 
   if (admin) {
-    const clients = (await listClients()).map((c) => ({ id: c.id, name: c.name, company: c.company }));
+    const clients = (await listClients()).filter((c) => c.kind !== "partner").map((c) => ({ id: c.id, name: c.name, company: c.company }));
     return (
       <>
         <PageHeader eyebrow="Studio" title="Payments" />

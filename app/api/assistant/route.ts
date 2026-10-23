@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { z } from "zod";
 import { KNOWLEDGE } from "../chat/knowledge";
 import { PERSONA_CORE } from "../chat/persona";
-import { ADMIN_TOOLS, CLIENT_TOOLS, accountSummary, runTool } from "@/lib/portal/assistant-tools";
+import { ADMIN_TOOLS, CLIENT_TOOLS, PARTNER_TOOLS, accountSummary, runTool } from "@/lib/portal/assistant-tools";
 import { STUDIO_PHONE } from "@/lib/portal/config";
 import { getSession } from "@/lib/portal/session";
 
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
   }
 
   const isAdmin = session.role === "admin";
-  const tools = isAdmin ? ADMIN_TOOLS : CLIENT_TOOLS;
+  const tools = isAdmin ? ADMIN_TOOLS : session.partner ? PARTNER_TOOLS : CLIENT_TOOLS;
   const account = isAdmin ? "" : await accountSummary(session);
   const system = `${PERSONA_CORE}\n${isAdmin ? ADMIN_ADDENDUM : CLIENT_ADDENDUM}\n\n${account ? `ACCOUNT (the signed-in client)\n${account}\n\n` : ""}KNOWLEDGE\n${KNOWLEDGE}`;
 

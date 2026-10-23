@@ -105,3 +105,6 @@ create table if not exists public.push_subscriptions (
 alter table public.alerts enable row level security;
 alter table public.push_subscriptions enable row level security;
 alter table public.clients add column if not exists alerts_seen_at timestamptz;
+
+-- Partners: people on the app for scheduling and updates only (no invoices, no Pay tab).
+alter table public.clients add column if not exists kind text not null default 'client' check (kind in ('client', 'partner'));

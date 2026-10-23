@@ -81,6 +81,9 @@ export const CLIENT_TOOLS: Anthropic.Tool[] = [
   },
 ];
 
+/** Partners can see and book time, nothing about money. */
+export const PARTNER_TOOLS: Anthropic.Tool[] = CLIENT_TOOLS.filter((t) => t.name !== "i_paid");
+
 export const ADMIN_TOOLS: Anthropic.Tool[] = [
   {
     name: "get_studio_overview",
@@ -116,8 +119,8 @@ export async function accountSummary(session: Session): Promise<string> {
   const overdue = open.filter((i) => invoiceState(i.status, i.dueDate) === "overdue").length;
   return [
     `Name: ${session.name}${me?.company ? `, ${me.company}` : ""}.`,
-    `Service: ${me?.service ? serviceLabel(me.service) : "not set"}.`,
-    `Balance due: ${due ? money(due) : "nothing"}${overdue ? ` (${overdue} overdue)` : ""}.`,
+    session.partner ? "This person is a partner of the studio: scheduling and updates only. They have no invoices and nothing to pay; if money comes up, say it does not apply to them." : `Service: ${me?.service ? serviceLabel(me.service) : "not set"}.`,
+    session.partner ? "" : `Balance due: ${due ? money(due) : "nothing"}${overdue ? ` (${overdue} overdue)` : ""}.`,
     `Next call: ${bookings[0] ? `${whenLabel(bookings[0].startsAt)}, ${callType(bookings[0].callType)?.label ?? bookings[0].callType}` : "none booked"}.`,
     session.previewing ? "NOTE: Elijah is previewing this client's view. Booking, cancelling and payment claims are disabled; say so if asked to do them." : "",
   ]
@@ -158,8 +161,9 @@ export async function runTool(name: string, input: unknown, session: Session): P
           name: session.name,
           business: me?.company ?? null,
           service: me?.service ? serviceLabel(me.service) : null,
-          balance_due: money(open.reduce((n, i) => n + i.amountCents, 0)),
-          invoices: invoices.map((i) => ({
+          partner: session.partner || undefined,
+          balance_due: session.partner ? undefined : money(open.reduce((n, i) => n + i.amountCents, 0)),
+          invoices: session.partner ? undefined : invoices.map((i) => ({
             description: i.description,
             amount: money(i.amountCents),
             due: dateOnly(i.dueDate, true),
@@ -172,13 +176,13 @@ export async function runTool(name: string, input: unknown, session: Session): P
             call: callType(b.callType)?.label ?? b.callType,
             meet_link: schedule.meetLink || "Elijah will send it",
           })),
-          ways_to_pay: [
+          ways_to_pay: session.partner ? undefined : [
             pay.squareLink && "card (Square) from the Pay tab",
             pay.paypalHandle && `PayPal (paypal.me/${pay.paypalHandle})`,
             pay.zelleEmail && `Zelle to ${pay.zelleEmail}`,
             pay.cashAppTag && `Cash App $${pay.cashAppTag}`,
           ].filter(Boolean),
-          note: "Payments are confirmed by Elijah by hand; the Pay tab has buttons for each method.",
+          note: session.partner ? "Partner account: booking and updates only." : "Payments are confirmed by Elijah by hand; the Pay tab has buttons for each method.",
         });
       }
       case "get_open_times":

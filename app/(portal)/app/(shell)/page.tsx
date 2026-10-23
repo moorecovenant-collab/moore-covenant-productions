@@ -96,7 +96,7 @@ export default async function Home() {
       {header}
       <InstallCard />
       <PushToggle compact publicKey={session.previewing ? null : (process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY ?? null)} />
-      {me?.service && (
+      {me?.service && !session.partner && (
         <div className={card}>
           <p className={label}>Your service</p>
           <p className="font-display text-2xl text-cream">{serviceLabel(me.service)}</p>
@@ -116,6 +116,7 @@ export default async function Home() {
           </>
         )}
       </Link>
+      {!session.partner && (
       <Link href="/app/pay" className={`${card} block transition-colors hover:border-gold/60`}>
         <p className={label}>Balance</p>
         <p className="font-display text-2xl text-cream">{owed ? money(owed) : "All paid up"}</p>
@@ -123,6 +124,7 @@ export default async function Home() {
           {owed ? (late ? "Part of this is past due. Tap to pay." : "Tap to pay or see invoices.") : "Nothing due right now."}
         </p>
       </Link>
+      )}
       <Link href="/app/alerts" className={`${card} block transition-colors hover:border-gold/60`}>
         <p className={label}>From the studio</p>
         {latest ? (

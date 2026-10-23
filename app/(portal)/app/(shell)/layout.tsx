@@ -40,7 +40,7 @@ export default async function ShellLayout({ children }: Readonly<{ children: Rea
       <main className="mx-auto max-w-xl px-5 pt-6" style={{ paddingBottom: "calc(6rem + env(safe-area-inset-bottom))" }}>
         {children}
       </main>
-      <TabBar role={session.role} unread={unread} />
+      <TabBar role={session.role} unread={unread} partner={session.partner} />
     </>
   );
 }

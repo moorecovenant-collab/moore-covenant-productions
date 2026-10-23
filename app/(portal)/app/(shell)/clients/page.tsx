@@ -33,7 +33,11 @@ export default async function ClientsPage() {
                   <div className="min-w-0">
                     <p className="truncate text-cream">{c.name}</p>
                     <p className="truncate text-sm text-text-secondary">{c.company ? `${c.company} · ` : ""}{c.email}</p>
-                    {c.service && <p className="truncate text-xs text-text-muted">{serviceLabel(c.service)}</p>}
+                    {c.kind === "partner" ? (
+                      <p className="text-xs text-gold">Partner · booking and updates only</p>
+                    ) : (
+                      c.service && <p className="truncate text-xs text-text-muted">{serviceLabel(c.service)}</p>
+                    )}
                   </div>
                   <div className="flex shrink-0 flex-col items-end gap-2">
                     <ViewAsButton clientId={c.id} />

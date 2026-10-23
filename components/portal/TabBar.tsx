@@ -22,9 +22,9 @@ const ADMIN_TABS = [
   { href: "/app/assistant", label: "Assistant", icon: ChatIcon },
 ];
 
-export default function TabBar({ role, unread = 0 }: { role: "admin" | "client"; unread?: number }) {
+export default function TabBar({ role, unread = 0, partner = false }: { role: "admin" | "client"; unread?: number; partner?: boolean }) {
   const pathname = usePathname();
-  const tabs = role === "admin" ? ADMIN_TABS : CLIENT_TABS;
+  const tabs = role === "admin" ? ADMIN_TABS : partner ? CLIENT_TABS.filter((t) => t.href !== "/app/pay") : CLIENT_TABS;
   return (
     <nav
       aria-label="Portal"
