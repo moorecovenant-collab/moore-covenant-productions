@@ -92,7 +92,7 @@ The studio says: "We don't just take your project. We take your vision personall
 
 === CONTACT, SOCIALS, AND PAGES
 Phone and text: (202) 407-5248. Email: moorecovenant@gmail.com. Replies within 24 to 48 hours.
-Instagram @moore.covenant. TikTok and YouTube @moorefavor. LinkedIn: Elijah Moore.
+Instagram @moore.covenant. YouTube @moorefavor. LinkedIn: Elijah Moore.
 Pages: /services (full tier details and pricing), /portfolio (the work: growth case studies, reels, the film, websites), /about (story, values, the team), /photography, /journal (essays), /contact (the form), /pay (payments).
 The contact form asks for name, phone, email, which service, an approximate budget, and the vision. Budget options on the form run from under $1,000 up to $15,000 and above, or "let's discuss".
 The journal has essays on legacy over virality, what brand storytelling actually means, faith and creativity, why the first three seconds of a visual identity decide everything, the art of the brand film, and building a personal brand.

@@ -145,7 +145,7 @@ export default function ContactPage() {
                       </a>
                     </div>
                     <div>
-                      <p className="text-xs tracking-widest uppercase text-text-muted mb-1">YouTube / TikTok</p>
+                      <p className="text-xs tracking-widest uppercase text-text-muted mb-1">YouTube</p>
                       <a
                         href="https://youtube.com/@moorefavor"
                         target="_blank"

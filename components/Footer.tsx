@@ -15,7 +15,6 @@ const socials = [
   { label: "Instagram", handle: "@moore.covenant", href: "https://instagram.com/moore.covenant" },
   { label: "LinkedIn", handle: "Elijah Moore", href: "https://www.linkedin.com/in/elijah-moore-366b493a8" },
   { label: "YouTube", handle: "@moorefavor", href: "https://youtube.com/@moorefavor" },
-  { label: "TikTok", handle: "@moorefavor", href: "https://tiktok.com/@moorefavor" },
 ];
 
 const credits = [
