@@ -103,4 +103,4 @@ phone numbers into staging.
 
 Newest first. Version, date, one line.
 
-- (unreleased) Phase 1 Step 1: CLAUDE.md, Vitest tests, GitHub Actions CI.
+- v1.0, 2026-11-03: Phase 1 Step 1. CLAUDE.md, 40 Vitest tests, GitHub Actions CI. No app changes.
