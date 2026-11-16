@@ -39,9 +39,12 @@ const growth = [
 ];
 
 const services = [
-  { number: "01", title: "Social Media Management", price: "From $1,500 / month", terms: "Three month minimum", desc: "Strategy, content, posting, engagement, and monthly reporting. You run the business. We run the feed.", href: "/services#social" },
-  { number: "02", title: "Video Production", price: "Content days from $1,500", terms: "Films quoted per project", desc: "Content days, short-form reels, brand films, and short films. Shot on cinema glass, cut with intention.", href: "/services#video" },
-  { number: "03", title: "Websites & Brand", price: "Starting at $1,000", terms: "Care plan from $150 / month", desc: "Custom sites and brand identity that make you look like the authority you already are.", href: "/services#web" },
+  { number: "01", title: "Social Media Coaching", price: "$800 / month", terms: "Coaching plus light management", desc: "A plan, a weekly coach, and someone to post and schedule for you. Grow it yourself without guessing.", href: "/services#coaching" },
+  { number: "02", title: "Editing", price: "From $600 / month", terms: "Long form $1,000 / month", desc: "You shoot it, we cut it. Monthly editing for shorts, YouTube, podcasts, and sermons.", href: "/services#editing" },
+  { number: "03", title: "Social Media Management", price: "From $1,500 / month", terms: "Three month minimum", desc: "Strategy, content, posting, engagement, and monthly reporting. You run the business. We run the feed.", href: "/services#social" },
+  { number: "04", title: "Videography & Photography", price: "Content days from $1,500", terms: "Films and photo shoots quoted", desc: "Content days, reels, brand films, and photography. Shot on cinema glass, cut with intention.", href: "/services#video" },
+  { number: "05", title: "Websites & Brand", price: "Starting at $1,000", terms: "Care plan from $150 / month", desc: "Custom sites and brand identity that make you look like the authority you already are.", href: "/services#web" },
+  { number: "06", title: "Design, Print & AI", price: "Cards from $150", terms: "AI agents from $1,500", desc: "QR business cards, poster graphics and boards, and AI agents that answer your customers while you work.", href: "/services#design-ai" },
 ];
 
 const partners = [
@@ -262,7 +265,7 @@ export default function HomePage() {
             <ScrollReveal>
               <Station scene="03" name="What we do" tone="light" className="mb-6" />
             </ScrollReveal>
-            <AnimatedText text="Three things, done properly." tag="h2" className="font-display text-display-huge font-light text-black" style={serif} />
+            <AnimatedText text="Everything your brand needs, done properly." tag="h2" className="font-display text-display-huge font-light text-black" style={serif} />
             <ScrollReveal delay={0.3}>
               <p className="text-black/70 text-base leading-relaxed mt-6">
                 Every engagement starts with a free call. We scope the work around your goals, not

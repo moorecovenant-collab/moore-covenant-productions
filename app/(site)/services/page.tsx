@@ -73,6 +73,65 @@ const videoOffers = [
     price: "Quoted per project",
     desc: "Narrative work, written and directed with you. This is where the company started and it still gets our best hours.",
   },
+  {
+    title: "Photography",
+    price: "Quoted per shoot",
+    desc: "Brand, product, headshot, and event photography. Edited, color graded, and delivered in a private gallery.",
+  },
+  {
+    title: "Photo and Video Together",
+    price: "Quoted per shoot",
+    desc: "One shoot, both covered. Stills and video from the same day so your feed, site, and ads all match.",
+  },
+];
+
+const coachingIncludes = [
+  "Full account audit and a 90 day content plan",
+  "Weekly one on one coaching call",
+  "Monthly content calendar built for you",
+  "Hook, caption, and video feedback before you post",
+  "Posting and scheduling for the content you film",
+  "Monthly numbers review with next steps",
+];
+
+const editingOffers = [
+  {
+    title: "Long Form Editing",
+    price: "$1,000",
+    unit: "/mo",
+    note: "About 5 videos a month, $200 a video",
+    desc: "YouTube videos, vlogs, podcasts, and sermons. Color, audio cleanup, music, and titles handled.",
+  },
+  {
+    title: "Short Form Editing",
+    price: "$600 to $800",
+    unit: "/mo",
+    note: "A full month of shorts",
+    desc: "Reels, TikToks, and Shorts with kinetic captions and sound design. Priced by how many you need.",
+  },
+];
+
+const extraOffers = [
+  {
+    title: "QR Business Cards",
+    price: "From $150",
+    desc: "Front and back design with a QR code that opens your site, booking page, or socials. Printing quoted.",
+  },
+  {
+    title: "Poster Graphics and Boards",
+    price: "$100 graphic, $200 with board",
+    desc: "Event posters, menus, and flyers. Add the printed board, made through our print partner, for $100 more.",
+  },
+  {
+    title: "Custom AI Agent",
+    price: "From $1,500",
+    desc: "An assistant trained on your business that answers customers, books calls, and takes leads around the clock. Upkeep from $100 a month. The one on this site is a live example.",
+  },
+  {
+    title: "Software and Automations",
+    price: "Quoted per project",
+    desc: "Client portals, internal tools, and automations that cut hours of admin each week. Scoped on a call.",
+  },
 ];
 
 const webIncludes = [
@@ -114,7 +173,7 @@ export default function ServicesPage() {
               className="font-display text-display-hero font-light text-cream"
               style={serif}
             >
-              Three things,
+              Your whole brand,
             </motion.h1>
           </div>
           <div className="overflow-hidden">
@@ -134,14 +193,18 @@ export default function ServicesPage() {
             transition={{ duration: 0.9, delay: 1 }}
             className="text-text-secondary text-base md:text-lg leading-relaxed max-w-xl mt-10"
           >
-            Social media management, video production, and websites. Every engagement starts
-            with a free call, and every price below is a real starting point, not a bait number.
+            Coaching, editing, social media management, video, websites, design, and AI tools.
+            Every engagement starts with a free call, and every price below is a real starting
+            point, not a bait number.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.9, delay: 1.3 }} className="flex flex-wrap gap-3 mt-10">
             {[
+              { href: "#coaching", label: "Coaching" },
+              { href: "#editing", label: "Editing" },
               { href: "#social", label: "Social Media" },
-              { href: "#video", label: "Video Production" },
+              { href: "#video", label: "Video and Photo" },
               { href: "#web", label: "Websites & Brand" },
+              { href: "#design-ai", label: "Design & AI" },
             ].map((l) => (
               <a key={l.href} href={l.href} className="pill-tag">
                 {l.label}
@@ -151,19 +214,100 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* COACHING + EDITING (black) */}
+      <section id="coaching" className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black scroll-mt-20">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
+            <div className="lg:col-span-7">
+              <ScrollReveal>
+                <Station scene="02" name="Social Media Coaching" className="mb-6" />
+              </ScrollReveal>
+              <AnimatedText text="Grow it yourself, with a coach in your corner." tag="h2" className="font-display text-display-huge font-light text-cream" style={serif} />
+            </div>
+            <ScrollReveal delay={0.2} className="lg:col-span-5 lg:pt-14">
+              <p className="text-text-secondary text-base leading-relaxed">
+                For the creator or business owner who wants to post their own content but needs a
+                plan, a second eye, and someone to keep them consistent. We set up the strategy and
+                handle the parts that slow you down. You show up and create.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <ScrollReveal>
+            <div className="relative pill-card bg-cream text-black p-8 md:p-12 grid grid-cols-1 lg:grid-cols-2 gap-10">
+              <span className="absolute top-5 right-5 px-3 py-1 rounded-full bg-gold text-black text-[9px] tracking-[0.2em] uppercase">
+                Featured
+              </span>
+              <div>
+                <p className="text-[10px] tracking-[0.22em] uppercase text-gold mb-4">Coaching and Management</p>
+                <p className="font-display text-5xl md:text-6xl font-light leading-none mb-2" style={serif}>
+                  <sup className="text-2xl align-super">$</sup>800
+                  <span className="text-base font-sans font-light ml-1 text-black/50">/mo</span>
+                </p>
+                <p className="text-[10px] tracking-[0.18em] uppercase mb-6 text-black/50">Monthly coaching retainer</p>
+                <p className="text-sm leading-relaxed mb-8 text-black/70 max-w-md">
+                  The middle ground between doing it alone and handing it all off. You learn how to run
+                  your brand online while we keep the engine running behind you.
+                </p>
+                <Link href="/contact" className="btn-dark justify-center">
+                  <span>Start Coaching</span>
+                </Link>
+              </div>
+              <ul className="space-y-3 lg:pt-10">
+                {coachingIncludes.map((f) => (
+                  <li key={f} className="flex items-start gap-3 text-sm text-black/75">
+                    <span className="block w-1 h-1 rounded-full bg-gold mt-2 shrink-0" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </ScrollReveal>
+
+          <div id="editing" className="mt-24 md:mt-32 scroll-mt-20">
+            <ScrollReveal>
+              <Station scene="03" name="Editing Only" className="mb-6" />
+            </ScrollReveal>
+            <AnimatedText text="You shoot it. We cut it." tag="h2" className="font-display text-display-huge font-light text-cream mb-6" style={serif} />
+            <ScrollReveal delay={0.1}>
+              <p className="text-text-secondary text-base leading-relaxed max-w-xl mb-12">
+                Send the footage, get back finished videos. Cut in DaVinci Resolve with color, sound,
+                and captions handled. Monthly retainers.
+              </p>
+            </ScrollReveal>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border/40 border border-border/40">
+              {editingOffers.map((v, i) => (
+                <ScrollReveal key={v.title} delay={i * 0.08}>
+                  <div className="bg-black p-8 md:p-12 h-full group hover:bg-dark transition-colors duration-500">
+                    <p className="text-[10px] tracking-[0.22em] uppercase text-gold mb-4">{v.title}</p>
+                    <p className="font-display text-4xl md:text-5xl font-light text-cream leading-none mb-2" style={serif}>
+                      {v.price}
+                      <span className="text-base font-sans font-light ml-1 text-text-muted">{v.unit}</span>
+                    </p>
+                    <p className="text-[10px] tracking-[0.18em] uppercase text-text-muted mb-6">{v.note}</p>
+                    <p className="text-sm text-text-secondary leading-relaxed max-w-md">{v.desc}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* SOCIAL MEDIA MANAGEMENT (cream) */}
       <section id="social" className="section-cream py-24 md:py-32 px-6 md:px-10 lg:px-16 scroll-mt-20">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <Station scene="02" name="Social Media Management" tone="light" className="mb-6" />
+                <Station scene="04" name="Social Media Management" tone="light" className="mb-6" />
               </ScrollReveal>
               <AnimatedText text="Run the business. We run the feed." tag="h2" className="font-display text-display-huge font-light text-black" style={serif} />
             </div>
             <ScrollReveal delay={0.2} className="lg:col-span-5 lg:pt-14">
               <p className="text-black/70 text-base leading-relaxed">
-                Monthly retainers with a three month minimum. That is how long it takes to see real
+                Full management, done for you. We run your accounts from posting to DMs. Monthly
+                retainers with a three month minimum. That is how long it takes to see real
                 movement, and we would rather be honest about it than sell you a month. Every plan
                 includes a free strategy call before you commit.
               </p>
@@ -236,7 +380,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <Station scene="03" name="Video Production" className="mb-6" />
+                <Station scene="05" name="Videography and Photography" className="mb-6" />
               </ScrollReveal>
               <AnimatedText text="The movie feel, for your brand." tag="h2" className="font-display text-display-huge font-light text-cream" style={serif} />
             </div>
@@ -284,7 +428,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <Station scene="04" name="Websites and Brand" tone="light" className="mb-6" />
+                <Station scene="06" name="Websites and Brand" tone="light" className="mb-6" />
               </ScrollReveal>
               <AnimatedText text="Look like the authority you already are." tag="h2" className="font-display text-display-huge font-light text-black" style={serif} />
             </div>
@@ -359,11 +503,46 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {/* DESIGN, PRINT, AND AI (black) */}
+      <section id="design-ai" className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black scroll-mt-20">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
+            <div className="lg:col-span-7">
+              <ScrollReveal>
+                <Station scene="07" name="Design, Print, and AI" className="mb-6" />
+              </ScrollReveal>
+              <AnimatedText text="The pieces that finish the picture." tag="h2" className="font-display text-display-huge font-light text-cream" style={serif} />
+            </div>
+            <ScrollReveal delay={0.2} className="lg:col-span-5 lg:pt-14">
+              <p className="text-text-secondary text-base leading-relaxed">
+                Cards people actually keep, signs that pull people in, and AI tools that answer your
+                customers while you work. Tell us what you need and we scope it on the call.
+              </p>
+            </ScrollReveal>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border/40 border border-border/40">
+            {extraOffers.map((v, i) => (
+              <ScrollReveal key={v.title} delay={i * 0.08}>
+                <div className="bg-black p-8 md:p-12 h-full group hover:bg-dark transition-colors duration-500">
+                  <div className="flex items-baseline justify-between gap-6 mb-4">
+                    <h3 className="font-display text-3xl md:text-4xl font-light text-cream group-hover:text-gold transition-colors duration-300" style={serif}>
+                      {v.title}
+                    </h3>
+                    <p className="text-[10px] tracking-[0.18em] uppercase text-gold shrink-0 text-right">{v.price}</p>
+                  </div>
+                  <p className="text-sm text-text-secondary leading-relaxed max-w-md">{v.desc}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* PROCESS (black) */}
-      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black">
+      <section className="py-24 md:py-32 px-6 md:px-10 lg:px-16 bg-black border-t border-border/40">
         <div className="max-w-[1400px] mx-auto">
           <ScrollReveal>
-            <Station scene="05" name="How it works" className="mb-6" />
+            <Station scene="08" name="How it works" className="mb-6" />
           </ScrollReveal>
           <AnimatedText text="No surprises." tag="h2" className="font-display text-display-huge font-light text-cream mb-16" style={serif} />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-border/40 border border-border/40">
