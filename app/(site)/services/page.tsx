@@ -205,6 +205,7 @@ export default function ServicesPage() {
               { href: "#video", label: "Video and Photo" },
               { href: "#web", label: "Websites & Brand" },
               { href: "#design-ai", label: "Design & AI" },
+              { href: "#events", label: "Event Decor" },
             ].map((l) => (
               <a key={l.href} href={l.href} className="pill-tag">
                 {l.label}
@@ -509,7 +510,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16 md:mb-20">
             <div className="lg:col-span-7">
               <ScrollReveal>
-                <Station scene="07" name="Design, Print, and AI" className="mb-6" />
+                <Station scene="07" name="Design, Print, AI, and Events" className="mb-6" />
               </ScrollReveal>
               <AnimatedText text="The pieces that finish the picture." tag="h2" className="font-display text-display-huge font-light text-cream" style={serif} />
             </div>
@@ -535,6 +536,25 @@ export default function ServicesPage() {
               </ScrollReveal>
             ))}
           </div>
+
+          <ScrollReveal delay={0.1}>
+            <div id="events" className="mt-6 pill-card border border-gold/30 bg-dark p-8 md:p-12 flex flex-col md:flex-row md:items-center gap-8 scroll-mt-20">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden border border-gold">
+                <Image src="/partners/beloved-promise.jpg" alt="Beloved Promise Events logo" fill sizes="160px" className="object-cover" />
+              </div>
+              <div className="flex-1">
+                <div className="flex flex-wrap items-baseline justify-between gap-4 mb-3">
+                  <h3 className="font-display text-3xl md:text-4xl font-light text-cream" style={serif}>Event Decor and Planning</h3>
+                  <p className="text-[10px] tracking-[0.18em] uppercase text-gold">Quoted per event</p>
+                </div>
+                <p className="text-[10px] tracking-[0.22em] uppercase text-text-muted mb-4">With our partner Beloved Promise Events, event decorator and planner</p>
+                <p className="text-sm text-text-secondary leading-relaxed max-w-2xl">
+                  Decorating and planning for weddings, birthdays, showers, and church events. Pair it with
+                  our photo and video coverage, poster boards, and signs so the whole day looks like one vision.
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
 

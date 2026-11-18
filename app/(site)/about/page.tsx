@@ -36,6 +36,12 @@ const team = [
     img: "/elijah-amyah-cafe.jpg",
   },
   {
+    name: "Amyah Moore",
+    role: "Manager · Founder, Beloved Promise Events",
+    bio: "My wife and my right hand. She keeps the calendar, the clients, and the business side on track, and she runs Beloved Promise Events, our event decor and planning partner.",
+    img: "/partners/beloved-promise.jpg",
+  },
+  {
     name: "You.",
     role: "The dreamer",
     bio: "The key component. Your story, your business, your calling. Nothing here works without it.",
@@ -50,7 +56,7 @@ const team = [
   {
     name: "Covenant partners",
     role: "The network",
-    bio: "Market Research Design LLC, AMD Branding, and Sam Studios. Design, strategy, and photography when the job calls for more hands.",
+    bio: "Market Research Design LLC, AMD Branding, Sam Studios, and Beloved Promise Events. Design, strategy, photography, and event decor when the job calls for more hands.",
     img: null,
   },
 ];
@@ -217,11 +223,11 @@ export default function AboutPage() {
           <AnimatedText text="Small on purpose." tag="h2" className="font-display text-display-huge font-light text-cream mb-4" style={serif} />
           <ScrollReveal delay={0.2}>
             <p className="text-text-secondary text-base leading-relaxed max-w-xl mb-14">
-              One person answers your calls, shoots your content, and signs off on the edit. The rest of
-              the team is you.
+              A husband and wife team. One shoots your content and signs off on the edit. The other keeps
+              every booking, deadline, and detail on track. The rest of the team is you.
             </p>
           </ScrollReveal>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
             {team.map((m, i) => (
               <ScrollReveal key={m.name} delay={i * 0.08}>
                 <div className="pill-card bg-dark border border-border/40 overflow-hidden h-full group hover:border-gold/40 transition-colors duration-500">
@@ -231,7 +237,7 @@ export default function AboutPage() {
                     ) : (
                       <div className="absolute inset-0 flex items-center justify-center bg-black">
                         <span className="font-display text-8xl font-light text-gold/20 group-hover:text-gold/50 transition-colors duration-500" style={serif}>
-                          {i === 1 ? "?" : i === 2 ? "+" : "&"}
+                          {i === 2 ? "?" : i === 3 ? "+" : "&"}
                         </span>
                       </div>
                     )}

@@ -44,13 +44,14 @@ const services = [
   { number: "03", title: "Social Media Management", price: "From $1,500 / month", terms: "Three month minimum", desc: "Strategy, content, posting, engagement, and monthly reporting. You run the business. We run the feed.", href: "/services#social" },
   { number: "04", title: "Videography & Photography", price: "Content days from $1,500", terms: "Films and photo shoots quoted", desc: "Content days, reels, brand films, and photography. Shot on cinema glass, cut with intention.", href: "/services#video" },
   { number: "05", title: "Websites & Brand", price: "Starting at $1,000", terms: "Care plan from $150 / month", desc: "Custom sites and brand identity that make you look like the authority you already are.", href: "/services#web" },
-  { number: "06", title: "Design, Print & AI", price: "Cards from $150", terms: "AI agents from $1,500", desc: "QR business cards, poster graphics and boards, and AI agents that answer your customers while you work.", href: "/services#design-ai" },
+  { number: "06", title: "Design, Print & AI", price: "Cards from $150", terms: "AI agents from $1,500", desc: "QR business cards, poster boards, event decor and planning, and AI agents that answer your customers while you work.", href: "/services#design-ai" },
 ];
 
-const partners = [
+const partners: { name: string; note: string; href: string; logo?: string }[] = [
   { name: "Market Research Design LLC", note: "Unique Brand Solutions", href: "https://mrdubs.com/" },
   { name: "AMD Branding", note: "Design your future", href: "https://www.instagram.com/amdbranding" },
   { name: "Sam Studios", note: "Photography", href: "https://thesamstudio.mypixieset.com/portfolio/" },
+  { name: "Beloved Promise Events", note: "Event decorator and planner", href: "/services#events", logo: "/partners/beloved-promise.jpg" },
 ];
 
 
@@ -345,9 +346,21 @@ export default function HomePage() {
               </div>
               <div className="flex flex-wrap gap-x-12 gap-y-4">
                 {partners.map((p) => (
-                  <a key={p.name} href={p.href} target="_blank" rel="noopener noreferrer" className="group">
-                    <p className="font-display text-2xl md:text-3xl text-black leading-none group-hover:text-gold transition-colors" style={serif}>{p.name}</p>
-                    <p className="text-[9px] tracking-[0.22em] uppercase text-black/50 mt-2">{p.note}</p>
+                  <a
+                    key={p.name}
+                    href={p.href}
+                    {...(p.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="group flex items-center gap-4"
+                  >
+                    {p.logo && (
+                      <span className="relative w-14 h-14 md:w-16 md:h-16 shrink-0 rounded-full overflow-hidden border border-gold/60">
+                        <Image src={p.logo} alt={`${p.name} logo`} fill sizes="64px" className="object-cover" />
+                      </span>
+                    )}
+                    <span>
+                      <p className="font-display text-2xl md:text-3xl text-black leading-none group-hover:text-gold transition-colors" style={serif}>{p.name}</p>
+                      <p className="text-[9px] tracking-[0.22em] uppercase text-black/50 mt-2">{p.note}</p>
+                    </span>
                   </a>
                 ))}
               </div>

@@ -9,6 +9,7 @@ const partners = [
   { name: "Market Research Design LLC", note: "Unique Brand Solutions", href: "https://mrdubs.com/" as string | null },
   { name: "AMD Branding", note: "Design your future", href: "https://www.instagram.com/amdbranding" as string | null },
   { name: "Sam Studios", note: "Photography", href: "https://thesamstudio.mypixieset.com/portfolio/" as string | null },
+  { name: "Beloved Promise Events", note: "Event decor and planning", href: "/services#events" as string | null },
 ];
 
 const socials = [

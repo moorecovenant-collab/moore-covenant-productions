@@ -89,6 +89,7 @@ Covenant partners are brought in when a job needs more hands.
 Market Research Design LLC ("MR Dubs", tagline "Unique Brand Solutions"), mrdubs.com.
 AMD Branding (Atlanta, "design your future").
 Sam Studios, photography, thesamstudio.mypixieset.com/portfolio.
+Beloved Promise Events, event decorator and planner. Event decor and planning for weddings, birthdays, showers, and church events is offered through them, quoted per event. It pairs with the studio's photo, video, and poster boards.
 
 === THE COVENANT FRAMEWORK (the company's values)
 C, Covenant First: keep our word, even when convenience says otherwise.

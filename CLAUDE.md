@@ -103,5 +103,6 @@ phone numbers into staging.
 
 Newest first. Version, date, one line.
 
+- v1.2, 2026-11-17: Beloved Promise Events partner. Event Decor and Planning card on services, BPE logo in the home partners row, Amyah on About, site assistant. No app changes.
 - v1.1, 2026-11-16: Pricing update. $800 coaching, editing retainers, photo and video, design, print, AI on services page, home cards, site assistant. No app changes.
 - v1.0, 2026-11-03: Phase 1 Step 1. CLAUDE.md, 40 Vitest tests, GitHub Actions CI. No app changes.
